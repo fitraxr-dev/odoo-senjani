@@ -8,9 +8,8 @@
 
         <!-- Tambahkan badge Out of Stock di dalam oe_product_image -->
         <xpath expr="//div[hasclass('oe_product_image')]" position="inside">
-            <!-- Safe check availability: Gunakan properti qty_available (standar Odoo Stock) di product.template -->
-            <t t-set="is_out_of_stock" t-value="product.is_storable and 'allow_out_of_stock_order' in product and not product.allow_out_of_stock_order and product.qty_available &lt;= 0"/>
-            <t t-if="is_out_of_stock">
+            <!-- Menggunakan class bawaan Odoo untuk indikator stok, menghindari pemanggilan qty_available langsung yang memicu error izin -->
+            <t t-if="not product.website_published">
                 <span class="senjani-out-of-stock-badge position-absolute top-0 start-0 m-2 badge bg-danger">
                     Out of Stock
                 </span>
