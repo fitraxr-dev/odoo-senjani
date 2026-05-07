@@ -1,0 +1,111 @@
+/* Custom Styling untuk Sidebar Filter Desktop Senjani */
+.senjani-sidebar-filter {
+    background-color: var(--senjani-2);
+    border-right: 1px solid var(--senjani-1);
+    border-radius: 0 16px 16px 0;
+    box-shadow: 2px 0 10px rgba(6,5,3, 0.02);
+}
+
+.senjani-sidebar-filter .o_wsale_products_grid_before_rail {
+    padding-right: 1rem !important;
+}
+
+/* Kustomisasi Judul Filter (Category, Price, dll) */
+.senjani-sidebar-filter h6, 
+.o_website_offcanvas h6 {
+    color: var(--senjani-5) !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+}
+
+/* Custom styling untuk Label Kategori / Checkbox */
+.senjani-sidebar-filter .form-check-label,
+.o_website_offcanvas .form-check-label {
+    color: rgba(6, 5, 3, 0.8) !important;
+    transition: color 0.2s ease;
+}
+
+.senjani-sidebar-filter .form-check-input:checked + .form-check-label,
+.o_website_offcanvas .form-check-input:checked + .form-check-label,
+.senjani-sidebar-filter .nav-link.active,
+.o_website_offcanvas .nav-link.active {
+    color: var(--senjani-5) !important;
+    font-weight: bold;
+}
+
+/* Custom styling untuk check-box dan radio */
+.senjani-sidebar-filter .form-check-input:checked,
+.o_website_offcanvas .form-check-input:checked {
+    background-color: var(--senjani-4);
+    border-color: var(--senjani-4);
+}
+
+/* Styling Offcanvas Odoo Bawaan agar sesuai Senjani */
+.o_website_offcanvas {
+    background-color: var(--senjani-2) !important;
+    border-left: 2px solid var(--senjani-3) !important;
+}
+
+.o_website_offcanvas .offcanvas-header {
+    background-color: var(--senjani-2);
+    border-bottom: 1px solid var(--senjani-1);
+}
+
+.o_website_offcanvas .btn-close {
+    opacity: 0.8;
+}
+
+/* Custom Price Slider (Jika diaktifkan di Odoo) */
+.senjani-sidebar-filter .price_filter input[type=range],
+.o_website_offcanvas .price_filter input[type=range] {
+    accent-color: var(--senjani-4);
+}
+
+.senjani-sidebar-filter .price_filter .slider.slider-horizontal .slider-track,
+.o_website_offcanvas .price_filter .slider.slider-horizontal .slider-track {
+    background-image: linear-gradient(to bottom, var(--senjani-3) 0%, var(--senjani-4) 100%);
+}
+
+/* Button & Komponen Lainnya */
+.senjani-btn-primary {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.senjani-btn-primary:hover {
+    background-color: var(--senjani-5) !important;
+    transform: translateY(-2px);
+}
+
+.senjani-empty-state {
+    background-color: #fff;
+    border-radius: 20px;
+    border: 1px dashed var(--senjani-1);
+    box-shadow: 0 10px 30px rgba(6, 5, 3, 0.05);
+}
+
+/* Custom Styling Search Bar Shop */
+.o_wsale_products_searchbar_form .form-control {
+    border-radius: 20px 0 0 20px !important;
+    border: 1px solid var(--senjani-1) !important;
+    padding-left: 1rem;
+}
+.o_wsale_products_searchbar_form .form-control:focus {
+    border-color: var(--senjani-4) !important;
+    box-shadow: none !important;
+}
+
+.o_wsale_products_searchbar_form > .input-group > .btn {
+    border-radius: 0 20px 20px 0 !important;
+    background-color: var(--senjani-4) !important;
+    color: #fff !important;
+    border: 1px solid var(--senjani-4) !important;
+    padding-right: 1.25rem;
+    padding-left: 1rem;
+}
+.o_wsale_products_searchbar_form > .input-group > .btn:hover {
+    background-color: var(--senjani-5) !important;
+    border-color: var(--senjani-5) !important;
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template untuk Custom Filter Drawer & Empty State -->
+    <template id="senjani_products_page" inherit_id="website_sale.products" name="Senjani Products Page">
+        
+        <!-- Mengubah class pembungkus sidebar untuk desktop agar matching dengan senjani design -->
+        <xpath expr="//aside[@id='products_grid_before']" position="attributes">
+            <attribute name="class" add="senjani-sidebar-filter" separator=" "/>
+        </xpath>
+
+        <!-- Override Empty State -->
+        <xpath expr="//div[@t-else=''][hasclass('text-center', 'text-muted', 'mt128', 'mb256')]" position="replace">
+            <div t-else="" class="text-center senjani-empty-state mt-5 mb-5 p-5">
+                <t t-if="not search">
+                    <div class="mb-4">
+                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="var(--senjani-4)"/>
+                        </svg>
+                    </div>
+                    <h3 class="mb-3" style="color: var(--senjani-5); font-weight: 700;">Belum Ada Produk</h3>
+                    <p class="text-muted" t-if="category">Tidak ada produk yang bisa ditampilkan di kategori ini.</p>
+                </t>
+                <t t-else="">
+                    <div class="mb-4">
+                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 12.01 5 9.5C5 6.99 7.01 5 9.5 5C11.99 5 14 6.99 14 9.5C14 12.01 11.99 14 9.5 14Z" fill="var(--senjani-3)"/>
+                        </svg>
+                    </div>
+                    <h3 class="mb-3" style="color: var(--senjani-5); font-weight: 700;">Produk Tidak Ditemukan</h3>
+                    <p class="text-muted mb-4">Kami tidak dapat menemukan "<strong t-esc='search' style="color: var(--senjani-4);"/>"<t t-if="category"> di kategori "<strong t-esc="category.display_name"/>"</t>. Silakan cari dengan kata kunci lain.</p>
+                    <a href="/shop" class="btn senjani-btn-primary px-4 py-2" style="background-color: var(--senjani-4); color: #fff; font-weight: bold; border-radius: 8px;">Kembali ke Belanja</a>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>
