@@ -1,0 +1,33 @@
+/* Override styling native Portal Rating / Chatter untuk menyesuaikan tema Senjani */
+.o_portal_chatter,
+.o_shop_discussion_rating,
+.o_portal_chatter_composer {
+    /* Style wrapper utama review jika perlu */
+}
+
+/* Warna bintang untuk rating */
+.o_portal_chatter_composer .fa-star,
+.o_portal_chatter_messages .fa-star,
+.o_portal_chatter_messages .fa-star-o,
+.o_portal_chatter_composer .fa-star-o,
+.o_portal_chatter_composer .fa-star-half-o,
+.o_portal_chatter_messages .fa-star-half-o,
+.o_rating_star_display .fa-star,
+.o_rating_star_display .fa-star-o,
+.o_rating_star_display .fa-star-half-o {
+    color: var(--senjani-4, #FFB829) !important;
+}
+
+/* Warna tombol Kirim (Send) di review */
+.o_portal_chatter_composer .o_portal_chatter_composer_btn {
+    background-color: var(--senjani-4) !important;
+    border-color: var(--senjani-4) !important;
+    color: white !important;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.o_portal_chatter_composer .o_portal_chatter_composer_btn:hover {
+    background-color: var(--senjani-5) !important;
+    border-color: var(--senjani-5) !important;
+}

@@ -9,11 +9,14 @@
     'data': [
         'views/products_item_templates.xml',
         'views/products_templates.xml',
+        'views/pdp_templates.xml',
     ],
     'assets': {
         'web.assets_frontend': [
             'senjani_website_custom/static/src/css/product_item_card.css',
             'senjani_website_custom/static/src/css/filter_drawer.css',
+            'senjani_website_custom/static/src/css/product_reviews.css',
+            'senjani_website_custom/static/src/xml/stock_availability.xml',
         ],
     },
     'application': False,

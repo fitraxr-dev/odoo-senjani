@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template Override untuk Product Detail Page (PDP) -->
+    <template id="senjani_pdp_layout" inherit_id="website_sale.product" name="Senjani PDP Layout">
+        
+        <!-- Tambahkan ID ke container utama agar styling Senjani bisa menargetkannya dengan kuat -->
+        <xpath expr="//section[@id='product_detail']" position="attributes">
+            <attribute name="data-senjani-pdp">true</attribute>
+        </xpath>
+
+    </template>
+
+    <!-- Override Share Buttons to only show WhatsApp with text -->
+    <template id="senjani_product_share_buttons" inherit_id="website_sale.product_share_buttons" name="Senjani WhatsApp Share">
+        <xpath expr="//div[hasclass('s_share')]" position="replace">
+            <div data-snippet="s_share" data-name="Share" class="s_share text-start o_no_link_popover mt-4 mb-3 d-block-important" style="visibility: visible !important; opacity: 1 !important;">
+                <a href="https://wa.me/?text={url}" target="_blank" aria-label="WhatsApp" class="s_share_whatsapp d-inline-flex align-items-center justify-content-center shadow-sm" style="background-color: #25D366; border: none; border-radius: 8px; font-weight: 600; padding: 10px 20px; color: white !important; text-decoration: none !important; transition: all 0.3s ease;">
+                    <i class="fa fa-whatsapp fa-lg me-2"></i>
+                    <span style="font-size: 1rem;">Share</span>
+                </a>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Aktifkan sistem review dan rating bawaan Odoo di PDP -->
+    <record id="website_sale.product_comment" model="ir.ui.view">
+        <field name="active" eval="True"/>
+    </record>
+</odoo>
