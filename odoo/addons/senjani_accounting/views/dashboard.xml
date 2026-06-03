@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        ================================================================
+        DASHBOARD — Senjani Accounting
+        ================================================================
+        Menggunakan Odoo 18 native Journal Dashboard (Kanban).
+        Action: account.open_account_journal_dashboard_kanban
+        ================================================================
+    -->
+
+    <!-- ===== ACTION: Bank Statement / Mutasi BRI ===== -->
+    <!--
+        Shortcut action untuk rekonsiliasi bank.
+        Di Odoo 18, reconciliation dilakukan langsung dari journal/bank statement.
+    -->
+    <record id="action_senjani_bank_reconciliation" model="ir.actions.act_window">
+        <field name="name">Rekonsiliasi Bank</field>
+        <field name="res_model">account.bank.statement.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('journal_id.type', '=', 'bank')]</field>
+        <field name="context">{'search_default_not_matched': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Tidak ada transaksi bank yang perlu dicocokkan
+            </p>
+            <p>
+                Semua transaksi bank sudah ter-rekonsiliasi dengan invoice/bill.
+            </p>
+        </field>
+    </record>
+
+    <!-- ===== INHERIT KANBAN DASHBOARD: Batasi Pembuatan Invoice dari Dashboard ===== -->
+    <record id="view_senjani_journal_dashboard_kanban_inherit" model="ir.ui.view">
+        <field name="name">account.journal.dashboard.kanban.inherit.senjani</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view"/>
+        <field name="arch" type="xml">
+            <!-- Sembunyikan tombol 'New' invoice pada kartu jurnal penjualan -->
+            <xpath expr="//t[@t-name='JournalBodySalePurchase']//t[@t-if=&quot;journal_type == 'sale'&quot;]/button[@name='action_create_new']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+            <!-- Sembunyikan bagian 'New' di menu dropdown kartu jurnal penjualan & pembelian -->
+            <xpath expr="//div[@name='kanban_manage_new' and @groups='account.group_account_invoice']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

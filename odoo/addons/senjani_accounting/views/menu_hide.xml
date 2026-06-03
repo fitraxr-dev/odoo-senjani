@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        ================================================================
+        SEMBUNYIKAN FITUR YANG TIDAK DIPERLUKAN — Senjani Accounting
+        ================================================================
+        Strategi: ubah groups menjadi base.group_no_one agar hanya
+        developer/superuser yang bisa melihat menu tersebut.
+        Ini lebih aman daripada active="False" karena masih bisa
+        diaktifkan kembali via debug mode jika suatu saat diperlukan.
+        ================================================================
+    -->
+
+    <!-- ====== SEMBUNYIKAN: Customer Follow-up ====== -->
+    <!-- Tidak relevan untuk e-commerce Senjani -->
+    <record id="om_account_followup.menu_finance_followup" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
+    <record id="om_account_followup.om_account_followup_main_menu" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
+
+    <!-- ====== SEMBUNYIKAN: Asset Management ====== -->
+    <!-- Tidak ada kebutuhan manajemen aset saat ini -->
+    <record id="om_account_asset.menu_action_account_asset_asset_form" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
+    <record id="om_account_asset.menu_action_asset_asset_report" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
+    <record id="om_account_asset.menu_action_account_asset_asset_list_normal_purchase" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
+    <record id="om_account_asset.menu_asset_depreciation_confirmation_wizard" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
+
+    <!-- ====== SEMBUNYIKAN: Budget Management ====== -->
+    <!-- Tidak digunakan untuk operasional e-commerce -->
+    <record id="om_account_budget.menu_budget_post_form" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
+    <record id="om_account_budget.menu_act_crossovered_budget_view" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
+    <record id="om_account_budget.menu_act_crossovered_budget_lines_view" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
+
+    <!-- ====== SEMBUNYIKAN: Recurring Payments ====== -->
+    <!-- Tidak relevan untuk transaksi e-commerce satu kali -->
+    <record id="om_recurring_payments.menu_recurring_payment" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
+    <record id="om_recurring_payments.menu_recurring_payments" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
+    <record id="om_recurring_payments.menu_recurring_template" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
+
+    <!-- ====== SEMBUNYIKAN: Menu Invoicing Default Odoo ====== -->
+    <!-- Semua fiturnya sudah diwakili secara rapi di menu_senjani_accounting_root -->
+    <record id="account.menu_finance" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
+    </record>
+
+    <!-- ====== SEMBUNYIKAN: Menu Accounting > Configuration (batasi ke Manager) ====== -->
+    <!-- Konfigurasi akun hanya untuk Accounting Manager -->
+    <record id="account.menu_finance_configuration" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [
+            ref('senjani_accounting.group_senjani_accounting_manager'),
+        ])]"/>
+    </record>
+
+</odoo>

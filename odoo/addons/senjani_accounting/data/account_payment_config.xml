@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        ================================================================
+        KONFIGURASI DATA AWAL — Senjani Accounting
+        ================================================================
+        File ini menyiapkan konfigurasi default untuk:
+        1. Journal khusus Xendit (agar pembayaran Xendit terpisah dari kas/bank lain)
+        2. Journal Bank BRI (untuk rekonsiliasi mutasi BRI)
+        ================================================================
+        CATATAN: Record ini hanya dibuat jika belum ada (noupdate="1").
+        Ubah via Settings → Accounting jika perlu penyesuaian.
+        ================================================================
+    -->
+    <data noupdate="1">
+        <!-- We do not define custom journals here anymore.
+             Instead, we use the default 'Bank' journal created by Odoo by default.
+             This avoids dashboard clutter and duplicate journal cards. -->
+    </data>
+</odoo>

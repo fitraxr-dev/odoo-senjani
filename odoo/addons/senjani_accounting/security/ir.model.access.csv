@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_move_senjani_staff,account.move senjani staff,account.model_account_move,senjani_accounting.group_senjani_accounting_staff,1,1,1,0
+access_account_payment_senjani_staff,account.payment senjani staff,account.model_account_payment,senjani_accounting.group_senjani_accounting_staff,1,1,1,0
+access_account_bank_statement_senjani_staff,account.bank.statement senjani staff,account.model_account_bank_statement,senjani_accounting.group_senjani_accounting_staff,1,1,1,0
+access_account_bank_statement_line_senjani_staff,account.bank.statement.line senjani staff,account.model_account_bank_statement_line,senjani_accounting.group_senjani_accounting_staff,1,1,1,0
+access_account_journal_senjani_staff,account.journal senjani staff,account.model_account_journal,senjani_accounting.group_senjani_accounting_staff,1,0,0,0
+access_account_account_senjani_staff,account.account senjani staff,account.model_account_account,senjani_accounting.group_senjani_accounting_staff,1,0,0,0
+access_res_partner_senjani_staff,res.partner senjani staff,base.model_res_partner,senjani_accounting.group_senjani_accounting_staff,1,0,0,0
+access_sale_order_senjani_staff,sale.order senjani staff,sale.model_sale_order,senjani_accounting.group_senjani_accounting_staff,1,0,0,0
+access_purchase_order_senjani_staff,purchase.order senjani staff,purchase.model_purchase_order,senjani_accounting.group_senjani_accounting_staff,1,0,0,0

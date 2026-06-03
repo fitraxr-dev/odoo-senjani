@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===== CATEGORY ===== -->
+    <record id="module_category_senjani_accounting" model="ir.module.category">
+        <field name="name">Senjani / Accounting</field>
+        <field name="sequence">200</field>
+    </record>
+
+    <!-- ===== GROUP: Accounting Staff Senjani ===== -->
+    <!--
+        Turunan dari account.group_account_user (Accountant).
+        Bisa: lihat invoice, confirm, reconcile, generate report.
+        Tidak bisa: ubah chart of accounts, journal configuration, dll.
+    -->
+    <record id="group_senjani_accounting_staff" model="res.groups">
+        <field name="name">Accounting Staff</field>
+        <field name="category_id" ref="module_category_senjani_accounting"/>
+        <field name="implied_ids" eval="[(4, ref('account.group_account_user'))]"/>
+        <field name="comment">
+            Dapat melihat invoice, bill, mengkonfirmasi, dan melakukan rekonsiliasi bank.
+            Dapat mengakses semua laporan keuangan.
+        </field>
+    </record>
+
+    <!-- ===== GROUP: Accounting Manager Senjani ===== -->
+    <!--
+        Turunan dari account.group_account_manager (Advisor).
+        Semua hak Accounting Staff plus konfigurasi akun, jurnal, lock date.
+    -->
+    <record id="group_senjani_accounting_manager" model="res.groups">
+        <field name="name">Accounting Manager</field>
+        <field name="category_id" ref="module_category_senjani_accounting"/>
+        <field name="implied_ids" eval="[
+            (4, ref('group_senjani_accounting_staff')),
+            (4, ref('account.group_account_manager')),
+        ]"/>
+        <field name="users" eval="[(4, ref('base.user_admin')), (4, ref('base.user_root'))]"/>
+        <field name="comment">
+            Akses penuh akuntansi: konfigurasi, laporan, lock date, fiscal year.
+        </field>
+    </record>
+
+</odoo>
