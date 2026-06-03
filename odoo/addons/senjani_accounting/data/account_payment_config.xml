@@ -17,4 +17,9 @@
              Instead, we use the default 'Bank' journal created by Odoo by default.
              This avoids dashboard clutter and duplicate journal cards. -->
     </data>
+
+    <!-- Run function to auto-configure outstanding payment accounts on XNDT and BNK1 journals -->
+    <data>
+        <function model="account.journal" name="_setup_senjani_outstanding_accounts"/>
+    </data>
 </odoo>

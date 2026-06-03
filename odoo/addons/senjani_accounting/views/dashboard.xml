@@ -36,13 +36,41 @@
         <field name="model">account.journal</field>
         <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view"/>
         <field name="arch" type="xml">
-            <!-- Sembunyikan tombol 'New' invoice pada kartu jurnal penjualan -->
-            <xpath expr="//t[@t-name='JournalBodySalePurchase']//t[@t-if=&quot;journal_type == 'sale'&quot;]/button[@name='action_create_new']" position="attributes">
-                <attribute name="groups">base.group_no_one</attribute>
+            <!-- Ganti isi kartu jurnal penjualan hanya dengan tombol 'Lihat Invoice' -->
+            <xpath expr="//t[@t-name='JournalBodySalePurchase']//t[@t-if=&quot;journal_type == 'sale'&quot;]" position="replace">
+                <t t-if="journal_type == 'sale'">
+                    <button type="object" name="open_action" class="btn btn-primary">
+                        Lihat Invoice
+                    </button>
+                </t>
+            </xpath>
+            <!-- Ganti isi kartu jurnal pembelian hanya dengan tombol 'Lihat Bill' -->
+            <xpath expr="//t[@t-name='JournalBodySalePurchase']//t[@t-if=&quot;journal_type == 'purchase'&quot;]" position="replace">
+                <t t-if="journal_type == 'purchase'">
+                    <button type="object" name="open_action" class="btn btn-primary">
+                        Lihat Bill
+                    </button>
+                </t>
             </xpath>
             <!-- Sembunyikan bagian 'New' di menu dropdown kartu jurnal penjualan & pembelian -->
             <xpath expr="//div[@name='kanban_manage_new' and @groups='account.group_account_invoice']" position="attributes">
                 <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+            <!-- Sembunyikan 'Journal Items' di menu dropdown kartu jurnal penjualan & pembelian -->
+            <xpath expr="//t[@t-name='menu']//a[@context=&quot;{'action_name': 'action_account_moves_all_a'}&quot;]" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+            <!-- Sesuaikan kondisi pemuatan grafik agar hanya muncul di jurnal penjualan/pembelian jika ada datanya (!journal_is_empty) -->
+            <xpath expr="//t[@t-call='JournalBodyGraph']" position="attributes">
+                <attribute name="t-if">['bank', 'cash', 'credit'].includes(journal_type) and !bank_unconfigured or (['sale', 'purchase'].includes(journal_type) and !journal_is_empty)</attribute>
+            </xpath>
+            <!-- Ganti teks deskripsi kosong pada kartu jurnal penjualan -->
+            <xpath expr="//t[@name='empty_journal_helper']/span[@t-if=&quot;journal_type == 'sale'&quot;]" position="replace">
+                <span class="text-muted" t-if="journal_type == 'sale'">Validasi draft invoice otomatis hasil pesanan e-commerce (Xendit) dan kelola status piutang pelanggan.</span>
+            </xpath>
+            <!-- Ganti teks deskripsi kosong pada kartu jurnal pembelian -->
+            <xpath expr="//t[@name='empty_journal_helper']/span[@t-if=&quot;journal_type == 'purchase'&quot;]" position="replace">
+                <span class="text-muted" t-if="journal_type == 'purchase'">Periksa kesesuaian tagihan dari vendor (3-Way Matching) berdasarkan Purchase Order dan data penerimaan gudang.</span>
             </xpath>
         </field>
     </record>

@@ -61,18 +61,34 @@
 
     <menuitem
         id="menu_senjani_customer_invoices"
-        name="Faktur Penjualan"
+        name="Faktur Penjualan (Invoice)"
         parent="menu_senjani_invoicing"
         action="senjani_accounting.action_senjani_customer_invoices"
         sequence="1"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
     <menuitem
+        id="menu_senjani_customer_refunds"
+        name="Nota Kredit (Retur)"
+        parent="menu_senjani_invoicing"
+        action="senjani_accounting.action_senjani_customer_refunds"
+        sequence="2"
+        groups="senjani_accounting.group_senjani_accounting_staff"/>
+
+    <menuitem
         id="menu_senjani_vendor_bills"
-        name="Faktur Pembelian"
+        name="Faktur Pembelian (Bill)"
         parent="menu_senjani_invoicing"
         action="senjani_accounting.action_senjani_vendor_bills"
-        sequence="2"
+        sequence="3"
+        groups="senjani_accounting.group_senjani_accounting_staff"/>
+
+    <menuitem
+        id="menu_senjani_vendor_refunds"
+        name="Nota Debit (Retur)"
+        parent="menu_senjani_invoicing"
+        action="senjani_accounting.action_senjani_vendor_refunds"
+        sequence="4"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
     <menuitem
@@ -80,7 +96,7 @@
         name="Mutasi Bank"
         parent="menu_senjani_invoicing"
         action="senjani_accounting.action_senjani_bank_statement_bri"
-        sequence="3"
+        sequence="5"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
     <!-- ===== REKONSILIASI ===== -->

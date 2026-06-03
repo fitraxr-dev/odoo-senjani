@@ -122,3 +122,51 @@ class AccountMove(models.Model):
                 if invoice_receivable_line:
                     # Lakukan rekonsiliasi otomatis
                     (invoice_receivable_line + receivable_lines[0]).reconcile()
+
+
+class AccountJournal(models.Model):
+    _inherit = 'account.journal'
+
+    @api.model
+    def _setup_senjani_outstanding_accounts(self):
+        """
+        Setup Outstanding Receipts and Payments accounts for XNDT and BNK1 journals.
+        """
+        XNDT = self.search([('code', '=', 'XNDT')])
+        BNK1 = self.search([('code', '=', 'BNK1')])
+        out_receipts = self.env['account.account'].search([('code', '=', '101403')])
+        out_payments = self.env['account.account'].search([('code', '=', '101404')])
+        
+        if out_receipts and out_payments:
+            for journal in (XNDT + BNK1):
+                for line in journal.inbound_payment_method_line_ids:
+                    if not line.payment_account_id:
+                        line.payment_account_id = out_receipts.id
+                for line in journal.outbound_payment_method_line_ids:
+                    if not line.payment_account_id:
+                        line.payment_account_id = out_payments.id
+
+    def open_action(self):
+        """
+        Override open_action agar klik pada kartu dashboard (Faktur Penjualan / Faktur Pembelian)
+        langsung membuka aksi kustom kita dengan filter kustom dan Bahasa Indonesia.
+        """
+        self.ensure_one()
+        action_name = self.env.context.get('action_name', False)
+        if self.type == 'sale':
+            if action_name == 'action_move_out_refund_type':
+                action = self.env["ir.actions.act_window"]._for_xml_id('senjani_accounting.action_senjani_customer_refunds')
+            else:
+                action = self.env["ir.actions.act_window"]._for_xml_id('senjani_accounting.action_senjani_customer_invoices')
+            ctx = dict(self.env.context, default_journal_id=self.id)
+            action['context'] = ctx
+            return action
+        elif self.type == 'purchase':
+            if action_name == 'action_move_in_refund_type':
+                action = self.env["ir.actions.act_window"]._for_xml_id('senjani_accounting.action_senjani_vendor_refunds')
+            else:
+                action = self.env["ir.actions.act_window"]._for_xml_id('senjani_accounting.action_senjani_vendor_bills')
+            ctx = dict(self.env.context, default_journal_id=self.id)
+            action['context'] = ctx
+            return action
+        return super(AccountJournal, self).open_action()

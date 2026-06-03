@@ -71,10 +71,20 @@
                     <field name="x_show_xendit_info" invisible="1"/>
                 </group>
             </xpath>
+            <!-- Ubah visibilitas button Confirm (action_post) asli agar tidak tampil di Customer Invoice -->
+            <xpath expr="//button[@name='action_post' and contains(@invisible, 'move_type ==')]" position="attributes">
+                <attribute name="invisible">hide_post_button or move_type == 'entry' or display_inactive_currency_warning or move_type == 'out_invoice'</attribute>
+            </xpath>
+            <!-- Tambahkan button 'Validasi ke In Payment' khusus untuk Customer Invoice -->
+            <xpath expr="//button[@name='action_post' and contains(@invisible, 'move_type ==')]" position="after">
+                <button name="action_post" string="Validasi ke In Payment" class="oe_highlight"
+                        type="object" groups="account.group_account_invoice" data-hotkey="q"
+                        context="{'validate_analytic': True, 'disable_abnormal_invoice_detection': False}"
+                        invisible="hide_post_button or move_type != 'out_invoice' or display_inactive_currency_warning"/>
+            </xpath>
         </field>
     </record>
 
-    <!-- ===== LIST VIEW: Invoice untuk Accounting ===== -->
     <record id="view_senjani_invoice_list" model="ir.ui.view">
         <field name="name">senjani.account.move.invoice.list</field>
         <field name="model">account.move</field>
@@ -196,6 +206,30 @@
                 Faktur Penjualan akan terbuat secara otomatis dari Sales Order
                 yang dibayar via Xendit. Tim Sales kemudian membuat draft invoice
                 dari SO tersebut untuk dikonfirmasi di sini.
+            </p>
+        </field>
+    </record>
+
+    <!-- ===== ACTION: Nota Kredit / Retur Penjualan ===== -->
+    <record id="action_senjani_customer_refunds" model="ir.actions.act_window">
+        <field name="name">Nota Kredit (Retur)</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_senjani_invoice_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_senjani_invoice_form')}),
+        ]"/>
+        <field name="domain">[('move_type', '=', 'out_refund')]</field>
+        <field name="context">{
+            'default_move_type': 'out_refund',
+        }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Belum ada Nota Kredit
+            </p>
+            <p>
+                Nota Kredit (Credit Note) digunakan untuk membatalkan faktur penjualan
+                yang salah atau mencatat retur produk dan pengembalian uang (refund) pelanggan.
             </p>
         </field>
     </record>
