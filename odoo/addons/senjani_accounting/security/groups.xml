@@ -18,15 +18,15 @@
         <field name="category_id" ref="module_category_senjani_accounting"/>
         <field name="implied_ids" eval="[(4, ref('account.group_account_user'))]"/>
         <field name="comment">
-            Dapat melihat invoice, bill, mengkonfirmasi, dan melakukan rekonsiliasi bank.
-            Dapat mengakses semua laporan keuangan.
+            Can view invoices, bills, confirm them, and perform bank reconciliation.
+            Can access all financial reports.
         </field>
     </record>
 
     <!-- ===== GROUP: Accounting Manager Senjani ===== -->
     <!--
-        Turunan dari account.group_account_manager (Advisor).
-        Semua hak Accounting Staff plus konfigurasi akun, jurnal, lock date.
+        Child of account.group_account_manager (Advisor).
+        All rights of Accounting Staff plus account configuration, journals, lock dates.
     -->
     <record id="group_senjani_accounting_manager" model="res.groups">
         <field name="name">Accounting Manager</field>
@@ -37,7 +37,7 @@
         ]"/>
         <field name="users" eval="[(4, ref('base.user_admin')), (4, ref('base.user_root'))]"/>
         <field name="comment">
-            Akses penuh akuntansi: konfigurasi, laporan, lock date, fiscal year.
+            Full accounting access: configuration, reports, lock date, fiscal year.
         </field>
     </record>
 

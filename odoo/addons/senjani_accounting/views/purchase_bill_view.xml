@@ -2,106 +2,100 @@
 <odoo>
 
     <!-- ================================================================
-         VENDOR BILL (PURCHASE) — Custom Views untuk Tim Accounting Senjani
-         ================================================================
-         Alur: Tim Purchasing buat Purchase Order → Terima barang
-               → Bill otomatis terbuat Draft
-               → Accounting lihat Draft Bill → Confirm → Bayar → Reconcile BRI
-               → Accounting lihat Draft Bill → Confirm → Bayar → Reconcile Bank
+         VENDOR BILL (PURCHASE) — Custom Views for the Accounting Team
          ================================================================ -->
 
-    <!-- ===== LIST VIEW: Bill Purchase ===== -->
+    <!-- ===== LIST VIEW: Vendor Bill ===== -->
     <record id="view_senjani_bill_list" model="ir.ui.view">
         <field name="name">senjani.account.move.bill.list</field>
         <field name="model">account.move</field>
         <field name="arch" type="xml">
-            <list string="Faktur Pembelian (Vendor Bill)"
+            <list string="Vendor Bills"
                   create="0"
                   decoration-info="state == 'draft'"
                   decoration-success="payment_state == 'paid'"
                   decoration-warning="payment_state in ('partial','not_paid') and state == 'posted'"
                   decoration-muted="state == 'cancel'"
                   multi_edit="1">
-                <field name="name" string="No. Tagihan" optional="show"/>
-                <field name="invoice_date" string="Tgl Tagihan" optional="show"/>
-                <field name="invoice_date_due" string="Jatuh Tempo" optional="show"/>
-                <field name="partner_id" string="Pemasok" optional="show"/>
-                <field name="purchase_id" string="Order Pembelian" optional="show"/>
-                <field name="ref" string="Ref. Pemasok" optional="show"/>
-                <field name="amount_untaxed" string="Subtotal" optional="show"/>
-                <field name="amount_tax" string="Pajak" optional="hide"/>
+                <field name="name" string="Bill Number" optional="show"/>
+                <field name="invoice_date" string="Bill Date" optional="show"/>
+                <field name="invoice_date_due" string="Due Date" optional="show"/>
+                <field name="partner_id" string="Vendor" optional="show"/>
+                <field name="purchase_id" string="Purchase Order" optional="show"/>
+                <field name="ref" string="Vendor Reference" optional="show"/>
+                <field name="amount_untaxed" string="Untaxed Amount" optional="show"/>
+                <field name="amount_tax" string="Tax" optional="hide"/>
                 <field name="amount_total" string="Total" optional="show"/>
-                <field name="amount_residual" string="Sisa Pembayaran" optional="show"/>
-                <field name="currency_id" string="Mata Uang" optional="hide"/>
+                <field name="amount_residual" string="Amount Due" optional="show"/>
+                <field name="currency_id" string="Currency" optional="hide"/>
                 <field name="state" string="Status"
                        widget="badge"
                        decoration-info="state == 'draft'"
                        decoration-success="state == 'posted'"
                        decoration-danger="state == 'cancel'"/>
-                <field name="payment_state" string="Status Bayar"
+                <field name="payment_state" string="Payment Status"
                        widget="badge"
                        decoration-success="payment_state == 'paid'"
                        decoration-warning="payment_state == 'partial'"
                        decoration-danger="payment_state == 'not_paid'"
                        optional="show"/>
-                <!-- Hidden fields untuk filter/decor -->
                 <field name="move_type" column_invisible="1"/>
             </list>
         </field>
     </record>
 
-    <!-- ===== SEARCH VIEW: Bill Purchase ===== -->
+    <!-- ===== SEARCH VIEW: Vendor Bill ===== -->
     <record id="view_senjani_bill_search" model="ir.ui.view">
         <field name="name">senjani.account.move.bill.search</field>
         <field name="model">account.move</field>
         <field name="arch" type="xml">
-            <search string="Cari Tagihan Pembelian">
-                <field name="name" string="No. Tagihan"/>
-                <field name="partner_id" string="Pemasok"/>
-                <field name="ref" string="Referensi Pemasok"/>
-                <field name="invoice_date" string="Tanggal"/>
+            <search string="Search Vendor Bills">
+                <field name="name" string="Bill Number"/>
+                <field name="partner_id" string="Vendor"/>
+                <field name="ref" string="Vendor Reference"/>
+                <field name="invoice_date" string="Date"/>
 
-                <!-- Filter cepat -->
+                <!-- Filters -->
                 <filter name="filter_draft"
-                        string="🕐 Draft (Belum Dikonfirmasi)"
-                        domain="[('state', '=', 'draft')]"/>
+                         string="🕐 Draft"
+                         domain="[('state', '=', 'draft')]"/>
                 <filter name="filter_posted"
-                        string="✅ Terkonfirmasi (Belum Lunas)"
-                        domain="[('state', '=', 'posted'), ('payment_state', 'in', ('not_paid', 'partial'))]"/>
+                         string="✅ Posted (Unpaid)"
+                         domain="[('state', '=', 'posted'), ('payment_state', 'in', ('not_paid', 'partial'))]"/>
                 <filter name="filter_paid"
-                        string="💰 Lunas"
-                        domain="[('payment_state', '=', 'paid')]"/>
+                         string="💰 Paid"
+                         domain="[('payment_state', '=', 'paid')]"/>
                 <filter name="filter_overdue"
-                        string="⚠️ Jatuh Tempo"
-                        domain="[('invoice_date_due', '!=', False), ('payment_state', 'not in', ['paid', 'in_payment']), ('state', '=', 'posted')]"/>
+                         string="⚠️ Overdue"
+                         domain="[('invoice_date_due', '!=', False), ('payment_state', 'not in', ['paid', 'in_payment']), ('state', '=', 'posted')]"/>
 
                 <separator/>
 
                 <filter name="filter_this_month"
-                        string="📅 Bulan Ini"
-                        domain="[]"
-                        context="{'group_by': 'invoice_date:month'}"/>
+                         string="📅 This Month"
+                         domain="[]"
+                         context="{'group_by': 'invoice_date:month'}"/>
 
                 <separator/>
 
                 <!-- Group by -->
-                <group string="Kelompokkan">
+                <group string="Group By">
                     <filter name="groupby_state" string="Status"
                             context="{'group_by': 'state'}"/>
-                    <filter name="groupby_payment_state" string="Status Bayar"
+                    <filter name="groupby_payment_state" string="Payment Status"
                             context="{'group_by': 'payment_state'}"/>
-                    <filter name="groupby_partner" string="Pemasok"
+                    <filter name="groupby_partner" string="Vendor"
                             context="{'group_by': 'partner_id'}"/>
-                    <filter name="groupby_date" string="Tanggal"
+                    <filter name="groupby_date" string="Date"
                             context="{'group_by': 'invoice_date:month'}"/>
                 </group>
             </search>
         </field>
     </record>
 
-    <!-- ===== ACTION: Daftar Bill Purchase ===== -->
+    <!-- ===== ACTION: Vendor Bills ===== -->
     <record id="action_senjani_vendor_bills" model="ir.actions.act_window">
-        <field name="name">Faktur Pembelian (Bill)</field>
+        <field name="name">Vendor Bills</field>
         <field name="res_model">account.move</field>
         <field name="view_mode">list,form</field>
         <field name="view_ids" eval="[(5, 0, 0),
@@ -114,19 +108,18 @@
         }</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Belum ada Faktur Pembelian (Bill)
+                No Vendor Bills yet
             </p>
             <p>
-                Bill (tagihan pembelian) terbuat setelah tim Purchasing membuat
-                Purchase Order dan barang diterima. Konfirmasi bill di sini,
-                lalu cocokkan dengan mutasi Bank untuk menyelesaikan pembayaran.
+                Vendor Bills are automatically created as Draft when a Purchase Order is confirmed
+                and goods are received. Confirm bills here, then match them with bank statements to complete payments.
             </p>
         </field>
     </record>
 
     <!-- ===== ACTION: Batch Confirm Bill ===== -->
     <record id="action_senjani_batch_confirm_bill" model="ir.actions.server">
-        <field name="name">Konfirmasi Bill Terpilih</field>
+        <field name="name">Confirm Selected Bills</field>
         <field name="model_id" ref="account.model_account_move"/>
         <field name="binding_model_id" ref="account.model_account_move"/>
         <field name="binding_view_types">list</field>
@@ -138,9 +131,9 @@ if records:
         <field name="groups_id" eval="[(4, ref('senjani_accounting.group_senjani_accounting_staff'))]"/>
     </record>
 
-    <!-- ===== ACTION: Nota Debit / Retur Pembelian ===== -->
+    <!-- ===== ACTION: Vendor Refunds ===== -->
     <record id="action_senjani_vendor_refunds" model="ir.actions.act_window">
-        <field name="name">Nota Debit (Retur)</field>
+        <field name="name">Refunds</field>
         <field name="res_model">account.move</field>
         <field name="view_mode">list,form</field>
         <field name="view_ids" eval="[(5, 0, 0),
@@ -152,33 +145,33 @@ if records:
         }</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Belum ada Nota Debit (Retur Pemasok)
+                No Vendor Refunds yet
             </p>
             <p>
-                Nota Debit (Vendor Refund) digunakan untuk membatalkan tagihan pemasok
-                atau mencatat retur barang ke pemasok dan pengembalian uang.
+                Vendor Refunds (Debit Notes) are used to record returns to vendors and retrieve refunds.
             </p>
         </field>
     </record>
 
-    <!-- ===== ACTION: Bank Statement / Mutasi Bank ===== -->
+    <!-- ===== ACTION: Bank Statements ===== -->
     <record id="action_senjani_bank_statement_bri" model="ir.actions.act_window">
-        <field name="name">Mutasi Bank</field>
+        <field name="name">Bank Statements</field>
         <field name="res_model">account.bank.statement</field>
         <field name="view_mode">list,form</field>
         <field name="domain">[('journal_id.type', '=', 'bank')]</field>
         <field name="context">{'default_journal_id': False}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Belum ada mutasi Bank
+                No Bank Statements yet
             </p>
             <p>
-                Input mutasi Bank di sini, lalu cocokkan (reconcile) dengan
-                invoice/bill yang sudah dikonfirmasi. Setelah rekonsiliasi berhasil,
-                status invoice akan berubah menjadi Lunas (Paid).
+                Import or create bank statements here. Then match (reconcile) each transaction line
+                with outstanding invoices/bills. Once matched, the invoice/bill changes to Paid.
             </p>
         </field>
-    </record>    <!-- ===== VIEW INHERITANCE: Aktifkan Tombol Buat Statement (New) ===== -->
+    </record>
+
+    <!-- ===== VIEW INHERITANCE: Enable Create Bank Statement Button ===== -->
     <record id="view_bank_statement_tree_inherit_senjani" model="ir.ui.view">
         <field name="name">account.bank.statement.list.inherit.senjani</field>
         <field name="model">account.bank.statement</field>
@@ -190,37 +183,39 @@ if records:
         </field>
     </record>
 
-    <!-- ===== FORM VIEW: Custom Form untuk Membuat/Mengedit Bank Statement secara Manual ===== -->
+    <!-- ===== FORM VIEW: Custom Form for Manual Bank Statement Creation ===== -->
     <record id="view_bank_statement_form_senjani" model="ir.ui.view">
         <field name="name">account.bank.statement.form.senjani</field>
         <field name="model">account.bank.statement</field>
         <field name="arch" type="xml">
-            <form string="Rekening Koran (Bank Statement)">
+            <form string="Bank Statement">
                 <sheet>
                     <div class="oe_title">
-                        <label for="name" class="oe_edit_only" string="Nama / Referensi Rekening Koran"/>
+                        <label for="name" class="oe_edit_only" string="Statement Reference"/>
                         <h1>
-                            <field name="name" placeholder="Contoh: Rekening Koran Mei 2026" required="1"/>
+                            <field name="name" placeholder="e.g. Bank Statement May 2026" required="1"/>
                         </h1>
                     </div>
                     <group>
                         <group>
-                            <field name="journal_id" string="Jurnal Bank" domain="[('type', '=', 'bank')]" required="1"/>
-                            <field name="date" string="Tanggal" required="1"/>
+                            <field name="journal_id" string="Bank Journal" domain="[('type', '=', 'bank')]" required="1"/>
+                            <field name="date" string="Date" required="1"/>
                         </group>
                         <group>
-                            <field name="balance_start" string="Saldo Awal"/>
-                            <field name="balance_end_real" string="Saldo Akhir"/>
+                            <field name="balance_start" string="Starting Balance"/>
+                            <field name="balance_end_real" string="Ending Balance"/>
                         </group>
                     </group>
                     <notebook>
-                        <page string="Daftar Transaksi (Lines)" name="lines">
-                            <field name="line_ids">
-                                <list string="Transaksi" editable="bottom">
-                                    <field name="date" string="Tanggal"/>
-                                    <field name="payment_ref" string="Keterangan / Label"/>
+                        <page string="Transactions" name="lines">
+                            <field name="line_ids" context="{'default_journal_id': journal_id, 'default_date': date}">
+                                <list string="Transactions" editable="bottom">
+                                    <field name="date" string="Date"/>
+                                    <field name="payment_ref" string="Reference / Label"/>
                                     <field name="partner_id" string="Partner" optional="show"/>
-                                    <field name="amount" string="Jumlah (IDR)"/>
+                                    <field name="amount" string="Amount (IDR)"/>
+                                    <field name="is_reconciled" column_invisible="1"/>
+                                    <button name="action_open_reconcile_wizard" string="Reconcile" type="object" icon="fa-share-square-o" invisible="is_reconciled"/>
                                 </list>
                             </field>
                         </page>
@@ -229,17 +224,18 @@ if records:
             </form>
         </field>
     </record>
-    <!-- ===== TRANSLATION OVERRIDE: Ubah Bahasa Halaman Mutasi Bank Bawaan Odoo ke Bahasa Indonesia ===== -->
+
+    <!-- ===== TRANSLATION OVERRIDE: Help Text translation ===== -->
     <record id="account.action_bank_statement_tree" model="ir.actions.act_window">
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Daftarkan rekening koran bank Anda
+                Register your bank statements
             </p>
             <p>
-                Rekening koran adalah ringkasan dari semua transaksi keuangan yang terjadi selama periode waktu tertentu pada rekening bank Anda. Anda harus menerima dokumen ini secara berkala dari bank Anda.
+                A bank statement is a summary of all financial transactions occurring over a given period of time on your bank account.
             </p>
             <p>
-                Odoo memungkinkan Anda untuk merekonsiliasikan baris mutasi secara langsung dengan faktur penjualan atau tagihan pembelian yang terkait.
+                Odoo allows you to reconcile statement lines directly with customer invoices or vendor bills.
             </p>
         </field>
     </record>

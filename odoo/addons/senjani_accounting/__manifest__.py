@@ -2,18 +2,18 @@
     'name': 'Senjani Accounting',
     'version': '18.0.1.0.0',
     'category': 'Accounting',
-    'summary': 'Modul Akuntansi Terintegrasi untuk Senjani E-Commerce',
+    'summary': 'Integrated Accounting Module for Senjani E-Commerce',
     'description': """
-        Modul akuntansi khusus Senjani yang mengintegrasikan:
-        - Manajemen Invoice dari Xendit Payment (via Sales Order otomatis)
-        - Manajemen Bill dari Purchase Order
-        - Rekonsiliasi manual dengan mutasi bank BRI
-        - Laporan keuangan lengkap (PDF): Ledger, Trial Balance, Balance Sheet, P&L, Tax
-        - Laporan harian: Cash Book, Day Book, Bank Book
+        Custom Senjani accounting module that integrates:
+        - Invoice Management from Xendit Payment (via automatic Sales Orders)
+        - Bill Management from Purchase Orders
+        - Manual reconciliation with Bank Statements
+        - Complete financial reports (PDF): Ledger, Trial Balance, Balance Sheet, P&L, Tax
+        - Daily reports: Cash Book, Day Book, Bank Book
         - Fiscal Year & Lock Date
-        - UI bersih — hanya fitur yang relevan yang ditampilkan
+        - Clean UI — only relevant features displayed
     """,
-    'author': 'Tim Senjani',
+    'author': 'Senjani Team',
     'license': 'LGPL-3',
     'depends': [
         # Accounting base
@@ -45,6 +45,7 @@
         'views/purchase_bill_view.xml',
         'views/dashboard.xml',
         'views/menu.xml',
+        'wizard/bank_reconcile_wizard_view.xml',
     ],
     'application': True,
     'installable': True,

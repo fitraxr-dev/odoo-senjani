@@ -3,24 +3,24 @@ from odoo import models, fields, api
 
 class AccountMove(models.Model):
     """
-    Ekstensi account.move untuk integrasi Xendit Payment.
+    Extension of account.move for Xendit Payment integration.
 
-    Menyimpan referensi pembayaran Xendit pada invoice customer
-    yang terbuat otomatis dari Sales Order via webhook Xendit.
+    Saves Xendit payment references on customer invoices
+    generated automatically from Sales Orders via Xendit webhooks.
     """
     _inherit = 'account.move'
 
-    # Referensi pembayaran dari Xendit (diisi otomatis via webhook SO)
+    # Payment reference from Xendit (auto-filled via SO webhook)
     x_xendit_payment_ref = fields.Char(
         string='Xendit Payment Reference',
         readonly=True,
         copy=False,
-        help='ID pembayaran dari Xendit yang terhubung dengan invoice ini. '
-             'Diisi otomatis saat Sales Order terbuat via webhook Xendit.',
+        help='Payment ID from Xendit linked with this invoice. '
+             'Auto-filled when the Sales Order is created via Xendit webhook.',
         tracking=True,
     )
 
-    # Status pembayaran di sisi Xendit
+    # Payment status on Xendit side
     x_xendit_payment_status = fields.Selection(
         selection=[
             ('pending', 'Pending'),
@@ -32,21 +32,21 @@ class AccountMove(models.Model):
         string='Xendit Payment Status',
         readonly=True,
         copy=False,
-        help='Status pembayaran di sistem Xendit.',
+        help='Payment status in the Xendit system.',
         tracking=True,
     )
 
-    # Metode pembayaran Xendit (transfer, QRIS, VA, dll)
+    # Xendit payment method (transfer, QRIS, VA, etc)
     x_xendit_payment_method = fields.Char(
-        string='Metode Bayar (Xendit)',
+        string='Payment Method (Xendit)',
         readonly=True,
         copy=False,
-        help='Contoh: BANK_TRANSFER, QRIS, VIRTUAL_ACCOUNT_BNI, dll.',
+        help='Example: BANK_TRANSFER, QRIS, VIRTUAL_ACCOUNT_BNI, etc.',
     )
 
     @api.depends('x_xendit_payment_ref', 'move_type')
     def _compute_display_xendit_info(self):
-        """Apakah perlu tampilkan info Xendit di form."""
+        """Check if Xendit info should be shown on form."""
         for move in self:
             move.x_show_xendit_info = bool(
                 move.x_xendit_payment_ref and move.move_type == 'out_invoice'
@@ -54,13 +54,13 @@ class AccountMove(models.Model):
 
     x_show_xendit_info = fields.Boolean(
         compute='_compute_display_xendit_info',
-        string='Tampilkan Info Xendit',
+        string='Show Xendit Info',
     )
 
     def action_senjani_confirm_invoice(self):
         """
-        Aksi batch: konfirmasi invoice dari status Draft ke Posted.
-        Digunakan dari list view untuk efisiensi kerja tim accounting.
+        Batch action: confirm invoice from Draft to Posted.
+        Used in list views to improve accounting team efficiency.
         """
         draft_invoices = self.filtered(
             lambda m: m.state == 'draft' and m.move_type in ('out_invoice', 'out_refund')
@@ -71,8 +71,8 @@ class AccountMove(models.Model):
 
     def action_senjani_confirm_bill(self):
         """
-        Aksi batch: konfirmasi vendor bill dari status Draft ke Posted.
-        Digunakan dari list view untuk efisiensi kerja tim accounting.
+        Batch action: confirm vendor bill from Draft to Posted.
+        Used in list views to improve accounting team efficiency.
         """
         draft_bills = self.filtered(
             lambda m: m.state == 'draft' and m.move_type in ('in_invoice', 'in_refund')
@@ -83,7 +83,7 @@ class AccountMove(models.Model):
 
     def action_post(self):
         """
-        Override action_post untuk otomatis mencocokkan pembayaran Xendit.
+        Override action_post to automatically match Xendit payments.
         """
         res = super(AccountMove, self).action_post()
         self._auto_link_xendit_payment()
@@ -91,19 +91,19 @@ class AccountMove(models.Model):
 
     def _auto_link_xendit_payment(self):
         """
-        Fungsi kustom untuk otomatis mencari outstanding payment di Jurnal Xendit
-        berdasarkan referensi Sales Order (invoice_origin) dan merekonsiliasikannya.
+        Custom helper to find outstanding payments in the Xendit Journal
+        matching the Sales Order reference (invoice_origin) and reconcile them.
         """
         for invoice in self:
             if invoice.move_type != 'out_invoice' or invoice.state != 'posted' or invoice.payment_state not in ('not_paid', 'partial'):
                 continue
 
-            # Cari referensi Sales Order (misal: S00050)
+            # Find Sales Order reference (e.g. S00050)
             origin = invoice.invoice_origin or invoice.ref
             if not origin:
                 continue
 
-            # Cari baris piutang (receivable) yang belum direkonsiliasi di Jurnal Xendit (XNDT)
+            # Find outstanding receivable lines in Xendit Journal (XNDT)
             receivable_lines = self.env['account.move.line'].search([
                 ('partner_id', '=', invoice.partner_id.id),
                 ('account_id.account_type', '=', 'asset_receivable'),
@@ -115,12 +115,12 @@ class AccountMove(models.Model):
             ])
 
             if receivable_lines:
-                # Ambil line piutang dari invoice ini sendiri
+                # Find receivable line on this invoice
                 invoice_receivable_line = invoice.line_ids.filtered(
                     lambda l: l.account_id.account_type == 'asset_receivable' and not l.reconciled
                 )
                 if invoice_receivable_line:
-                    # Lakukan rekonsiliasi otomatis
+                    # Perform automatic reconciliation
                     (invoice_receivable_line + receivable_lines[0]).reconcile()
 
 
@@ -148,8 +148,7 @@ class AccountJournal(models.Model):
 
     def open_action(self):
         """
-        Override open_action agar klik pada kartu dashboard (Faktur Penjualan / Faktur Pembelian)
-        langsung membuka aksi kustom kita dengan filter kustom dan Bahasa Indonesia.
+        Override open_action so clicking on the dashboard cards opens our custom actions with custom filters.
         """
         self.ensure_one()
         action_name = self.env.context.get('action_name', False)
@@ -169,12 +168,71 @@ class AccountJournal(models.Model):
             ctx = dict(self.env.context, default_journal_id=self.id)
             action['context'] = ctx
             return action
+        elif self.type == 'bank':
+            action = self.env["ir.actions.act_window"]._for_xml_id('senjani_accounting.action_senjani_bank_statement_bri')
+            ctx = dict(self.env.context, default_journal_id=self.id)
+            action['context'] = ctx
+            return action
+
         return super(AccountJournal, self).open_action()
 
     def open_customer_payments_action(self):
         """
-        Membuka daftar pembayaran pelanggan (inbound payments) khusus untuk jurnal ini.
+        Open the customer payments list (inbound payments) for this journal.
         """
         self.ensure_one()
         return self.open_payments_action(payment_type='inbound')
 
+
+class AccountBankStatement(models.Model):
+    _inherit = 'account.bank.statement'
+
+    # Override journal_id to be writable so users can select it in the form view
+    journal_id = fields.Many2one(
+        'account.journal',
+        string='Journal',
+        compute='_compute_journal_id',
+        inverse='_inverse_journal_id',
+        store=True,
+        readonly=False,
+    )
+
+    # Override date to be writable so users can set it in the form view
+    date = fields.Date(
+        string='Date',
+        compute='_compute_date_index',
+        inverse='_inverse_date_index',
+        store=True,
+        readonly=False,
+    )
+
+    def _inverse_journal_id(self):
+        for stmt in self:
+            if stmt.journal_id:
+                for line in stmt.line_ids:
+                    if not line.journal_id or line.journal_id != stmt.journal_id:
+                        line.journal_id = stmt.journal_id
+
+    def _inverse_date_index(self):
+        for stmt in self:
+            if stmt.date:
+                for line in stmt.line_ids:
+                    if not line.date or line.date != stmt.date:
+                        line.date = stmt.date
+
+
+class AccountBankStatementLine(models.Model):
+    _inherit = 'account.bank.statement.line'
+
+    def action_open_reconcile_wizard(self):
+        self.ensure_one()
+        return {
+            'name': 'Bank Mutation Reconciliation',
+            'type': 'ir.actions.act_window',
+            'res_model': 'senjani.bank.reconcile.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_statement_line_id': self.id,
+            }
+        }

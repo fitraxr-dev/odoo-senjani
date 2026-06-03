@@ -2,13 +2,10 @@
 <odoo>
 
     <!-- ================================================================
-         INVOICE CUSTOMER — Custom Views untuk Tim Accounting Senjani
-         ================================================================
-         Alur: Xendit bayar → SO otomatis → Sales buat Draft Invoice
-               → Accounting lihat Draft → Confirm → Reconcile BRI → Paid
+         CUSTOMER INVOICES — Custom Views for the Accounting Team
          ================================================================ -->
 
-    <!-- ===== BASE VIEWS INHERITANCE: Batasi Pembuatan Invoice/Bill Secara Global ===== -->
+    <!-- ===== BASE VIEWS INHERITANCE: Disable Create Globally ===== -->
     <record id="view_invoice_tree_inherit_senjani" model="ir.ui.view">
         <field name="name">account.invoice.list.inherit.senjani</field>
         <field name="model">account.move</field>
@@ -42,42 +39,41 @@
         </field>
     </record>
 
-    <!-- ===== FORM VIEW: Invoice dengan info Xendit ===== -->
+    <!-- ===== FORM VIEW: Invoice with Xendit Info ===== -->
     <record id="view_senjani_invoice_form" model="ir.ui.view">
         <field name="name">senjani.account.move.invoice.form</field>
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
-            <!-- Batasi agar tidak bisa membuat invoice baru dari form ini -->
+            <!-- Disable direct creation from form view -->
             <xpath expr="//form" position="attributes">
                 <attribute name="create">0</attribute>
             </xpath>
-            <!-- Tambahkan section info Xendit di bawah tanggal invoice -->
+            <!-- Add Xendit info section -->
             <xpath expr="//sheet//group[1]" position="before">
-                <group string="🔔 Informasi Pembayaran Xendit"
+                <group string="🔔 Xendit Payment Information"
                        invisible="not x_show_xendit_info"
                        col="2"
                        class="o_group_senjani_xendit">
                     <field name="x_xendit_payment_ref"
-                           string="Referensi Xendit"
+                           string="Xendit Reference"
                            readonly="1"/>
                     <field name="x_xendit_payment_status"
-                           string="Status Xendit"
+                           string="Xendit Status"
                            readonly="1"/>
                     <field name="x_xendit_payment_method"
-                           string="Metode Bayar"
+                           string="Payment Method"
                            readonly="1"/>
-                    <!-- Field invisible hanya untuk trigger visibility -->
                     <field name="x_show_xendit_info" invisible="1"/>
                 </group>
             </xpath>
-            <!-- Ubah visibilitas button Confirm (action_post) asli agar tidak tampil di Customer Invoice -->
+            <!-- Hide default post button on Customer Invoices -->
             <xpath expr="//button[@name='action_post' and contains(@invisible, 'move_type ==')]" position="attributes">
                 <attribute name="invisible">hide_post_button or move_type == 'entry' or display_inactive_currency_warning or move_type == 'out_invoice'</attribute>
             </xpath>
-            <!-- Tambahkan button 'Validasi ke In Payment' khusus untuk Customer Invoice -->
+            <!-- Add specialized Validate to In Payment button -->
             <xpath expr="//button[@name='action_post' and contains(@invisible, 'move_type ==')]" position="after">
-                <button name="action_post" string="Validasi ke In Payment" class="oe_highlight"
+                <button name="action_post" string="Validate to In Payment" class="oe_highlight"
                         type="object" groups="account.group_account_invoice" data-hotkey="q"
                         context="{'validate_analytic': True, 'disable_abnormal_invoice_detection': False}"
                         invisible="hide_post_button or move_type != 'out_invoice' or display_inactive_currency_warning"/>
@@ -85,108 +81,107 @@
         </field>
     </record>
 
+    <!-- ===== LIST VIEW: Customer Invoices ===== -->
     <record id="view_senjani_invoice_list" model="ir.ui.view">
         <field name="name">senjani.account.move.invoice.list</field>
         <field name="model">account.move</field>
         <field name="arch" type="xml">
-            <list string="Faktur Penjualan (Customer Invoice)"
+            <list string="Customer Invoices"
                   create="0"
                   decoration-info="state == 'draft'"
                   decoration-success="payment_state == 'paid'"
                   decoration-warning="payment_state in ('partial','not_paid') and state == 'posted'"
                   decoration-muted="state == 'cancel'"
                   multi_edit="1">
-                <field name="name" string="No. Faktur" optional="show"/>
-                <field name="invoice_date" string="Tgl Faktur" optional="show"/>
-                <field name="invoice_date_due" string="Jatuh Tempo" optional="show"/>
-                <field name="partner_id" string="Pelanggan" optional="show"/>
-                <field name="x_xendit_payment_ref" string="Ref. Xendit" optional="show"/>
-                <field name="x_xendit_payment_method" string="Metode Bayar" optional="hide"/>
-                <field name="amount_untaxed" string="Subtotal" optional="show"/>
-                <field name="amount_tax" string="Pajak" optional="hide"/>
+                <field name="name" string="Invoice Number" optional="show"/>
+                <field name="invoice_date" string="Invoice Date" optional="show"/>
+                <field name="invoice_date_due" string="Due Date" optional="show"/>
+                <field name="partner_id" string="Customer" optional="show"/>
+                <field name="x_xendit_payment_ref" string="Xendit Reference" optional="show"/>
+                <field name="x_xendit_payment_method" string="Payment Method" optional="hide"/>
+                <field name="amount_untaxed" string="Untaxed Amount" optional="show"/>
+                <field name="amount_tax" string="Tax" optional="hide"/>
                 <field name="amount_total" string="Total" optional="show"/>
-                <field name="amount_residual" string="Sisa Tagihan" optional="show"/>
-                <field name="currency_id" string="Mata Uang" optional="hide"/>
+                <field name="amount_residual" string="Amount Due" optional="show"/>
+                <field name="currency_id" string="Currency" optional="hide"/>
                 <field name="state" string="Status"
                        widget="badge"
                        decoration-info="state == 'draft'"
                        decoration-success="state == 'posted'"
                        decoration-danger="state == 'cancel'"/>
-                <field name="payment_state" string="Status Bayar"
+                <field name="payment_state" string="Payment Status"
                        widget="badge"
                        decoration-success="payment_state == 'paid'"
                        decoration-warning="payment_state == 'partial'"
                        decoration-danger="payment_state == 'not_paid'"
                        optional="show"/>
-                <!-- Field tersembunyi untuk filter -->
                 <field name="move_type" column_invisible="1"/>
                 <field name="x_show_xendit_info" column_invisible="1"/>
             </list>
         </field>
     </record>
 
-    <!-- ===== SEARCH VIEW: Invoice untuk Accounting ===== -->
+    <!-- ===== SEARCH VIEW: Customer Invoices ===== -->
     <record id="view_senjani_invoice_search" model="ir.ui.view">
         <field name="name">senjani.account.move.invoice.search</field>
         <field name="model">account.move</field>
         <field name="arch" type="xml">
-            <search string="Cari Faktur Penjualan">
-                <field name="name" string="No. Faktur"/>
-                <field name="partner_id" string="Pelanggan"/>
-                <field name="x_xendit_payment_ref" string="Referensi Xendit"/>
-                <field name="invoice_date" string="Tanggal"/>
+            <search string="Search Customer Invoices">
+                <field name="name" string="Invoice Number"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="x_xendit_payment_ref" string="Xendit Reference"/>
+                <field name="invoice_date" string="Date"/>
 
-                <!-- Filter cepat berdasarkan status -->
+                <!-- Filters -->
                 <filter name="filter_draft"
-                        string="🕐 Draft (Belum Dikonfirmasi)"
+                        string="🕐 Draft"
                         domain="[('state', '=', 'draft')]"/>
                 <filter name="filter_posted"
-                        string="✅ Terkonfirmasi (Belum Lunas)"
+                        string="✅ Posted (Unpaid)"
                         domain="[('state', '=', 'posted'), ('payment_state', 'in', ('not_paid', 'partial'))]"/>
                 <filter name="filter_paid"
-                        string="💰 Lunas"
+                        string="💰 Paid"
                         domain="[('payment_state', '=', 'paid')]"/>
                 <filter name="filter_has_xendit"
-                        string="💳 Ada Referensi Xendit"
+                        string="💳 Has Xendit Reference"
                         domain="[('x_xendit_payment_ref', '!=', False)]"/>
 
                 <separator/>
 
-                <!-- Filter periode -->
                 <filter name="filter_this_month"
-                        string="📅 Bulan Ini"
+                        string="📅 This Month"
                         domain="[]"
                         context="{'group_by': 'invoice_date:month'}"/>
                 <filter name="filter_this_year"
-                        string="📅 Tahun Ini"
+                        string="📅 This Year"
                         domain="[]"
                         context="{'group_by': 'invoice_date:year'}"/>
                 <filter name="filter_overdue"
-                        string="⚠️ Jatuh Tempo"
+                        string="⚠️ Overdue"
                         domain="[('invoice_date_due', '!=', False), ('payment_state', 'not in', ['paid', 'in_payment']), ('state', '=', 'posted')]"/>
 
                 <separator/>
 
                 <!-- Group by -->
-                <group string="Kelompokkan">
+                <group string="Group By">
                     <filter name="groupby_state" string="Status"
                             context="{'group_by': 'state'}"/>
-                    <filter name="groupby_payment_state" string="Status Bayar"
+                    <filter name="groupby_payment_state" string="Payment Status"
                             context="{'group_by': 'payment_state'}"/>
-                    <filter name="groupby_partner" string="Pelanggan"
+                    <filter name="groupby_partner" string="Customer"
                             context="{'group_by': 'partner_id'}"/>
-                    <filter name="groupby_date" string="Tanggal"
+                    <filter name="groupby_date" string="Date"
                             context="{'group_by': 'invoice_date:month'}"/>
-                    <filter name="groupby_xendit_method" string="Metode Bayar Xendit"
+                    <filter name="groupby_xendit_method" string="Xendit Payment Method"
                             context="{'group_by': 'x_xendit_payment_method'}"/>
                 </group>
             </search>
         </field>
     </record>
 
-    <!-- ===== ACTION: Daftar Invoice untuk Accounting ===== -->
+    <!-- ===== ACTION: Customer Invoices ===== -->
     <record id="action_senjani_customer_invoices" model="ir.actions.act_window">
-        <field name="name">Faktur Penjualan (Invoice)</field>
+        <field name="name">Customer Invoices</field>
         <field name="res_model">account.move</field>
         <field name="view_mode">list,form</field>
         <field name="view_ids" eval="[(5, 0, 0),
@@ -200,19 +195,18 @@
         }</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Belum ada Faktur Penjualan
+                No Customer Invoices yet
             </p>
             <p>
-                Faktur Penjualan akan terbuat secara otomatis dari Sales Order
-                yang dibayar via Xendit. Tim Sales kemudian membuat draft invoice
-                dari SO tersebut untuk dikonfirmasi di sini.
+                Invoices are automatically created as Draft from Sales Orders
+                paid via Xendit. The sales team prepares draft invoices, which are validated here.
             </p>
         </field>
     </record>
 
-    <!-- ===== ACTION: Nota Kredit / Retur Penjualan ===== -->
+    <!-- ===== ACTION: Credit Notes ===== -->
     <record id="action_senjani_customer_refunds" model="ir.actions.act_window">
-        <field name="name">Nota Kredit (Retur)</field>
+        <field name="name">Credit Notes</field>
         <field name="res_model">account.move</field>
         <field name="view_mode">list,form</field>
         <field name="view_ids" eval="[(5, 0, 0),
@@ -225,18 +219,17 @@
         }</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Belum ada Nota Kredit
+                No Credit Notes yet
             </p>
             <p>
-                Nota Kredit (Credit Note) digunakan untuk membatalkan faktur penjualan
-                yang salah atau mencatat retur produk dan pengembalian uang (refund) pelanggan.
+                Credit Notes are used to cancel or refund invoices for customers.
             </p>
         </field>
     </record>
 
     <!-- ===== ACTION: Batch Confirm Invoice ===== -->
     <record id="action_senjani_batch_confirm_invoice" model="ir.actions.server">
-        <field name="name">Konfirmasi Invoice Terpilih</field>
+        <field name="name">Confirm Selected Invoices</field>
         <field name="model_id" ref="account.model_account_move"/>
         <field name="binding_model_id" ref="account.model_account_move"/>
         <field name="binding_view_types">list</field>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ===== FORM VIEW: Bank Reconcile Wizard ===== -->
+    <record id="view_senjani_bank_reconcile_wizard_form" model="ir.ui.view">
+        <field name="name">senjani.bank.reconcile.wizard.form</field>
+        <field name="model">senjani.bank.reconcile.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Bank Mutation Reconciliation">
+                <group string="Mutation Transaction Details">
+                    <group>
+                        <field name="statement_line_id" invisible="1"/>
+                        <field name="date" string="Mutation Date"/>
+                        <field name="payment_ref" string="Reference / Label"/>
+                    </group>
+                    <group>
+                        <field name="partner_id" string="Partner / Customer"/>
+                        <field name="amount" string="Transaction Amount"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                </group>
+                
+                <group string="Matching Type">
+                    <field name="reconcile_type" widget="radio" nolabel="1"/>
+                </group>
+                
+                <group string="Matching Document">
+                    <!-- Show payment field if type is 'payment' -->
+                    <field name="payment_id" 
+                           string="Payment Document"
+                           invisible="reconcile_type != 'payment'" 
+                           required="reconcile_type == 'payment'"
+                           options="{'no_create': True, 'no_open': True}"/>
+                           
+                    <!-- Show invoice field if type is 'invoice' -->
+                    <field name="invoice_id" 
+                           string="Invoice / Bill"
+                           invisible="reconcile_type != 'invoice'" 
+                           required="reconcile_type == 'invoice'"
+                           options="{'no_create': True, 'no_open': True}"/>
+                </group>
+                
+                <footer>
+                    <button name="action_reconcile" string="Match &amp; Reconcile" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -2,33 +2,36 @@
 <odoo>
 
     <!-- ================================================================
-         MENU UTAMA — Senjani Accounting
+         MAIN MENU — Senjani Accounting
          ================================================================
-         Struktur menu yang bersih dan fokus untuk tim accounting.
+         Clean and focused menu structure for the Senjani accounting team.
 
-         📊 Akuntansi Senjani (root)
+         📊 Accounting (root)
          ├── 🏠 Dashboard
-         ├── 📋 Invoice & Tagihan
-         │   ├── Invoice Customer
-         │   ├── Tagihan Pembelian (Bill)
-         │   └── Mutasi Bank BRI
-         ├── 🔄 Rekonsiliasi Bank
-         ├── 📚 Jurnal
-         │   ├── Jurnal Penjualan
-         │   ├── Jurnal Pembelian
-         │   ├── Jurnal Bank & Kas
-         │   └── Jurnal Lainnya
-         └── 📈 Laporan
-             ├── Laporan Keuangan
+         ├── 📋 Invoices & Bills
+         │   ├── Customer Invoices
+         │   ├── Credit Notes
+         │   ├── Customer Payments
+         │   ├── Vendor Bills
+         │   ├── Refunds
+         │   ├── Vendor Payments
+         │   └── Bank Statements
+         ├── 📚 Journals
+         │   ├── Sales Journal
+         │   ├── Purchase Journal
+         │   ├── Bank & Cash Journal
+         │   └── Miscellaneous Journal
+         └── 📈 Reporting
+             ├── Financial Reports
              │   ├── Trial Balance
              │   ├── Balance Sheet
-             │   ├── Profit & Loss
+             │   ├── Profit and Loss
              │   └── Tax Report
-             ├── Buku Besar (Ledger)
+             ├── Ledgers
              │   ├── General Ledger
              │   ├── Partner Ledger
-             │   └── Aged Partner
-             └── Laporan Harian
+             │   └── Aged Partner Balance
+             └── Daily Reports
                  ├── Day Book
                  ├── Cash Book
                  └── Bank Book
@@ -37,7 +40,7 @@
     <!-- ===== ROOT MENU ===== -->
     <menuitem
         id="menu_senjani_accounting_root"
-        name="Akuntansi"
+        name="Accounting"
         sequence="30"
         web_icon="senjani_accounting,static/description/icon.png"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
@@ -51,17 +54,17 @@
         sequence="1"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
-    <!-- ===== INVOICE & TAGIHAN ===== -->
+    <!-- ===== INVOICES & BILLS ===== -->
     <menuitem
         id="menu_senjani_invoicing"
-        name="Invoice dan Tagihan"
+        name="Invoices &amp; Bills"
         parent="menu_senjani_accounting_root"
         sequence="10"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
     <menuitem
         id="menu_senjani_customer_invoices"
-        name="Faktur Penjualan (Invoice)"
+        name="Customer Invoices"
         parent="menu_senjani_invoicing"
         action="senjani_accounting.action_senjani_customer_invoices"
         sequence="1"
@@ -69,56 +72,63 @@
 
     <menuitem
         id="menu_senjani_customer_refunds"
-        name="Nota Kredit (Retur)"
+        name="Credit Notes"
         parent="menu_senjani_invoicing"
         action="senjani_accounting.action_senjani_customer_refunds"
         sequence="2"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
     <menuitem
-        id="menu_senjani_vendor_bills"
-        name="Faktur Pembelian (Bill)"
+        id="menu_senjani_customer_payments"
+        name="Customer Payments"
         parent="menu_senjani_invoicing"
-        action="senjani_accounting.action_senjani_vendor_bills"
+        action="account.action_account_payments"
         sequence="3"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
     <menuitem
-        id="menu_senjani_vendor_refunds"
-        name="Nota Debit (Retur)"
+        id="menu_senjani_vendor_bills"
+        name="Vendor Bills"
         parent="menu_senjani_invoicing"
-        action="senjani_accounting.action_senjani_vendor_refunds"
+        action="senjani_accounting.action_senjani_vendor_bills"
         sequence="4"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
     <menuitem
-        id="menu_senjani_bank_statement"
-        name="Mutasi Bank"
+        id="menu_senjani_vendor_refunds"
+        name="Refunds"
         parent="menu_senjani_invoicing"
-        action="senjani_accounting.action_senjani_bank_statement_bri"
+        action="senjani_accounting.action_senjani_vendor_refunds"
         sequence="5"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
-    <!-- ===== REKONSILIASI ===== -->
     <menuitem
-        id="menu_senjani_reconciliation"
-        name="Rekonsiliasi Bank"
-        parent="menu_senjani_accounting_root"
-        action="senjani_accounting.action_senjani_bank_reconciliation"
-        sequence="20"
+        id="menu_senjani_vendor_payments"
+        name="Vendor Payments"
+        parent="menu_senjani_invoicing"
+        action="account.action_account_payments_payable"
+        sequence="6"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
-    <!-- ===== JURNAL ===== -->
+    <menuitem
+        id="menu_senjani_bank_statement"
+        name="Bank Statements"
+        parent="menu_senjani_invoicing"
+        action="senjani_accounting.action_senjani_bank_statement_bri"
+        sequence="10"
+        groups="senjani_accounting.group_senjani_accounting_staff"/>
+
+    <!-- ===== JOURNALS ===== -->
     <menuitem
         id="menu_senjani_journals"
-        name="Jurnal"
+        name="Journals"
         parent="menu_senjani_accounting_root"
         sequence="30"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
     <menuitem
         id="menu_senjani_journal_sales"
-        name="Jurnal Penjualan"
+        name="Sales Journal"
         parent="menu_senjani_journals"
         action="account.action_account_moves_journal_sales"
         sequence="1"
@@ -126,7 +136,7 @@
 
     <menuitem
         id="menu_senjani_journal_purchase"
-        name="Jurnal Pembelian"
+        name="Purchase Journal"
         parent="menu_senjani_journals"
         action="account.action_account_moves_journal_purchase"
         sequence="2"
@@ -134,7 +144,7 @@
 
     <menuitem
         id="menu_senjani_journal_bank_cash"
-        name="Jurnal Bank &amp; Kas"
+        name="Bank &amp; Cash Journal"
         parent="menu_senjani_journals"
         action="account.action_account_moves_journal_bank_cash"
         sequence="3"
@@ -142,31 +152,31 @@
 
     <menuitem
         id="menu_senjani_journal_misc"
-        name="Jurnal Lainnya"
+        name="Miscellaneous Journal"
         parent="menu_senjani_journals"
         action="account.action_account_moves_journal_misc"
         sequence="4"
         groups="account.group_account_readonly"/>
 
-    <!-- ===== LAPORAN ===== -->
+    <!-- ===== REPORTING ===== -->
     <menuitem
         id="menu_senjani_reports"
-        name="Laporan"
+        name="Reporting"
         parent="menu_senjani_accounting_root"
         sequence="40"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
-    <!-- Sub: Laporan Keuangan -->
+    <!-- Sub: Financial Reports -->
     <menuitem
         id="menu_senjani_financial_reports"
-        name="Laporan Keuangan"
+        name="Financial Reports"
         parent="menu_senjani_reports"
         sequence="1"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
     <menuitem
         id="menu_senjani_trial_balance"
-        name="Neraca Saldo (Trial Balance)"
+        name="Trial Balance"
         parent="menu_senjani_financial_reports"
         action="accounting_pdf_reports.action_account_balance_menu"
         sequence="1"
@@ -174,7 +184,7 @@
 
     <menuitem
         id="menu_senjani_balance_sheet"
-        name="Laporan Posisi Keuangan (Neraca)"
+        name="Balance Sheet"
         parent="menu_senjani_financial_reports"
         action="accounting_pdf_reports.action_account_report_bs"
         sequence="2"
@@ -182,7 +192,7 @@
 
     <menuitem
         id="menu_senjani_profit_loss"
-        name="Laporan Laba Rugi"
+        name="Profit and Loss"
         parent="menu_senjani_financial_reports"
         action="accounting_pdf_reports.action_account_report_pl"
         sequence="3"
@@ -190,23 +200,23 @@
 
     <menuitem
         id="menu_senjani_tax_report"
-        name="Laporan Pajak"
+        name="Tax Report"
         parent="menu_senjani_financial_reports"
         action="accounting_pdf_reports.action_account_tax_report"
         sequence="4"
         groups="account.group_account_readonly"/>
 
-    <!-- Sub: Buku Besar -->
+    <!-- Sub: Ledgers -->
     <menuitem
         id="menu_senjani_ledger"
-        name="Buku Besar"
+        name="Ledgers"
         parent="menu_senjani_reports"
         sequence="2"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
     <menuitem
         id="menu_senjani_general_ledger"
-        name="Buku Besar Umum (General Ledger)"
+        name="General Ledger"
         parent="menu_senjani_ledger"
         action="accounting_pdf_reports.action_account_general_ledger_menu"
         sequence="1"
@@ -214,7 +224,7 @@
 
     <menuitem
         id="menu_senjani_partner_ledger"
-        name="Buku Besar Pembantu Partner"
+        name="Partner Ledger"
         parent="menu_senjani_ledger"
         action="accounting_pdf_reports.action_account_partner_ledger_menu"
         sequence="2"
@@ -222,23 +232,23 @@
 
     <menuitem
         id="menu_senjani_aged_partner"
-        name="Umur Piutang / Utang"
+        name="Aged Partner Balance"
         parent="menu_senjani_ledger"
         action="accounting_pdf_reports.action_account_aged_balance_view"
         sequence="3"
         groups="account.group_account_readonly"/>
 
-    <!-- Sub: Laporan Harian -->
+    <!-- Sub: Daily Reports -->
     <menuitem
         id="menu_senjani_daily_reports"
-        name="Laporan Harian"
+        name="Daily Reports"
         parent="menu_senjani_reports"
         sequence="3"
         groups="senjani_accounting.group_senjani_accounting_staff"/>
 
     <menuitem
         id="menu_senjani_day_book"
-        name="Buku Harian (Day Book)"
+        name="Day Book"
         parent="menu_senjani_daily_reports"
         action="om_account_daily_reports.action_account_daybook_menu"
         sequence="1"
@@ -246,7 +256,7 @@
 
     <menuitem
         id="menu_senjani_cash_book"
-        name="Buku Kas"
+        name="Cash Book"
         parent="menu_senjani_daily_reports"
         action="om_account_daily_reports.action_account_cashbook_menu"
         sequence="2"
@@ -254,23 +264,23 @@
 
     <menuitem
         id="menu_senjani_bank_book"
-        name="Buku Bank"
+        name="Bank Book"
         parent="menu_senjani_daily_reports"
         action="om_account_daily_reports.action_account_bankbook_menu"
         sequence="3"
         groups="account.group_account_readonly"/>
 
-    <!-- ===== KONFIGURASI (hanya Accounting Manager) ===== -->
+    <!-- ===== CONFIGURATION (Only Accounting Manager) ===== -->
     <menuitem
         id="menu_senjani_config"
-        name="Konfigurasi"
+        name="Configuration"
         parent="menu_senjani_accounting_root"
         sequence="100"
         groups="senjani_accounting.group_senjani_accounting_manager"/>
 
     <menuitem
         id="menu_senjani_config_journals"
-        name="Jurnal Akuntansi"
+        name="Journals"
         parent="menu_senjani_config"
         action="account.action_account_journal_form"
         sequence="1"
@@ -278,7 +288,7 @@
 
     <menuitem
         id="menu_senjani_config_fiscal_year"
-        name="Tahun Fiskal"
+        name="Fiscal Years"
         parent="menu_senjani_config"
         action="om_fiscal_year.actions_account_fiscal_year"
         sequence="2"
@@ -286,7 +296,7 @@
 
     <menuitem
         id="menu_senjani_config_lock_date"
-        name="Kunci Tanggal Transaksi"
+        name="Lock Dates"
         parent="menu_senjani_config"
         action="om_fiscal_year.action_view_change_lock_date"
         sequence="3"

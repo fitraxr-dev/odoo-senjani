@@ -8,3 +8,4 @@ access_account_account_senjani_staff,account.account senjani staff,account.model
 access_res_partner_senjani_staff,res.partner senjani staff,base.model_res_partner,senjani_accounting.group_senjani_accounting_staff,1,0,0,0
 access_sale_order_senjani_staff,sale.order senjani staff,sale.model_sale_order,senjani_accounting.group_senjani_accounting_staff,1,0,0,0
 access_purchase_order_senjani_staff,purchase.order senjani staff,purchase.model_purchase_order,senjani_accounting.group_senjani_accounting_staff,1,0,0,0
+access_senjani_bank_reconcile_wizard_staff,senjani.bank.reconcile.wizard staff,model_senjani_bank_reconcile_wizard,group_senjani_accounting_staff,1,1,1,1
