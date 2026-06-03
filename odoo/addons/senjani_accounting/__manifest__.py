@@ -47,6 +47,11 @@
         'views/menu.xml',
         'wizard/bank_reconcile_wizard_view.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'senjani_accounting/static/src/js/journal_dashboard_graph.js',
+        ],
+    },
     'application': True,
     'installable': True,
     'auto_install': False,

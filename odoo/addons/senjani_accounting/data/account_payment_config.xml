@@ -2,20 +2,22 @@
 <odoo>
     <!--
         ================================================================
-        KONFIGURASI DATA AWAL — Senjani Accounting
+        INITIAL CONFIGURATION DATA — Senjani Accounting
         ================================================================
-        File ini menyiapkan konfigurasi default untuk:
-        1. Journal khusus Xendit (agar pembayaran Xendit terpisah dari kas/bank lain)
-        2. Journal Bank BRI (untuk rekonsiliasi mutasi BRI)
+        This file prepares the default configuration for:
+        1. Special Xendit Journal (to keep Xendit transactions separate from other bank accounts)
         ================================================================
-        CATATAN: Record ini hanya dibuat jika belum ada (noupdate="1").
-        Ubah via Settings → Accounting jika perlu penyesuaian.
+        NOTE: This record is only created if it doesn't exist yet (noupdate="1").
         ================================================================
     -->
     <data noupdate="1">
-        <!-- We do not define custom journals here anymore.
-             Instead, we use the default 'Bank' journal created by Odoo by default.
-             This avoids dashboard clutter and duplicate journal cards. -->
+        <!-- Xendit Bank Journal -->
+        <record id="journal_xendit" model="account.journal">
+            <field name="name">Xendit</field>
+            <field name="code">XNDT</field>
+            <field name="type">bank</field>
+            <field name="show_on_dashboard" eval="True"/>
+        </record>
     </data>
 
     <!-- Run function to auto-configure outstanding payment accounts on XNDT and BNK1 journals -->
