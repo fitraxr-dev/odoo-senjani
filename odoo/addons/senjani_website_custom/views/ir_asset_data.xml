@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <asset id="senjani_order_detail_css" name="Senjani Order Detail CSS">
+            <bundle>web.assets_frontend</bundle>
+            <path>senjani_website_custom/static/src/css/order_detail.css</path>
+            <field name="sequence" eval="99"/>
+        </asset>
+    </data>
+</odoo>

@@ -1,0 +1,197 @@
+.senjani-status-card {
+    background: #fff;
+    border: 1px solid var(--senjani-1);
+    border-radius: 16px;
+    padding: 2rem 1.5rem 1.5rem;
+    box-shadow: 0 4px 6px rgba(6, 5, 3, 0.05);
+}
+
+.senjani-progress-bar-wrapper {
+    position: relative;
+    padding: 0 0.5rem;
+}
+
+.senjani-progress-track {
+    position: absolute;
+    top: 22px;
+    left: calc(10% + 22px);
+    right: calc(10% + 22px);
+    height: 4px;
+    background: var(--senjani-1);
+    border-radius: 2px;
+    z-index: 0;
+}
+
+.senjani-progress-fill {
+    height: 100%;
+    background: var(--senjani-4);
+    border-radius: 2px;
+    transition: width 0.5s ease;
+}
+
+.senjani-progress-fill-pending { width: 0%; }
+.senjani-progress-fill-diproses { width: 25%; }
+.senjani-progress-fill-dikirim { width: 50%; }
+.senjani-progress-fill-diterima { width: 75%; }
+.senjani-progress-fill-selesai { width: 100%; }
+
+.senjani-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+}
+
+.senjani-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    text-align: center;
+}
+
+.senjani-step-indicator {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 3px solid var(--senjani-1);
+    color: var(--senjani-1);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    margin-bottom: 0.5rem;
+}
+
+.senjani-step.senjani-step-active .senjani-step-indicator,
+.senjani-step.senjani-step-completed .senjani-step-indicator {
+    background: var(--senjani-4);
+    border-color: var(--senjani-4);
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(255, 186, 100, 0.25);
+}
+
+.senjani-step-indicator-active {
+    transform: scale(1.1);
+}
+
+.senjani-step-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--senjani-5);
+    white-space: nowrap;
+}
+
+.senjani-step.senjani-step-active .senjani-step-label {
+    color: var(--senjani-4);
+    font-weight: 700;
+}
+
+.senjani-tracking-card {
+    background: #fff;
+    border: 1px solid var(--senjani-1);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 4px 6px rgba(6, 5, 3, 0.05);
+}
+
+.senjani-tracking-card h5 {
+    color: var(--senjani-5);
+    font-weight: 700;
+}
+
+.senjani-tracking-card hr {
+    border-color: var(--senjani-1);
+    opacity: 0.6;
+}
+
+.senjani-tracking-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.senjani-tracking-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.senjani-resi-number {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--senjani-5);
+    letter-spacing: 1.5px;
+    background: var(--senjani-2);
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    border: 1px dashed var(--senjani-3);
+    display: inline-block;
+}
+
+.senjani-tracking-actions {
+    flex-shrink: 0;
+}
+
+.senjani-btn-tracking {
+    background-color: var(--senjani-4) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 0.6rem 1.5rem !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    font-size: 0.9rem;
+}
+
+.senjani-btn-tracking:hover {
+    background-color: var(--senjani-5) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(6, 5, 3, 0.15);
+}
+
+@media (max-width: 575.98px) {
+    .senjani-status-card {
+        padding: 1.25rem 0.75rem;
+    }
+
+    .senjani-progress-track {
+        top: 18px;
+        left: calc(10% + 18px);
+        right: calc(10% + 18px);
+    }
+
+    .senjani-step-indicator {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+        border-width: 2px;
+    }
+
+    .senjani-step-label {
+        font-size: 0.65rem;
+    }
+
+    .senjani-tracking-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .senjani-tracking-actions {
+        width: 100%;
+    }
+
+    .senjani-btn-tracking {
+        width: 100%;
+        text-align: center;
+    }
+
+    .senjani-resi-number {
+        font-size: 1rem;
+    }
+}
