@@ -76,7 +76,7 @@
             <xpath expr="//t[@name='empty_journal_helper']/span[@t-if=&quot;journal_type == 'bank'&quot;]" position="replace">
                 <t t-if="journal_type == 'bank'">
                     <span class="text-muted" t-if="record.code.raw_value == 'XNDT'">Kelola dana penampungan hasil transaksi e-commerce (Xendit) sebelum dicairkan ke bank.</span>
-                    <span class="text-muted" t-if="record.code.raw_value != 'XNDT'">Hubungkan rekening bank Anda dan cocokkan transaksi secara otomatis.</span>
+                    <span class="text-muted" t-if="record.code.raw_value != 'XNDT'">Kelola rekening koran Bank, catat mutasi, serta lakukan rekonsiliasi dengan transaksi penjualan dan pembelian.</span>
                 </t>
             </xpath>
 
