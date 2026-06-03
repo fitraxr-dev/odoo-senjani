@@ -170,3 +170,11 @@ class AccountJournal(models.Model):
             action['context'] = ctx
             return action
         return super(AccountJournal, self).open_action()
+
+    def open_customer_payments_action(self):
+        """
+        Membuka daftar pembayaran pelanggan (inbound payments) khusus untuk jurnal ini.
+        """
+        self.ensure_one()
+        return self.open_payments_action(payment_type='inbound')
+

@@ -178,6 +178,70 @@ if records:
                 status invoice akan berubah menjadi Lunas (Paid).
             </p>
         </field>
+    </record>    <!-- ===== VIEW INHERITANCE: Aktifkan Tombol Buat Statement (New) ===== -->
+    <record id="view_bank_statement_tree_inherit_senjani" model="ir.ui.view">
+        <field name="name">account.bank.statement.list.inherit.senjani</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="create">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ===== FORM VIEW: Custom Form untuk Membuat/Mengedit Bank Statement secara Manual ===== -->
+    <record id="view_bank_statement_form_senjani" model="ir.ui.view">
+        <field name="name">account.bank.statement.form.senjani</field>
+        <field name="model">account.bank.statement</field>
+        <field name="arch" type="xml">
+            <form string="Rekening Koran (Bank Statement)">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Nama / Referensi Rekening Koran"/>
+                        <h1>
+                            <field name="name" placeholder="Contoh: Rekening Koran Mei 2026" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="journal_id" string="Jurnal Bank" domain="[('type', '=', 'bank')]" required="1"/>
+                            <field name="date" string="Tanggal" required="1"/>
+                        </group>
+                        <group>
+                            <field name="balance_start" string="Saldo Awal"/>
+                            <field name="balance_end_real" string="Saldo Akhir"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Daftar Transaksi (Lines)" name="lines">
+                            <field name="line_ids">
+                                <list string="Transaksi" editable="bottom">
+                                    <field name="date" string="Tanggal"/>
+                                    <field name="payment_ref" string="Keterangan / Label"/>
+                                    <field name="partner_id" string="Partner" optional="show"/>
+                                    <field name="amount" string="Jumlah (IDR)"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- ===== TRANSLATION OVERRIDE: Ubah Bahasa Halaman Mutasi Bank Bawaan Odoo ke Bahasa Indonesia ===== -->
+    <record id="account.action_bank_statement_tree" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Daftarkan rekening koran bank Anda
+            </p>
+            <p>
+                Rekening koran adalah ringkasan dari semua transaksi keuangan yang terjadi selama periode waktu tertentu pada rekening bank Anda. Anda harus menerima dokumen ini secara berkala dari bank Anda.
+            </p>
+            <p>
+                Odoo memungkinkan Anda untuk merekonsiliasikan baris mutasi secara langsung dengan faktur penjualan atau tagihan pembelian yang terkait.
+            </p>
+        </field>
     </record>
 
 </odoo>
