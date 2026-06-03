@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="senjani_order_styles" name="Senjani Order Detail Styles">
+        <style>
+            .senjani-status-card {
+                background: #fff;
+                border: 1px solid var(--senjani-1, #FFEACF);
+                border-radius: 16px;
+                padding: 2rem 1.5rem 1.5rem;
+                box-shadow: 0 4px 6px rgba(6, 5, 3, 0.05);
+            }
+            .senjani-progress-bar-wrapper {
+                position: relative;
+                padding: 0 0.5rem;
+            }
+            .senjani-progress-track {
+                position: absolute;
+                top: 22px;
+                left: calc(10% + 22px);
+                right: calc(10% + 22px);
+                height: 4px;
+                background: var(--senjani-1, #FFEACF);
+                border-radius: 2px;
+                z-index: 0;
+            }
+            .senjani-progress-fill {
+                height: 100%;
+                background: var(--senjani-4, #FFBA64);
+                border-radius: 2px;
+                transition: width 0.5s ease;
+            }
+            .senjani-progress-fill-pending { width: 0%; }
+            .senjani-progress-fill-diproses { width: 25%; }
+            .senjani-progress-fill-dikirim { width: 50%; }
+            .senjani-progress-fill-diterima { width: 75%; }
+            .senjani-progress-fill-selesai { width: 100%; }
+            .senjani-steps {
+                display: flex;
+                justify-content: space-between;
+                position: relative;
+                z-index: 1;
+            }
+            .senjani-step {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                flex: 1;
+                text-align: center;
+            }
+            .senjani-step-indicator {
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #fff;
+                border: 3px solid var(--senjani-1, #FFEACF);
+                color: var(--senjani-1, #FFEACF);
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+                margin-bottom: 0.5rem;
+            }
+            .senjani-step.senjani-step-active .senjani-step-indicator,
+            .senjani-step.senjani-step-completed .senjani-step-indicator {
+                background: var(--senjani-4, #FFBA64);
+                border-color: var(--senjani-4, #FFBA64);
+                color: #fff;
+                box-shadow: 0 0 0 4px rgba(255, 186, 100, 0.25);
+            }
+            .senjani-step-indicator-active {
+                transform: scale(1.1);
+            }
+            .senjani-step-label {
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: var(--senjani-5, #060503);
+                white-space: nowrap;
+            }
+            .senjani-step.senjani-step-active .senjani-step-label {
+                color: var(--senjani-4, #FFBA64);
+                font-weight: 700;
+            }
+            .senjani-tracking-card {
+                background: #fff;
+                border: 1px solid var(--senjani-1, #FFEACF);
+                border-radius: 16px;
+                padding: 1.25rem 1.5rem;
+                box-shadow: 0 4px 6px rgba(6, 5, 3, 0.05);
+            }
+            .senjani-tracking-card h5 {
+                color: var(--senjani-5, #060503);
+                font-weight: 700;
+            }
+            .senjani-tracking-card hr {
+                border-color: var(--senjani-1, #FFEACF);
+                opacity: 0.6;
+            }
+            .senjani-tracking-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .senjani-tracking-label {
+                display: flex;
+                flex-direction: column;
+                gap: 0.15rem;
+            }
+            .senjani-resi-number {
+                font-size: 1.25rem;
+                font-weight: 800;
+                color: var(--senjani-5, #060503);
+                letter-spacing: 1.5px;
+                background: var(--senjani-2, #FFF8F0);
+                padding: 0.35rem 0.75rem;
+                border-radius: 8px;
+                border: 1px dashed var(--senjani-3, #FFCA86);
+                display: inline-block;
+            }
+            .senjani-tracking-actions {
+                flex-shrink: 0;
+            }
+            .senjani-btn-tracking {
+                background-color: var(--senjani-4, #FFBA64) !important;
+                color: #fff !important;
+                font-weight: 700 !important;
+                border: none !important;
+                border-radius: 10px !important;
+                padding: 0.6rem 1.5rem !important;
+                transition: all 0.3s ease !important;
+                text-decoration: none !important;
+                font-size: 0.9rem;
+            }
+            .senjani-btn-tracking:hover {
+                background-color: var(--senjani-5, #060503) !important;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(6, 5, 3, 0.15);
+            }
+            @media (max-width: 575.98px) {
+                .senjani-status-card { padding: 1.25rem 0.75rem; }
+                .senjani-progress-track { top: 18px; left: calc(10% + 18px); right: calc(10% + 18px); }
+                .senjani-step-indicator { width: 36px; height: 36px; font-size: 0.9rem; border-width: 2px; }
+                .senjani-step-label { font-size: 0.65rem; }
+                .senjani-tracking-item { flex-direction: column; align-items: flex-start; }
+                .senjani-tracking-actions { width: 100%; }
+                .senjani-btn-tracking { width: 100%; text-align: center; }
+                .senjani-resi-number { font-size: 1rem; }
+            }
+        </style>
+    </template>
+
+    <template id="senjani_order_progress_bar" name="Senjani Order Progress Bar">
+        <t t-call="senjani_website_custom.senjani_order_styles"/>
+        <t t-if="sale_order.state in ('sale', 'done') and sale_order.senjani_order_status">
+            <div class="senjani-status-card mb-4">
+                <div class="senjani-progress-bar-wrapper">
+                    <div class="senjani-progress-track">
+                        <div t-attf-class="senjani-progress-fill senjani-progress-fill-#{sale_order.senjani_order_status}"/>
+                    </div>
+                    <div class="senjani-steps">
+                        <t t-set="status_list" t-value="[
+                            ('pending', 'Pending'),
+                            ('diproses', 'Diproses'),
+                            ('dikirim', 'Dikirim'),
+                            ('diterima', 'Diterima'),
+                            ('selesai', 'Selesai'),
+                        ]"/>
+                        <t t-set="current_idx" t-value="{
+                            'pending': 0, 'diproses': 1, 'dikirim': 2, 'diterima': 3, 'selesai': 4
+                        }.get(sale_order.senjani_order_status, 0)"/>
+                        <t t-foreach="status_list" t-as="st">
+                            <div t-attf-class="senjani-step #{st[0] == sale_order.senjani_order_status and 'senjani-step-active' or ''} #{st[0] == 'selesai' and sale_order.senjani_order_status == 'selesai' and 'senjani-step-completed' or ''}">
+                                <div t-attf-class="senjani-step-indicator #{st[0] == sale_order.senjani_order_status and 'senjani-step-indicator-active' or ''}">
+                                    <t t-if="st[0] == 'pending'"><i class="fa fa-file-o"/></t>
+                                    <t t-elif="st[0] == 'diproses'"><i class="fa fa-cog"/></t>
+                                    <t t-elif="st[0] == 'dikirim'"><i class="fa fa-truck"/></t>
+                                    <t t-elif="st[0] == 'diterima'"><i class="fa fa-handshake-o"/></t>
+                                    <t t-elif="st[0] == 'selesai'"><i class="fa fa-check-circle"/></t>
+                                </div>
+                                <span t-esc="st[1]" class="senjani-step-label"/>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="senjani_order_tracking_info" name="Senjani Order Tracking Info">
+        <t t-call="senjani_website_custom.senjani_order_styles"/>
+        <t t-set="pickings_with_tracking" t-value="sale_order.picking_ids.filtered(
+            lambda p: p.picking_type_id.code == 'outgoing' and p.carrier_tracking_ref
+        ).sorted('date', reverse=True)"/>
+        <t t-if="pickings_with_tracking">
+            <div class="senjani-tracking-card mb-4">
+                <h5 class="mb-1">Informasi Pengiriman</h5>
+                <hr class="mt-1 mb-3"/>
+                <t t-foreach="pickings_with_tracking" t-as="picking">
+                    <div class="senjani-tracking-item">
+                        <div class="senjani-tracking-label">
+                            <span class="text-muted small">No. Resi</span>
+                            <strong class="senjani-resi-number" t-field="picking.carrier_tracking_ref"/>
+                        </div>
+                        <div class="senjani-tracking-actions">
+                            <a href="https://jne.co.id/tracking-package" target="_blank" class="btn senjani-btn-tracking">
+                                <i class="fa fa-external-link me-1"/>
+                                Lacak di JNE
+                            </a>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="senjani_order_portal_content_inherit"
+              name="Senjani Order Portal Content"
+              inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//div[@id='introduction']" position="after">
+            <div id="senjani_order_status_section" class="row mb-2">
+                <div class="col-12">
+                    <t t-call="senjani_website_custom.senjani_order_progress_bar"/>
+                    <t t-call="senjani_website_custom.senjani_order_tracking_info"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="senjani_order_list_styles" name="Senjani Order List Styles">
+        <style>
+            .senjani-order-card {
+                background: #fff;
+                border: 1px solid var(--senjani-1, #FFEACF);
+                border-radius: 16px;
+                box-shadow: 0 4px 6px rgba(6, 5, 3, 0.05);
+                overflow: hidden;
+                transition: box-shadow 0.2s ease;
+            }
+            .senjani-order-card:hover {
+                box-shadow: 0 6px 14px rgba(6, 5, 3, 0.1);
+            }
+            .senjani-order-card-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1rem 1.25rem;
+                background: var(--senjani-2, #FFF8F0);
+                border-bottom: 1px solid var(--senjani-1, #FFEACF);
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            .senjani-order-ref {
+                font-weight: 700;
+                font-size: 1rem;
+                color: var(--senjani-5, #060503);
+                text-decoration: none;
+            }
+            .senjani-order-ref:hover {
+                color: var(--senjani-4, #FFBA64);
+            }
+            .senjani-order-date {
+                font-size: 0.8rem;
+                color: #6c757d;
+            }
+            .senjani-badge-status {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+                padding: 0.3rem 0.8rem;
+                border-radius: 20px;
+                font-size: 0.75rem;
+                font-weight: 700;
+                white-space: nowrap;
+            }
+            .senjani-badge-pending {
+                background: var(--senjani-2, #FFF8F0);
+                color: var(--senjani-3, #FFCA86);
+                border: 1px solid var(--senjani-1, #FFEACF);
+            }
+            .senjani-badge-diproses {
+                background: #FFF3E0;
+                color: #E65100;
+                border: 1px solid #FFE0B2;
+            }
+            .senjani-badge-dikirim {
+                background: #E3F2FD;
+                color: #1565C0;
+                border: 1px solid #BBDEFB;
+            }
+            .senjani-badge-diterima {
+                background: #E8F5E9;
+                color: #2E7D32;
+                border: 1px solid #C8E6C9;
+            }
+            .senjani-badge-selesai {
+                background: var(--senjani-4, #FFBA64);
+                color: #fff;
+                border: 1px solid var(--senjani-4, #FFBA64);
+            }
+            .senjani-order-card-body {
+                padding: 0.75rem 1.25rem;
+            }
+            .senjani-order-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.5rem 0;
+                border-bottom: 1px dashed var(--senjani-1, #FFEACF);
+                gap: 0.75rem;
+            }
+            .senjani-order-item:last-child {
+                border-bottom: none;
+            }
+            .senjani-order-item-info {
+                flex: 1;
+                min-width: 0;
+            }
+            .senjani-order-item-name {
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: var(--senjani-5, #060503);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .senjani-order-item-variant {
+                font-size: 0.75rem;
+                color: #6c757d;
+            }
+            .senjani-order-item-qty {
+                font-size: 0.85rem;
+                font-weight: 600;
+                color: var(--senjani-5, #060503);
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            .senjani-order-card-footer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.75rem 1.25rem;
+                background: var(--senjani-2, #FFF8F0);
+                border-top: 1px solid var(--senjani-1, #FFEACF);
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            .senjani-order-total-label {
+                font-size: 0.8rem;
+                color: #6c757d;
+            }
+            .senjani-order-total-value {
+                font-size: 1.1rem;
+                font-weight: 800;
+                color: var(--senjani-5, #060503);
+            }
+            .senjani-order-empty {
+                text-align: center;
+                padding: 4rem 2rem;
+                color: #6c757d;
+            }
+            .senjani-order-empty svg {
+                margin-bottom: 1rem;
+                opacity: 0.4;
+            }
+            .senjani-order-empty h4 {
+                color: var(--senjani-5, #060503);
+                font-weight: 700;
+            }
+            .senjani-tracking-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.75rem 1.25rem;
+                background: var(--senjani-2, #FFF8F0);
+                border-top: 1px solid var(--senjani-1, #FFEACF);
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            .senjani-tracking-row-label {
+                font-size: 0.8rem;
+                color: #6c757d;
+            }
+            .senjani-tracking-row-value {
+                font-size: 0.9rem;
+                font-weight: 700;
+                color: var(--senjani-5, #060503);
+                letter-spacing: 1px;
+            }
+            .senjani-btn-lacak {
+                background-color: transparent !important;
+                color: var(--senjani-4, #FFBA64) !important;
+                font-weight: 700 !important;
+                border: 2px solid var(--senjani-4, #FFBA64) !important;
+                border-radius: 10px !important;
+                padding: 0.4rem 1rem !important;
+                font-size: 0.8rem !important;
+                transition: all 0.2s ease !important;
+                text-decoration: none !important;
+                cursor: pointer;
+            }
+            .senjani-btn-lacak:hover {
+                background-color: var(--senjani-4, #FFBA64) !important;
+                color: #fff !important;
+            }
+            .senjani-modal-resi {
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: var(--senjani-5, #060503);
+                letter-spacing: 2px;
+                background: var(--senjani-2, #FFF8F0);
+                padding: 0.75rem 1rem;
+                border-radius: 12px;
+                border: 2px dashed var(--senjani-3, #FFCA86);
+                text-align: center;
+                margin: 1rem 0;
+            }
+            .senjani-modal-step {
+                display: flex;
+                align-items: flex-start;
+                gap: 0.75rem;
+                padding: 0.75rem 0;
+                border-bottom: 1px solid var(--senjani-1, #FFEACF);
+            }
+            .senjani-modal-step:last-child {
+                border-bottom: none;
+            }
+            .senjani-modal-step-num {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: var(--senjani-4, #FFBA64);
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.8rem;
+                font-weight: 700;
+                flex-shrink: 0;
+            }
+            .senjani-modal-step-text {
+                font-size: 0.9rem;
+                color: var(--senjani-5, #060503);
+                padding-top: 0.2rem;
+            }
+            .senjani-btn-copy {
+                background-color: var(--senjani-4, #FFBA64) !important;
+                color: #fff !important;
+                font-weight: 700 !important;
+                border: none !important;
+                border-radius: 10px !important;
+                padding: 0.6rem 1.5rem !important;
+                font-size: 0.9rem !important;
+                transition: all 0.2s ease !important;
+                cursor: pointer;
+            }
+            .senjani-btn-copy:hover {
+                background-color: var(--senjani-5, #060503) !important;
+            }
+            .senjani-btn-copy.copied {
+                background-color: #2E7D32 !important;
+            }
+            .senjani-modal-btn-jne {
+                background-color: var(--senjani-5, #060503) !important;
+                color: #fff !important;
+                font-weight: 700 !important;
+                border: none !important;
+                border-radius: 10px !important;
+                padding: 0.6rem 1.5rem !important;
+                font-size: 0.9rem !important;
+                text-decoration: none !important;
+                transition: all 0.2s ease !important;
+            }
+            .senjani-modal-btn-jne:hover {
+                background-color: var(--senjani-4, #FFBA64) !important;
+            }
+            @media (max-width: 575.98px) {
+                .senjani-order-card-header {
+                    padding: 0.75rem 1rem;
+                }
+                .senjani-order-card-body {
+                    padding: 0.5rem 1rem;
+                }
+                .senjani-order-card-footer {
+                    padding: 0.75rem 1rem;
+                }
+                .senjani-order-item-name {
+                    font-size: 0.8rem;
+                }
+                .senjani-order-item-qty {
+                    font-size: 0.8rem;
+                }
+            }
+        </style>
+    </template>
+
+    <template id="senjani_portal_my_orders_inherit"
+              name="Senjani My Orders"
+              inherit_id="sale.portal_my_orders">
+        <xpath expr="//t[@t-call='portal.portal_table']" position="replace">
+            <t t-call="senjani_website_custom.senjani_order_list_styles"/>
+            <t t-foreach="orders" t-as="order">
+                <div class="senjani-order-card mb-3">
+                    <div class="senjani-order-card-header">
+                        <div>
+                            <a t-att-href="order.get_portal_url()" class="senjani-order-ref">
+                                <i class="fa fa-file-text-o me-1" style="color: var(--senjani-4, #FFBA64);"/>
+                                <t t-out="order.name"/>
+                            </a>
+                            <div class="senjani-order-date">
+                                <i class="fa fa-calendar me-1"/>
+                                <span t-field="order.date_order" t-options="{'widget': 'date'}"/>
+                            </div>
+                        </div>
+                        <t t-if="order.senjani_order_status">
+                            <span t-attf-class="senjani-badge-status senjani-badge-#{order.senjani_order_status}">
+                                <i t-attf-class="fa #{'fa-file-o' if order.senjani_order_status == 'pending' else 'fa-cog' if order.senjani_order_status == 'diproses' else 'fa-truck' if order.senjani_order_status == 'dikirim' else 'fa-handshake-o' if order.senjani_order_status == 'diterima' else 'fa-check-circle'}"/>
+                                <t t-out="{
+                                    'pending': 'Pending',
+                                    'diproses': 'Diproses',
+                                    'dikirim': 'Dikirim',
+                                    'diterima': 'Diterima',
+                                    'selesai': 'Selesai',
+                                }.get(order.senjani_order_status, order.senjani_order_status)"/>
+                            </span>
+                        </t>
+                        <t t-else="">
+                            <span class="senjani-badge-status senjani-badge-pending">
+                                <i class="fa fa-file-o"/>
+                                Pending
+                            </span>
+                        </t>
+                    </div>
+                    <div class="senjani-order-card-body">
+                        <t t-foreach="order.order_line" t-as="line">
+                            <div class="senjani-order-item">
+                                <div class="senjani-order-item-info">
+                                    <div class="senjani-order-item-name" t-att-title="line.product_id.display_name">
+                                        <t t-out="line.product_id.display_name"/>
+                                    </div>
+                                    <t t-set="variant_values" t-value="line.product_template_attribute_value_ids"/>
+                                    <t t-if="variant_values">
+                                        <div class="senjani-order-item-variant">
+                                            <t t-foreach="variant_values" t-as="ptav">
+                                                <t t-out="ptav.display_name"/>
+                                                <t t-if="not ptav_foreach.last">, </t>
+                                            </t>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="senjani-order-item-qty">
+                                    x<t t-esc="line.product_uom_qty"/>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="order.senjani_tracking_ref">
+                            <div class="senjani-tracking-row">
+                                <div>
+                                    <div class="senjani-tracking-row-label">No. Resi</div>
+                                    <div class="senjani-tracking-row-value">
+                                        <t t-out="order.senjani_tracking_ref"/>
+                                    </div>
+                                </div>
+                                <button type="button" class="senjani-btn-lacak" data-bs-toggle="modal" t-attf-data-bs-target="#trackingModal-#{order.id}">
+                                    <i class="fa fa-truck me-1"/>
+                                    Lacak
+                                </button>
+                            </div>
+                        </t>
+                    </div>
+                    <div class="senjani-order-card-footer">
+                        <span class="senjani-order-total-label">Total Belanja</span>
+                        <span class="senjani-order-total-value">
+                            <t t-out="order.currency_id.symbol or 'Rp'"/>
+                            <t t-esc="'{:,.0f}'.format(order.amount_total).replace(',', '.')"/>
+                        </span>
+                    </div>
+                </div>
+
+                <div t-attf-id="trackingModal-#{order.id}" class="modal fade" tabindex="-1" role="dialog" t-attf-aria-labelledby="trackingModalLabel-#{order.id}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content" style="border-radius: 20px; border: none; box-shadow: 0 20px 40px rgba(6,5,3,0.15);">
+                            <div class="modal-header" style="border-bottom: 1px solid var(--senjani-1, #FFEACF); padding: 1.25rem 1.5rem;">
+                                <h5 class="modal-title fw-bold" style="color: var(--senjani-5, #060503);" t-attf-id="trackingModalLabel-#{order.id}">
+                                    <i class="fa fa-truck me-2" style="color: var(--senjani-4, #FFBA64);"/>
+                                    Lacak Pengiriman
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+                            </div>
+                            <div class="modal-body" style="padding: 1.5rem;">
+                                <p style="font-size: 0.9rem; color: #6c757d; margin-bottom: 0.5rem;">Nomor Resi</p>
+                                <div class="senjani-modal-resi">
+                                    <t t-out="order.senjani_tracking_ref"/>
+                                </div>
+
+                                <div style="margin-top: 1.5rem;">
+                                    <div class="senjani-modal-step">
+                                        <div class="senjani-modal-step-num">1</div>
+                                        <div class="senjani-modal-step-text">Salin nomor resi di atas dengan menekan tombol <strong>Salin Resi</strong></div>
+                                    </div>
+                                    <div class="senjani-modal-step">
+                                        <div class="senjani-modal-step-num">2</div>
+                                        <div class="senjani-modal-step-text">Buka website JNE melalui tombol <strong>Lacak di JNE</strong> di bawah</div>
+                                    </div>
+                                    <div class="senjani-modal-step">
+                                        <div class="senjani-modal-step-num">3</div>
+                                        <div class="senjani-modal-step-text">Tempel (paste) nomor resi pada kolom pelacakan di website JNE</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="border-top: 1px solid var(--senjani-1, #FFEACF); padding: 1.25rem 1.5rem; gap: 0.75rem;">
+                                <button type="button" class="senjani-btn-copy" t-att-data-resi="order.senjani_tracking_ref" onclick="var btn=this; navigator.clipboard.writeText(btn.getAttribute('data-resi')).then(function(){btn.textContent='Tersalin!'; btn.classList.add('copied'); setTimeout(function(){btn.textContent='Salin Resi'; btn.classList.remove('copied');},2000);}).catch(function(){alert('Gagal menyalin. Silakan salin manual.');})">
+                                    <i class="fa fa-copy me-1"/>
+                                    Salin Resi
+                                </button>
+                                <a href="https://jne.co.id/tracking-package" target="_blank" class="senjani-modal-btn-jne">
+                                    <i class="fa fa-external-link me-1"/>
+                                    Lacak di JNE
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-call="portal.pager"/>
+        </xpath>
+    </template>
+
+</odoo>
