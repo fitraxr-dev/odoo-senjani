@@ -11,13 +11,7 @@
         ================================================================
     -->
     <data noupdate="1">
-        <!-- Xendit Bank Journal -->
-        <record id="journal_xendit" model="account.journal">
-            <field name="name">Xendit</field>
-            <field name="code">XNDT</field>
-            <field name="type">bank</field>
-            <field name="show_on_dashboard" eval="True"/>
-        </record>
+        <!-- Xendit Bank Journal creation moved to python (_setup_senjani_outstanding_accounts) to avoid UniqueViolation -->
     </data>
 
     <!-- Run function to auto-configure outstanding payment accounts on XNDT and BNK1 journals -->

@@ -150,8 +150,17 @@ class AccountJournal(models.Model):
     def _setup_senjani_outstanding_accounts(self):
         """
         Setup Outstanding Receipts and Payments accounts for XNDT and BNK1 journals.
+        Creates XNDT journal if it does not exist.
         """
         XNDT = self.search([('code', '=', 'XNDT')])
+        if not XNDT:
+            XNDT = self.create({
+                'name': 'Xendit',
+                'code': 'XNDT',
+                'type': 'bank',
+                'show_on_dashboard': True,
+            })
+            
         BNK1 = self.search([('code', '=', 'BNK1')])
         out_receipts = self.env['account.account'].search([('code', '=', '101403')])
         out_payments = self.env['account.account'].search([('code', '=', '101404')])
