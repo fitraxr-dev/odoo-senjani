@@ -137,10 +137,11 @@ class ReportGeneralLedger(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
-        if not data.get('form') or not self.env.context.get('active_model'):
+        if not data or not data.get('form'):
             raise UserError(_("Form content is missing, this report cannot be printed."))
-        model = self.env.context.get('active_model')
-        docs = self.env[model].browse(self.env.context.get('active_ids', []))
+        model = self.env.context.get('active_model') or data.get('model') or 'ir.ui.menu'
+        active_ids = self.env.context.get('active_ids') or data.get('ids') or []
+        docs = self.env[model].browse(active_ids)
         init_balance = data['form'].get('initial_balance', True)
         sortby = data['form'].get('sortby', 'sort_date')
         display_account = data['form']['display_account']
