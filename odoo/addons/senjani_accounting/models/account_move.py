@@ -60,6 +60,22 @@ class AccountMove(models.Model):
         string='Show Xendit Info',
     )
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('x_xendit_payment_ref'):
+                vals['payment_reference'] = vals['x_xendit_payment_ref']
+                if not vals.get('x_xendit_payment_method'):
+                    vals['x_xendit_payment_method'] = 'Xendit(Xendit)'
+        return super(AccountMove, self).create(vals_list)
+
+    def write(self, vals):
+        if vals.get('x_xendit_payment_ref'):
+            vals['payment_reference'] = vals['x_xendit_payment_ref']
+            if not vals.get('x_xendit_payment_method'):
+                vals['x_xendit_payment_method'] = 'Xendit(Xendit)'
+        return super(AccountMove, self).write(vals)
+
     def action_senjani_confirm_invoice(self):
         """
         Batch action: confirm invoice from Draft to Posted.

@@ -55,8 +55,8 @@
                        invisible="not x_show_xendit_info"
                        col="2"
                        class="o_group_senjani_xendit">
-                    <field name="x_xendit_payment_ref"
-                           string="Xendit Reference"
+                    <field name="payment_reference"
+                           string="Payment Reference"
                            readonly="1"/>
                     <field name="x_xendit_payment_status"
                            string="Xendit Status"
@@ -97,7 +97,7 @@
                 <field name="invoice_date" string="Invoice Date" optional="show"/>
                 <field name="invoice_date_due" string="Due Date" optional="show"/>
                 <field name="partner_id" string="Customer" optional="show"/>
-                <field name="x_xendit_payment_ref" string="Xendit Reference" optional="show"/>
+                <field name="payment_reference" string="Payment Reference" optional="show"/>
                 <field name="x_xendit_payment_method" string="Payment Method" optional="hide"/>
                 <field name="amount_untaxed" string="Untaxed Amount" optional="show"/>
                 <field name="amount_tax" string="Tax" optional="hide"/>
@@ -129,7 +129,7 @@
             <search string="Search Customer Invoices">
                 <field name="name" string="Invoice Number"/>
                 <field name="partner_id" string="Customer"/>
-                <field name="x_xendit_payment_ref" string="Xendit Reference"/>
+                <field name="payment_reference" string="Payment Reference"/>
                 <field name="invoice_date" string="Date"/>
 
                 <!-- Filters -->
