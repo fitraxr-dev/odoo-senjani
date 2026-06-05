@@ -22,6 +22,9 @@
             'senjani_website_custom/static/src/css/order_detail.css',
             'senjani_website_custom/static/src/xml/stock_availability.xml',
         ],
+        'portal.assets_chatter_style': [
+            'senjani_website_custom/static/src/css/product_reviews.css',
+        ],
     },
     'application': True,
     'installable': True,

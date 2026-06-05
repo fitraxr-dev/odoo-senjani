@@ -1,33 +1,293 @@
-/* Override styling native Portal Rating / Chatter untuk menyesuaikan tema Senjani */
-.o_portal_chatter,
-.o_shop_discussion_rating,
-.o_portal_chatter_composer {
-    /* Style wrapper utama review jika perlu */
+/* =========================================
+   Product Reviews Custom CSS (Senjani)
+   ========================================= */
+
+/* Top Section: Rating Summary Card */
+.o_website_rating_card_container {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background-color: #ffffff !important;
+    border-radius: 30px !important;
+    padding: 30px 40px !important;
+    margin-bottom: 2rem !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03) !important;
+    gap: 40px !important;
 }
 
-/* Warna bintang untuk rating */
-.o_portal_chatter_composer .fa-star,
-.o_portal_chatter_messages .fa-star,
-.o_portal_chatter_messages .fa-star-o,
-.o_portal_chatter_composer .fa-star-o,
-.o_portal_chatter_composer .fa-star-half-o,
-.o_portal_chatter_messages .fa-star-half-o,
-.o_rating_star_display .fa-star,
-.o_rating_star_display .fa-star-o,
-.o_rating_star_display .fa-star-half-o {
-    color: var(--senjani-4, #FFB829) !important;
+/* Override Odoo's columns behavior to allow flex side-by-side */
+.o_website_rating_card_container > .col-lg-12 {
+    width: auto !important;
+    flex: 1 1 auto !important;
+    padding: 0 !important;
 }
 
-/* Warna tombol Kirim (Send) di review */
-.o_portal_chatter_composer .o_portal_chatter_composer_btn {
-    background-color: var(--senjani-4) !important;
-    border-color: var(--senjani-4) !important;
-    color: white !important;
-    border-radius: 8px;
-    font-weight: 600;
+.o-discuss-separator {
+    display: none !important;
 }
 
-.o_portal_chatter_composer .o_portal_chatter_composer_btn:hover {
-    background-color: var(--senjani-5) !important;
-    border-color: var(--senjani-5) !important;
+/* Average Rating (Left Column) */
+.o_website_rating_avg {
+    text-align: center !important;
 }
+
+.o_website_rating_avg h1 {
+    font-size: 3.5rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 0 !important;
+    color: #1f1f1f !important;
+}
+
+.o_website_rating_avg .o_website_rating_static {
+    margin-bottom: 5px !important;
+}
+
+.o_website_rating_avg span,
+.o_website_rating_avg i.fa-comments {
+    font-size: 0.9rem !important;
+    color: #888888 !important;
+    font-weight: 500 !important;
+    display: inline-block !important; /* Keep icon and text inline */
+}
+
+/* Stars color (Peach/Orange) */
+.o_website_rating_static i.fa-star,
+.o_website_rating_static i.fa-star-half-o,
+.o-mail-Message-stars i.fa-star,
+.o_website_rating_table_row .fa-star {
+    color: #f7b76a !important; /* Senjani Orange */
+}
+
+/* Empty stars color */
+.o_website_rating_static i.text-black-25,
+.o-mail-Message-stars i.text-black-25 {
+    color: #ececec !important;
+}
+
+/* Progress Bars Table layout adjustments */
+.o_website_rating_table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+}
+
+.o_website_rating_table td {
+    border: none !important;
+    padding: 3px 0 !important;
+}
+
+/* Progress Bars (Right Column) */
+.o_website_rating_table_row {
+    margin-bottom: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.o_website_rating_table_star_num {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: #4a4a4a !important;
+    padding-right: 15px !important;
+    min-width: 60px !important;
+}
+
+.o_website_rating_table_progress {
+    flex-grow: 1 !important;
+}
+
+.o_website_rating_table_progress .progress {
+    height: 10px !important;
+    background-color: #585c64 !important; /* Dark grey for empty portion */
+    border-radius: 10px !important;
+    overflow: hidden !important;
+}
+
+.o_website_rating_table_progress .progress-bar {
+    background-color: #f7b76a !important; /* Peach/Orange for filled progess */
+    border-radius: 10px !important;
+}
+
+.o_website_rating_table_percent {
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    color: #4a4a4a !important;
+    padding-left: 15px !important;
+    min-width: 50px !important;
+    text-align: right !important;
+}
+
+.o_website_rating_table_reset {
+    display: none !important;
+}
+
+
+/* =========================================
+   Bottom Section: Review List Card 
+   ========================================= */
+
+/* Review card container */
+.o-mail-Message {
+    background-color: #ffecd6 !important; /* Pastel Peach */
+    border-radius: 30px !important;
+    padding: 20px 24px !important;
+    margin-bottom: 20px !important;
+    border: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-shadow: none !important;
+}
+
+.o-mail-Message-core {
+    background-color: transparent !important;
+}
+
+/* Header: Avatar and Name */
+.o-mail-Message-sidebar {
+    margin-right: 15px !important;
+}
+
+.o-mail-Message-avatarContainer {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+}
+
+.o-mail-Message-avatar {
+    border-radius: 50% !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+/* User Name and Meta */
+.o-mail-Message-header {
+    margin-bottom: 2px !important;
+    display: flex !important;
+    flex-direction: column !important; /* Stack name and rating */
+    align-items: flex-start !important;
+}
+
+.o-mail-Message-author strong {
+    font-weight: 700 !important;
+    color: #333333 !important;
+    font-size: 1.1rem !important;
+}
+
+.o-mail-Message-date {
+    display: none !important; /* Hide date to match design */
+}
+
+/* Override stars positioning in review header */
+.o-mail-Message-core .mb-2 {
+    margin-bottom: 10px !important;
+    margin-top: -5px !important;
+}
+
+/* Inner Text Card (White Background) */
+.o-mail-Message-contentContainer {
+    width: 100% !important;
+}
+
+.o-mail-Message-content {
+    width: 100% !important;
+}
+
+.o-mail-Message-textContent .text-body {
+    background-color: #ffffff !important;
+    border-radius: 20px !important;
+    padding: 20px 24px !important;
+    width: 100% !important;
+    display: block !important;
+    /* Optional shadow for inner card */
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.02) !important;
+}
+
+/* Remove default bubbles */
+.o-mail-Message-bubble {
+    display: none !important;
+}
+
+.o-mail-Message-body {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.o-mail-Message-richBody p {
+    color: #444444 !important;
+    line-height: 1.6 !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 0 !important;
+}
+
+/* Read More (Pseudo element for visual hint) */
+/* We can't strictly truncate cleanly without JS for variable lengths in pure CSS across browsers safely in all cases, but we can append READ MORE if desired. However, Odoo doesn't truncate tightly text this way by default. */
+/* Just styling the overall layout nicely. */
+
+/* Remove interaction menus not needed */
+.o-mail-Message-actions {
+    display: none !important;
+}
+
+/* Composer / Input area styling */
+.o-mail-Composer {
+    background-color: #ffffff !important;
+    border-radius: 30px !important;
+    padding: 20px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;
+    margin-bottom: 20px !important;
+}
+.o-mail-Composer-bg {
+    border-radius: 20px !important;
+}
+
+/* =========================================
+   Publisher Comments (Replies) 
+   ========================================= */
+
+/* Add spacing and a subtle separator for replies */
+.o_wrating_publisher_comment {
+    margin-top: 15px !important;
+    padding-top: 15px !important;
+    border-top: 1px dashed rgba(247, 183, 106, 0.4) !important; /* using the peach color but transparent */
+}
+
+/* Style the text box to match the main review style */
+.o_wrating_publisher_comment .o-mail-Message-body {
+    background-color: #ffffff !important;
+    border-radius: 20px !important;
+    padding: 15px 24px !important;
+    width: 100% !important;
+    display: block !important;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.02) !important;
+    margin-top: 8px !important;
+}
+
+/* Ensure the wrapper behaves as a block so background spans fully */
+.o_wrating_publisher_comment .d-inline-block,
+.o_wrating_publisher_comment .o-min-width-0.d-flex.overflow-x-auto {
+    display: block !important;
+    width: 100% !important;
+}
+
+/* Date in comment (if exists) */
+.o_wrating_publisher_comment .o-mail-Message-header small {
+    font-size: 0.8rem !important;
+    color: #999999 !important;
+    margin-top: 4px !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .o_website_rating_card_container {
+        flex-direction: column !important;
+        padding: 20px !important;
+        gap: 20px !important;
+    }
+    .o_website_rating_table_row {
+        width: 100% !important;
+    }
+}
+
