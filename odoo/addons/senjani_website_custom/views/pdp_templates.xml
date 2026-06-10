@@ -26,4 +26,25 @@
     <record id="website_sale.product_comment" model="ir.ui.view">
         <field name="active" eval="True"/>
     </record>
+
+    <!-- Batasi pengisian review hanya untuk pembeli yang sah -->
+    <template id="senjani_product_comment_limit" inherit_id="website_sale.product_comment" name="Limit Reviews to Buyers">
+        <xpath expr="//t[@t-call='portal.message_thread']" position="inside">
+            <t t-set="disable_composer" t-value="not product._can_user_review()"/>
+        </xpath>
+        <xpath expr="//t[@t-call='portal.message_thread']" position="before">
+            <t t-set="can_review" t-value="product._can_user_review()"/>
+            <div t-if="not can_review" class="alert alert-info py-2 mb-3 rounded shadow-sm d-flex align-items-center gap-2">
+                <i class="fa fa-info-circle text-primary"></i>
+                <div>
+                    <span t-if="request.env.user._is_public()">
+                        Silakan <a t-attf-href="/web/login?redirect={{request.httprequest.path}}" class="alert-link fw-bold">Masuk</a> terlebih dahulu dan beli produk ini untuk menulis ulasan.
+                    </span>
+                    <span t-else="">
+                        Hanya pelanggan yang telah membeli produk ini yang dapat memberikan ulasan.
+                    </span>
+                </div>
+            </div>
+        </xpath>
+    </template>
 </odoo>
