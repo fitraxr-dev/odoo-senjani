@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Custom Login Layout: Split screen with left brand panel and right form panel -->
+    <template id="senjani_login_layout" inherit_id="website.login_layout" name="Senjani Custom Login Layout">
+        <xpath expr="//div[hasclass('oe_website_login_container')]" position="replace">
+            <div class="senjani-login-wrapper">
+                <!-- Left Banner with Logo -->
+                <div class="senjani-login-banner d-none d-lg-flex">
+                    <div class="senjani-login-logo-container">
+                        <img src="/senjani_website_custom/static/src/img/logo_full.webp" alt="SENJANI SCARF Logo" class="senjani-login-logo-img"/>
+                    </div>
+                </div>
+                <!-- Right Content with Form -->
+                <div class="senjani-login-content">
+                    <div class="senjani-login-form-box">
+                        <h2>Log In</h2>
+                        <t t-out="0"/>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Custom Login Form Fields & Buttons -->
+    <template id="senjani_login_form" inherit_id="web.login" name="Senjani Custom Login Form">
+        <!-- Replace Email field but keep label hidden for compatibility -->
+        <xpath expr="//div[hasclass('field-login')]" position="replace">
+            <div class="mb-3 field-login">
+                <label for="login" class="d-none">Email</label>
+                <input type="text" placeholder="Phone Number / Username / Email" name="login" t-att-value="login" id="login" class="form-control" required="required" autocapitalize="off" autocomplete="username"/>
+            </div>
+        </xpath>
+
+        <!-- Replace Password field, wrap in show/hide group, keep label hidden for compatibility -->
+        <xpath expr="//div[hasclass('mb-3')][input[@type='password']]" position="replace">
+            <div class="mb-3">
+                <label for="password" class="d-none">Password</label>
+                <div class="senjani-password-group">
+                    <input type="password" placeholder="Password" name="password" id="password" class="form-control" required="required" autocomplete="current-password" t-att-autofocus="'autofocus' if login else None" maxlength="4096"/>
+                    <button type="button" class="senjani-password-toggle" onclick="var p = document.getElementById('password'); var i = this.querySelector('i'); if(p.type=='password'){ p.type='text'; i.classList.remove('fa-eye-slash'); i.classList.add('fa-eye'); } else { p.type='password'; i.classList.remove('fa-eye'); i.classList.add('fa-eye-slash'); }">
+                        <i class="fa fa-eye-slash"></i>
+                    </button>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- Customize Login and Action Buttons -->
+        <xpath expr="//div[hasclass('oe_login_buttons')]" position="replace">
+            <div class="oe_login_buttons text-center gap-1 d-grid mb-1 pt-2">
+                <button type="submit" class="btn btn-senjani-login">Log In</button>
+                
+                <!-- Custom Forgot Password link -->
+                <a t-if="reset_password_enabled" class="senjani-login-forgot" t-attf-href="/web/reset_password?{{ keep_query() }}">Forgot Password</a>
+                
+                <!-- Social Login Separator & Buttons -->
+                <div class="senjani-login-divider">Or</div>
+                <div class="senjani-social-buttons">
+                    <a href="#" class="btn-senjani-social">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook"/>
+                        Facebook
+                    </a>
+                    <a href="#" class="btn-senjani-social">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google"/>
+                        Google
+                    </a>
+                </div>
+                
+                <!-- Custom Signup link -->
+                <div class="senjani-login-footer">
+                    New to SENJANI SCARF? <a t-if="signup_enabled" t-attf-href="/web/signup?{{ keep_query() }}">Sign Up</a>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

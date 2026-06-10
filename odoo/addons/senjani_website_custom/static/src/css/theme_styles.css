@@ -1,0 +1,441 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400%3B500%3B600%3B700&family=Playfair+Display:ital,wght@0,400..900%3B1,400..900&display=swap');
+
+/* Base Styles */
+:root {
+    --senjani-gold: #A36B36;
+    --senjani-peach: #FDBB74;
+    --senjani-light-peach: #FFF5EA;
+    --senjani-dark: #0C0908;
+    --senjani-charcoal: #4A3C31;
+    --senjani-gray: #7F7F7F;
+}
+
+/* ==========================================================================
+   Header Styling
+   ========================================================================== */
+header#top {
+    background-color: #FFFFFF !important;
+    border-bottom: 1px solid #ECECEC;
+}
+
+header#top .navbar {
+    background-color: #FFFFFF !important;
+}
+
+/* Logo styling */
+.senjani-header-brand-text {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.1;
+    color: var(--senjani-gold) !important;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* Nav links */
+header#top .navbar-nav .nav-link {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--senjani-charcoal) !important;
+    text-transform: lowercase;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    transition: color 0.2s ease;
+}
+
+header#top .navbar-nav .nav-link:hover,
+header#top .navbar-nav .nav-link.active {
+    color: var(--senjani-gold) !important;
+}
+
+/* Sign In Button styling */
+.btn-senjani-signin {
+    background-color: var(--senjani-peach) !important;
+    color: var(--senjani-gold) !important;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: lowercase;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 10px 28px !important;
+    transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.btn-senjani-signin:hover {
+    opacity: 0.9 !important;
+    color: var(--senjani-gold) !important;
+}
+
+/* Remove default Odoo CTA button if needed */
+header#top .o_header_call_to_action {
+    display: none !important;
+}
+
+
+/* ==========================================================================
+   Footer Styling
+   ========================================================================== */
+footer#bottom.o_footer {
+    background-color: var(--senjani-dark) !important;
+    color: #FFFFFF !important;
+    font-family: 'Inter', sans-serif;
+    padding-top: 4rem !important;
+    padding-bottom: 2rem !important;
+    border-top: none !important;
+}
+
+/* Brand info */
+.senjani-footer-brand {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.senjani-footer-logo-img {
+    height: 120px;
+    width: auto;
+    margin-bottom: 1rem;
+}
+
+.senjani-footer-brand-text {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: var(--senjani-gold) !important;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+/* Column titles */
+.o_footer .senjani-footer-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--senjani-peach) !important;
+    margin-bottom: 1.5rem;
+    text-transform: capitalize;
+}
+
+/* Links & items list */
+.senjani-footer-links {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.senjani-footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.senjani-footer-links a {
+    color: #DDDDDD !important;
+    text-decoration: none !important;
+    font-size: 0.95rem;
+    text-transform: lowercase;
+    transition: color 0.2s ease;
+}
+
+.senjani-footer-links a:hover {
+    color: var(--senjani-peach) !important;
+}
+
+/* Contact info text */
+.senjani-footer-text {
+    font-size: 0.9rem;
+    color: #DDDDDD;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.senjani-footer-email {
+    color: var(--senjani-peach) !important;
+    text-decoration: none !important;
+}
+
+/* Social icons */
+.senjani-footer-socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 1rem;
+}
+
+.senjani-footer-social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF !important;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+}
+
+.senjani-footer-social-link:hover {
+    transform: scale(1.1);
+}
+
+.senjani-footer-social-link.whatsapp {
+    background-color: #25D366;
+}
+
+.senjani-footer-social-link.instagram {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+}
+
+/* Custom separator line */
+.senjani-footer-separator {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Hide default copyright template branding */
+.o_footer_copyright {
+    display: none !important;
+}
+
+
+/* ==========================================================================
+   Login Page Styling
+   ========================================================================== */
+.senjani-login-wrapper {
+    display: flex;
+    min-height: 75vh;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    background-color: #FFFFFF;
+}
+
+/* Left side banner */
+.senjani-login-banner {
+    width: 50%;
+    background-color: var(--senjani-peach);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.senjani-login-logo-container {
+    background-color: #FFFFFF;
+    border-radius: 28px;
+    padding: 3rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 360px;
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+.senjani-login-logo-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Right side form */
+.senjani-login-content {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    background-color: #FFFFFF;
+}
+
+.senjani-login-form-box {
+    max-width: 440px;
+    width: 100%;
+}
+
+.senjani-login-form-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: var(--senjani-dark);
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+/* Form group overrides */
+.senjani-login-form-box .mb-3 {
+    margin-bottom: 1.25rem !important;
+}
+
+.senjani-login-form-box label.form-label {
+    display: none !important; /* Hide labels since we have placeholders matching mockup */
+}
+
+.senjani-login-form-box input.form-control {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E5E5E5 !important;
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+    font-size: 0.95rem;
+    color: var(--senjani-dark);
+    box-shadow: none !important;
+    transition: border-color 0.2s ease;
+}
+
+.senjani-login-form-box input.form-control:focus {
+    border-color: var(--senjani-peach) !important;
+}
+
+/* Custom password inputs wrapper */
+.senjani-password-group {
+    position: relative;
+}
+
+.senjani-password-toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--senjani-gray);
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0;
+}
+
+/* Submit Button */
+.btn-senjani-login {
+    background-color: var(--senjani-peach) !important;
+    color: var(--senjani-charcoal) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    width: 100%;
+    margin-top: 1rem;
+    transition: opacity 0.2s ease;
+}
+
+.btn-senjani-login:hover {
+    opacity: 0.9;
+}
+
+/* Helper links */
+.senjani-login-forgot {
+    display: inline-block;
+    color: var(--senjani-charcoal) !important;
+    font-size: 0.85rem;
+    text-decoration: none !important;
+    margin-top: 0.75rem;
+    font-weight: 500;
+}
+
+.senjani-login-forgot:hover {
+    color: var(--senjani-gold) !important;
+}
+
+/* Divider "Or" */
+.senjani-login-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--senjani-gray);
+    font-size: 0.9rem;
+    margin: 2rem 0;
+}
+
+.senjani-login-divider::before,
+.senjani-login-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.senjani-login-divider:not(:empty)::before {
+    margin-right: 1.5em;
+}
+
+.senjani-login-divider:not(:empty)::after {
+    margin-left: 1.5em;
+}
+
+/* Social Login Buttons */
+.senjani-social-buttons {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 2.5rem;
+}
+
+.btn-senjani-social {
+    flex: 1;
+    background-color: #FFFFFF !important;
+    border: 1px solid #E5E5E5 !important;
+    border-radius: 8px !important;
+    padding: 10px !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--senjani-dark) !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none !important;
+    transition: background-color 0.2s ease;
+}
+
+.btn-senjani-social:hover {
+    background-color: #FAFAFA !important;
+}
+
+.btn-senjani-social img {
+    height: 18px;
+    width: auto;
+}
+
+/* Signup Redirect link */
+.senjani-login-footer {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--senjani-gray);
+}
+
+.senjani-login-footer a {
+    color: var(--senjani-peach) !important;
+    font-weight: 600;
+    text-decoration: none !important;
+}
+
+.senjani-login-footer a:hover {
+    text-decoration: underline !important;
+}
+
+
+/* ==========================================================================
+   Responsive Settings
+   ========================================================================== */
+@media (max-width: 991px) {
+    .senjani-login-banner {
+        display: none !important;
+    }
+    .senjani-login-content {
+        width: 100% !important;
+        padding: 2rem !important;
+    }
+    
+    footer#bottom.o_footer {
+        padding-top: 3rem !important;
+    }
+    .senjani-footer-brand {
+        text-align: left;
+    }
+    .senjani-footer-socials {
+        justify-content: flex-start;
+        margin-bottom: 2rem;
+    }
+}

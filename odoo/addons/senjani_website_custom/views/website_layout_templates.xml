@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Custom Header Logo and Branding -->
+    <template id="senjani_header_logo" inherit_id="website.option_header_brand_logo" name="Senjani Custom Header Logo">
+        <xpath expr="//a[@data-name='Navbar Logo']" position="replace">
+            <a data-name="Navbar Logo" href="/" class="navbar-brand logo d-flex align-items-center gap-2">
+                <img src="/senjani_website_custom/static/src/img/logo_clean.png" alt="SENJANI SCARF Logo" style="height: 40px; width: auto;"/>
+                <span class="senjani-header-brand-text d-flex flex-column align-items-center justify-content-center text-center">
+                    <span>SENJANI</span>
+                    <span>SCARF</span>
+                </span>
+            </a>
+        </xpath>
+    </template>
+
+    <!-- Custom Header Sign In Button -->
+    <template id="senjani_header_signin_button" inherit_id="portal.user_sign_in" name="Senjani Custom Header Sign In Button">
+        <xpath expr="//a" position="attributes">
+            <attribute name="t-attf-class">#{_link_class} btn-senjani-signin</attribute>
+        </xpath>
+    </template>
+
+    <!-- Redesigned Footer Section -->
+    <template id="senjani_footer" inherit_id="website.layout" name="Senjani Redesigned Footer">
+        <xpath expr="//footer" position="replace">
+            <footer t-if="not no_footer" id="bottom" data-anchor="true" class="o_footer">
+                <div class="container">
+                    <div class="row">
+                        <!-- Column 1: Logo & Brand Text -->
+                        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 d-flex flex-column align-items-center justify-content-center text-center">
+                            <img src="/senjani_website_custom/static/src/img/logo_clean.png" alt="SENJANI Logo" class="senjani-footer-logo-img"/>
+                            <div class="senjani-footer-brand-text text-center">
+                                SENJANI<br/>SCARF
+                            </div>
+                        </div>
+
+                        <!-- Column 2: Quick Links -->
+                        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 text-center text-md-start">
+                            <h5 class="senjani-footer-title">Quick Link</h5>
+                            <ul class="senjani-footer-links">
+                                <li><a href="/">home</a></li>
+                                <li><a href="/shop">shop</a></li>
+                                <li><a href="/aboutus">about us</a></li>
+                                <li><a href="/contactus">contact us</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Column 3: Company Links -->
+                        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 text-center text-md-start">
+                            <h5 class="senjani-footer-title">Company Link</h5>
+                            <ul class="senjani-footer-links">
+                                <li><a href="/privacy">privacy policy</a></li>
+                                <li><a href="/terms">terms of services</a></li>
+                                <li><a href="/refund">refund policy</a></li>
+                                <li><a href="/shipping">shipping policy</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Column 4: Contact & Socials -->
+                        <div class="col-lg-3 col-md-6 text-center text-md-start">
+                            <h5 class="senjani-footer-title">Contact</h5>
+                            
+                            <p class="senjani-footer-title mb-1" style="font-size: 0.95rem; color: #FFFFFF;">opening hours</p>
+                            <p class="senjani-footer-text mb-3" style="font-size: 0.85rem; color: #BBBBBB;">
+                                Mon-Fri: 8:00 - 17:00<br/>
+                                Sat-Sun: 9:00 - 18:00
+                            </p>
+
+                            <p class="senjani-footer-title mb-1" style="font-size: 0.95rem; color: #FFFFFF;">email</p>
+                            <p class="senjani-footer-text mb-3">
+                                <a href="mailto:senjani@gmail.com" class="senjani-footer-email">senjani@gmail.com</a>
+                            </p>
+
+                            <div class="senjani-footer-socials justify-content-center justify-content-md-start">
+                                <a href="https://wa.me/628123456789" target="_blank" class="senjani-footer-social-link whatsapp" aria-label="WhatsApp">
+                                    <i class="fa fa-whatsapp"></i>
+                                </a>
+                                <a href="https://instagram.com/senjani.scarf" target="_blank" class="senjani-footer-social-link instagram" aria-label="Instagram">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Separator -->
+                    <div class="senjani-footer-separator"></div>
+                    <div class="row">
+                        <div class="col text-center text-muted small">
+                            <span>&amp;copy; 2026 <t t-esc="res_company.name"/>. All Rights Reserved.</span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </xpath>
+    </template>
+</odoo>
