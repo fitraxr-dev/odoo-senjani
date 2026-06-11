@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- 
+        ==============================================================================
+        Website Shop Cart Views - Discount Display
+        ==============================================================================
+        
+        This module extends the e-commerce shopping cart to display calculated 
+        discounts dynamically.
+        
+        Features:
+        - Auto-detects discount amounts in cart total
+        - Inserts discount row after taxes
+        - Real-time updates on cart changes
+        - Handles various currency formats
+        
+        Implementation:
+        - JavaScript: static/src/js/cart_discount.js
+        - QWeb Templates: static/src/xml/cart_templates.xml
+        -->
+        
+        <!-- 
+        Template: Extend website.shop cart page with discount display
+        This template is loaded on all shop cart pages via assets.
+        -->
+        <template id="shop_cart_discount" inherit_id="website_sale.cart">
+            <!-- 
+            No XPath modifications needed - discount injection is handled by JavaScript.
+            The JavaScript module automatically:
+            1. Detects the cart_total section
+            2. Locates the taxes row
+            3. Inserts discount row dynamically
+            4. Updates values in real-time
+            
+            This approach is more maintainable as it doesn't break with minor
+            template changes in the base website_sale module.
+            -->
+        </template>
+    </data>
+</odoo>

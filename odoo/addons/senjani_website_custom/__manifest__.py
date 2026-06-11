@@ -6,7 +6,7 @@
     'license': 'LGPL-3',
     'category': 'Website/Website',
     'version': '18.0.1.0',
-    'depends': ['website_sale', 'website_sale_stock', 'stock_delivery'],
+    'depends': ['website_sale', 'website_sale_stock', 'stock_delivery', 'website_sale_wishlist'],
     'data': [
         'views/products_item_templates.xml',
         'views/products_templates.xml',
@@ -15,6 +15,8 @@
         'views/ir_asset_data.xml',
         'views/website_layout_templates.xml',
         'views/login_templates.xml',
+        'views/cart_templates.xml',
+        'views/homepage_templates.xml',
     ],
     'assets': {
         'web.assets_frontend': [
@@ -24,9 +26,15 @@
             'senjani_website_custom/static/src/css/order_detail.css',
             'senjani_website_custom/static/src/css/theme_styles.css',
             'senjani_website_custom/static/src/xml/stock_availability.xml',
+            'senjani_website_custom/static/src/css/homepage.css',
+            'senjani_website_custom/static/src/js/cart_discount.js',
+            'senjani_website_custom/static/src/js/wishlist.js',
         ],
         'portal.assets_chatter_style': [
             'senjani_website_custom/static/src/css/product_reviews.css',
+        ],
+        'web.assets_qweb': [
+            'senjani_website_custom/static/src/xml/cart_templates.xml',
         ],
     },
     'application': True,

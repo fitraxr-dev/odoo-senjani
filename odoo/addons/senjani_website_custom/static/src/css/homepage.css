@@ -1,0 +1,375 @@
+:root {
+    --senjani-font-serif: 'Playfair Display', Georgia, serif;
+    --senjani-font-sans: 'Outfit', sans-serif;
+
+    --senjani-1: #FFEACF;
+    --senjani-2: #FFF8F0;
+    --senjani-3: #FFCA86;
+    --senjani-4: #FFBA64;
+    --senjani-5: #060503;
+}
+
+/* Global Page Customizations */
+.senjani-homepage-container {
+    background-color: #fff;
+    color: var(--senjani-5);
+    font-family: var(--senjani-font-sans);
+}
+
+header#top.o_header_standard {
+    background: linear-gradient(180deg,
+            rgba(255, 202, 134, 1) 0%,
+            rgba(255, 223, 179, 0.7) 12%,
+            rgba(255, 241, 220, 0.3) 25%,
+            rgba(255, 255, 255, 1) 45%) !important;
+    border-bottom: 1px solid var(--senjani-1) !important;
+}
+
+header#top.o_header_standard .navbar {
+    background: transparent !important;
+}
+
+header.o_header_standard .nav-link {
+    font-family: var(--senjani-font-sans);
+    color: var(--senjani-5) !important;
+    font-weight: 500;
+    text-transform: lowercase;
+}
+
+header.o_header_standard .nav-link:hover {
+    color: var(--senjani-4) !important;
+}
+
+/* Section Containers */
+.senjani-section-container {
+    background-color: var(--senjani-2);
+    border-radius: 36px;
+    padding: 3rem 2.5rem;
+}
+
+.senjani-container-title-wrapper {
+    display: block;
+    margin-bottom: 2.5rem;
+}
+
+.senjani-container-title {
+    background-color: var(--senjani-4);
+    color: var(--senjani-5);
+    font-family: var(--senjani-font-sans);
+    font-weight: 700;
+    font-size: 1.4rem;
+    padding: 16px 20px;
+    border-radius: 30px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+/* Hero Banner */
+.senjani-hero-banner .senjani-banner-card {
+    border-radius: 28px;
+    height: 420px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    background-image: url('/senjani_website_custom/static/src/img/Title_banner.png');
+}
+
+.senjani-banner-overlay {
+    background-color: rgba(6, 5, 3, 0.15);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.senjani-banner-title {
+    color: var(--senjani-2);
+    font-family: var(--senjani-font-serif);
+    font-size: 5rem;
+    font-weight: 700;
+    letter-spacing: 16px;
+    line-height: 1.1;
+    text-shadow: 0 4px 20px rgba(6, 5, 3, 0.25);
+    margin-left: 16px;
+    /* Offset for high letter-spacing alignment */
+}
+
+.senjani-banner-title .subtitle {
+    font-size: 4rem;
+    letter-spacing: 20px;
+    margin-left: 20px;
+}
+
+/* Category Grid */
+.senjani-category-link {
+    display: inline-block;
+}
+
+.senjani-category-img-wrapper {
+    width: 100%;
+    max-width: 180px;
+    aspect-ratio: 4 / 3;
+    border-radius: 18px;
+    overflow: hidden;
+    background-color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 0 auto;
+}
+
+.senjani-category-img-wrapper:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(6, 5, 3, 0.08);
+}
+
+.senjani-category-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.senjani-category-name {
+    font-family: var(--senjani-font-sans);
+    color: var(--senjani-5);
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: block;
+    margin-top: 6px;
+    transition: color 0.2s ease;
+    text-transform: capitalize;
+}
+
+.senjani-category-link:hover .senjani-category-name {
+    color: var(--senjani-4);
+}
+
+/* Product Cards */
+.senjani-landing-product-card {
+    border-radius: 20px;
+    background-color: #fff;
+    border: 1px solid rgba(255, 234, 207, 0.6) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.senjani-landing-product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(6, 5, 3, 0.08) !important;
+    border-color: var(--senjani-3) !important;
+}
+
+.senjani-card-img-container {
+    height: 240px;
+    overflow: hidden;
+    background-color: var(--senjani-2);
+}
+
+.senjani-product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.senjani-landing-product-card:hover .senjani-product-img {
+    transform: scale(1.05);
+}
+
+.senjani-wishlist-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none !important;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.senjani-wishlist-btn:hover,
+.senjani-wishlist-btn.active {
+    background-color: #fff !important;
+    transform: scale(1.1);
+}
+
+.senjani-wishlist-btn i {
+    color: var(--senjani-5);
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+
+.senjani-wishlist-btn:hover i,
+.senjani-wishlist-btn.active i {
+    color: #dc3545 !important;
+}
+
+.senjani-card-title-link {
+    font-family: var(--senjani-font-sans);
+    color: var(--senjani-5) !important;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 2.6rem;
+    line-height: 1.3;
+}
+
+.senjani-card-title-link:hover {
+    color: var(--senjani-4) !important;
+}
+
+.senjani-product-price {
+    font-family: var(--senjani-font-sans);
+    color: var(--senjani-5);
+    font-size: 1.1rem;
+}
+
+.senjani-rating-stars {
+    color: #ffc107;
+}
+
+/* Aesthetic Section */
+.senjani-aesthetic-card {
+    background-color: var(--senjani-2);
+    border: 1px solid var(--senjani-1);
+}
+
+.senjani-aesthetic-img-container {
+    height: 380px;
+    border-radius: 18px;
+}
+
+.senjani-aesthetic-subtitle {
+    font-family: var(--senjani-font-sans);
+    color: var(--senjani-5);
+    font-weight: 700;
+    font-size: 1.35rem;
+    letter-spacing: 0.5px;
+}
+
+.senjani-aesthetic-text {
+    font-family: var(--senjani-font-sans);
+    color: rgba(6, 5, 3, 0.75);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.senjani-btn-aesthetic {
+    background-color: var(--senjani-4) !important;
+    color: #fff !important;
+    font-family: var(--senjani-font-sans);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none !important;
+    display: flex;
+    width: fit-content;
+    margin-left: auto;
+}
+
+.senjani-btn-aesthetic:hover {
+    background-color: var(--senjani-5) !important;
+    transform: translateY(-2px);
+}
+
+/* Footer Customizations */
+#footer.text-white {
+    font-family: var(--senjani-font-sans);
+}
+
+.senjani-footer-links li a {
+    transition: color 0.2s ease, padding-left 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.senjani-footer-links li a:hover {
+    color: var(--senjani-4) !important;
+    padding-left: 4px;
+}
+
+.senjani-footer-socials a {
+    background-color: rgba(255, 255, 255, 0.05);
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.senjani-footer-socials a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.08);
+}
+
+/* Responsiveness adjustments */
+@media (max-width: 991.98px) {
+    .senjani-banner-title {
+        font-size: 3.5rem;
+        letter-spacing: 10px;
+    }
+
+    .senjani-banner-title .subtitle {
+        font-size: 2.8rem;
+        letter-spacing: 14px;
+    }
+
+    .senjani-hero-banner .senjani-banner-card {
+        height: 320px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .senjani-banner-title {
+        font-size: 2.5rem;
+        letter-spacing: 6px;
+    }
+
+    .senjani-banner-title .subtitle {
+        font-size: 2rem;
+        letter-spacing: 8px;
+    }
+
+    .senjani-hero-banner .senjani-banner-card {
+        height: 250px;
+    }
+
+    .senjani-category-img-wrapper {
+        width: 85px;
+        height: 85px;
+        border-radius: 12px;
+    }
+
+    .senjani-category-name {
+        font-size: 1rem;
+    }
+
+    .senjani-section-header .section-title {
+        font-size: 1.2rem;
+        padding: 8px 35px;
+    }
+
+    .senjani-card-img-container {
+        height: 180px;
+    }
+
+    .senjani-card-title-link {
+        font-size: 0.85rem;
+        height: 2.2rem;
+    }
+
+    .senjani-product-price {
+        font-size: 0.95rem;
+    }
+
+    .senjani-aesthetic-img-container {
+        height: 280px;
+    }
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Website Cart Discount Display Template -->
+        <template id="cart_discount_template" name="Cart Discount Display">
+            <!-- 
+            This template loads the cart discount JavaScript module.
+            The module automatically detects the cart total section and 
+            adds a discount row that displays calculated discounts.
+            
+            JavaScript Location: static/src/js/cart_discount.js
+            -->
+        </template>
+    </data>
+</odoo>
