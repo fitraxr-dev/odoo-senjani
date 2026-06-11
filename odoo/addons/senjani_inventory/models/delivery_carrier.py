@@ -13,19 +13,11 @@ class DeliveryCarrier(models.Model):
         ondelete={'jne': 'set default'},
     )
 
-    # -------------------------------------------------------------------------
-    # Helper: Ambil API key dari konfigurasi sistem
-    # -------------------------------------------------------------------------
     def _get_rajaongkir_api_key(self):
         return self.env['ir.config_parameter'].sudo().get_param('rajaongkir.api_key', '')
 
-    # -------------------------------------------------------------------------
-    # Hitung Ongkir menggunakan RajaOngkir Starter
-    # -------------------------------------------------------------------------
+
     def jne_rate_shipment(self, order):
-        """
-        Hitung ongkir JNE REG via RajaOngkir API.
-        """
         api_key = self._get_rajaongkir_api_key()
         if not api_key:
             return {
@@ -44,16 +36,12 @@ class DeliveryCarrier(models.Model):
         if total_weight_gram <= 0:
             total_weight_gram = 1000  # minimal 1 kg
 
-        # Ambil origin city ID dari alamat perusahaan (warehouse)
-        # Asumsikan Anda sudah mengisi city_id di partner perusahaan
         company = order.company_id or self.env.company
         origin_city_id = company.partner_id.city_id.rajaongkir_city_id if company.partner_id.city_id else False
         if not origin_city_id:
-            # Alternatif: gunakan default (misal Jakarta Pusat = 501)
             origin_city_id = 501
             _logger.warning("Origin city ID tidak ditemukan, menggunakan default 501")
 
-        # Ambil destination city ID dari alamat pengiriman
         dest_city_id = order.partner_shipping_id.city_id.rajaongkir_city_id if order.partner_shipping_id.city_id else False
         if not dest_city_id:
             # Bisa coba dari partner itu sendiri
@@ -125,13 +113,9 @@ class DeliveryCarrier(models.Model):
                 'warning_message': False,
             }
 
-    # -------------------------------------------------------------------------
-    # Generate Resi (Sementara dummy, karena RajaOngkir tidak menyediakan)
-    # -------------------------------------------------------------------------
     def jne_send_shipping(self, pickings):
         result = []
         for picking in pickings:
-            # Buat nomor resi dummy (nanti bisa diisi dari API JNE resmi jika punya)
             random_num = random.randint(10_000_000_000, 99_999_999_999)
             resi_number = f"JNE-REG-{random_num}"
             picking.x_no_resi = resi_number
