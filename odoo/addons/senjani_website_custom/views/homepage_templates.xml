@@ -233,88 +233,12 @@
         </div>
     </template>
 
-    <!-- Footer Override for Website Layout -->
-    <template id="senjani_custom_footer" inherit_id="website.layout" name="Senjani Custom Footer">
-        <xpath expr="//div[@id='footer']" position="replace">
-            <div id="footer" class="oe_structure oe_structure_solo text-white" style="background-color: #060503; border-top: 5px solid #FFBA64;" t-ignore="true" t-if="not no_footer">
-                <section class="s_text_block pt-5 pb-4">
-                    <div class="container">
-                        <div class="row g-4">
-                            <!-- Left Column: Logo -->
-                            <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-                                <div class="senjani-footer-brand mb-3 text-center">
-                                    <img src="/senjani_website_custom/static/src/img/Logo_footer.png" class="img-fluid" style="max-height: 220px; width: auto;" alt="Senjani Scarf"/>
-                                </div>
-                            </div>
-                            
-                            <!-- Column 2: Quick Links -->
-                            <div class="col-lg-3 col-md-6 text-center text-md-start">
-                                <h5 class="text-uppercase fw-bold mb-3 small" style="color: #FFBA64; font-family: 'Outfit', sans-serif; letter-spacing: 1px;">Quick Link</h5>
-                                <ul class="list-unstyled senjani-footer-links">
-                                    <li class="mb-2"><a href="/" class="text-white-50 text-decoration-none text-lowercase">home</a></li>
-                                    <li class="mb-2"><a href="/shop" class="text-white-50 text-decoration-none text-lowercase">shop</a></li>
-                                    <li class="mb-2"><a href="/about-us" class="text-white-50 text-decoration-none text-lowercase">about us</a></li>
-                                    <li class="mb-2"><a href="/contactus" class="text-white-50 text-decoration-none text-lowercase">contact us</a></li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Column 3: Company Links -->
-                            <div class="col-lg-3 col-md-6 text-center text-md-start">
-                                <h5 class="text-uppercase fw-bold mb-3 small" style="color: #FFBA64; font-family: 'Outfit', sans-serif; letter-spacing: 1px;">Company Link</h5>
-                                <ul class="list-unstyled senjani-footer-links">
-                                    <li class="mb-2"><a href="/privacy" class="text-white-50 text-decoration-none text-lowercase">privacy policy</a></li>
-                                    <li class="mb-2"><a href="/terms" class="text-white-50 text-decoration-none text-lowercase">terms of services</a></li>
-                                    <li class="mb-2"><a href="/refund" class="text-white-50 text-decoration-none text-lowercase">refund policy</a></li>
-                                    <li class="mb-2"><a href="/shipping" class="text-white-50 text-decoration-none text-lowercase">shipping policy</a></li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Column 4: Contact & Socials -->
-                            <div class="col-lg-3 col-md-6 text-center text-md-start text-white-50">
-                                <h5 class="text-uppercase fw-bold mb-3 small" style="color: #FFBA64; font-family: 'Outfit', sans-serif; letter-spacing: 1px;">Contact</h5>
-                                
-                                <div class="mb-3">
-                                    <h6 class="text-white mb-1 small text-lowercase" style="font-weight: 600;">opening hours</h6>
-                                    <p class="small mb-0">mon-fri: 09:00 - 17:00</p>
-                                    <p class="small mb-0">sat-sun: 09:00 - 15:00</p>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <h6 class="text-white mb-1 small text-lowercase" style="font-weight: 600;">email</h6>
-                                    <p class="small mb-0"><a href="mailto:hello@senjani.com" class="text-white-50 text-decoration-none">hello@senjani.com</a></p>
-                                </div>
-                                
-                                <div class="senjani-footer-socials d-flex justify-content-center justify-content-md-start gap-3 mt-3">
-                                    <a href="https://wa.me/..." target="_blank" class="text-decoration-none">
-                                        <i class="fa fa-whatsapp" style="color: #FFBA64; font-size: 1.5rem;"/>
-                                    </a>
-                                    <a href="https://instagram.com/..." target="_blank" class="text-decoration-none">
-                                        <i class="fa fa-instagram" style="color: #FFBA64; font-size: 1.5rem;"/>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </xpath>
-    </template>
-
     <!-- Load Google Fonts in the website layout head -->
     <template id="senjani_fonts" inherit_id="website.layout" name="Senjani Fonts">
         <xpath expr="//head" position="inside">
             <link rel="preconnect" href="https://fonts.googleapis.com"/>
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
             <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
-        </xpath>
-    </template>
-
-    <!-- Header Logo Override -->
-    <template id="senjani_header_logo" inherit_id="website.option_header_brand_logo" name="Senjani Header Logo Override">
-        <xpath expr="//a[@data-name='Navbar Logo']" position="replace">
-            <a data-name="Navbar Logo" href="/" t-attf-class="navbar-brand logo #{_link_class}">
-                <img src="/senjani_website_custom/static/src/img/Logo_header.png" class="img-fluid" style="max-height: 48px; width: auto;" alt="Senjani Scarf"/>
-            </a>
         </xpath>
     </template>
 </odoo>
