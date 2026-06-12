@@ -4,50 +4,49 @@
     <template id="senjani_homepage" inherit_id="website.homepage" name="Senjani Homepage Custom">
         <xpath expr="//div[@id='wrap']" position="replace">
             <div id="wrap" class="senjani-homepage-container">
-
+                
                 <!-- Hero Banner Section -->
                 <section class="senjani-hero-banner py-5">
                     <div class="container">
                         <div class="senjani-banner-card position-relative overflow-hidden shadow-lg">
                             <div class="senjani-banner-overlay d-flex align-items-center justify-content-center">
                                 <h1 class="senjani-banner-title text-center text-uppercase">
-                                    SENJANI<br/>
-                                <span class="subtitle">SCARF</span>
-                            </h1>
+                                    SENJANI<br/><span class="subtitle">SCARF</span>
+                                </h1>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- Kategori Section -->
-            <section class="senjani-categories-section py-4">
-                <div class="container">
-                    <div class="senjani-section-container p-4 p-md-5 rounded-5 shadow-sm">
-                        <div class="senjani-container-title-wrapper">
-                            <h2 class="senjani-container-title">Kategori</h2>
-                        </div>
-
-                        <!-- Categories Grid -->
-                        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-4 justify-content-center">
-                            <!-- Dynamic loop or static mockup placeholders -->
-                            <t t-set="public_categories" t-value="request.env['product.public.category'].search([], limit=10)"/>
-
-                            <t t-if="public_categories">
-                                <t t-foreach="public_categories" t-as="cat">
-                                    <div class="col text-center">
-                                        <a t-attf-href="/shop?category=#{cat.id}" class="senjani-category-link text-decoration-none">
-                                            <div class="senjani-category-img-wrapper mb-3 mx-auto shadow-sm">
-                                                <img t-if="cat.image_1920" t-attf-src="/web/image/product.public.category/#{cat.id}/image_1920" class="img-fluid senjani-category-img" t-att-alt="cat.name"/>
-                                                <img t-else="" src="/senjani_website_custom/static/src/img/Category_Section_placeholder.png" class="img-fluid senjani-category-img" t-att-alt="cat.name"/>
-                                            </div>
-                                            <span class="senjani-category-name" t-esc="cat.name"/>
-                                        </a>
-                                    </div>
+                <!-- Kategori Section -->
+                <section class="senjani-categories-section py-4">
+                    <div class="container">
+                        <div class="senjani-section-container p-4 p-md-5 rounded-5 shadow-sm">
+                            <div class="senjani-container-title-wrapper">
+                                <h2 class="senjani-container-title">Kategori</h2>
+                            </div>
+                            
+                            <!-- Categories Grid -->
+                            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-4 justify-content-center">
+                                <!-- Dynamic loop or static mockup placeholders -->
+                                <t t-set="public_categories" t-value="request.env['product.public.category'].search([], limit=10)"/>
+                                
+                                <t t-if="public_categories">
+                                    <t t-foreach="public_categories" t-as="cat">
+                                        <div class="col text-center">
+                                            <a t-attf-href="/shop?category=#{cat.id}" class="senjani-category-link text-decoration-none">
+                                                <div class="senjani-category-img-wrapper mb-3 mx-auto shadow-sm">
+                                                    <img t-if="cat.image_1920" t-attf-src="/web/image/product.public.category/#{cat.id}/image_1920" class="img-fluid senjani-category-img" t-att-alt="cat.name"/>
+                                                    <img t-else="" src="/senjani_website_custom/static/src/img/Category_Section_placeholder.png" class="img-fluid senjani-category-img" t-att-alt="cat.name"/>
+                                                </div>
+                                                <span class="senjani-category-name" t-esc="cat.name"/>
+                                            </a>
+                                        </div>
+                                    </t>
                                 </t>
-                            </t>
-                            <t t-else="">
-                                <!-- Fallback Mockup Categories -->
-                                <t t-set="mockup_cats" t-value="[
+                                <t t-else="">
+                                    <!-- Fallback Mockup Categories -->
+                                    <t t-set="mockup_cats" t-value="[
                                         {'name': 'Hijab'},
                                         {'name': 'Hijab'},
                                         {'name': 'Kaligrafi'},
@@ -59,281 +58,263 @@
                                         {'name': 'Tasbih'},
                                         {'name': 'Baju Koko'}
                                     ]"/>
-                                <t t-foreach="mockup_cats" t-as="cat">
-                                    <div class="col text-center">
-                                        <a href="/shop" class="senjani-category-link text-decoration-none">
-                                            <div class="senjani-category-img-wrapper mb-3 mx-auto shadow-sm">
-                                                <img src="/senjani_website_custom/static/src/img/Category_Section_placeholder.png" class="img-fluid senjani-category-img" t-att-alt="cat['name']"/>
-                                            </div>
-                                            <span class="senjani-category-name" t-esc="cat['name']"/>
-                                        </a>
-                                    </div>
+                                    <t t-foreach="mockup_cats" t-as="cat">
+                                        <div class="col text-center">
+                                            <a href="/shop" class="senjani-category-link text-decoration-none">
+                                                <div class="senjani-category-img-wrapper mb-3 mx-auto shadow-sm">
+                                                    <img src="/senjani_website_custom/static/src/img/Category_Section_placeholder.png" class="img-fluid senjani-category-img" t-att-alt="cat['name']"/>
+                                                </div>
+                                                <span class="senjani-category-name" t-esc="cat['name']"/>
+                                            </a>
+                                        </div>
+                                    </t>
                                 </t>
-                            </t>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Produk Terpopuler Section -->
-            <section class="senjani-products-section py-4">
-                <div class="container">
-                    <div class="senjani-section-container p-4 p-md-5 rounded-5 shadow-sm">
-                        <div class="senjani-container-title-wrapper">
-                            <h2 class="senjani-container-title">Produk Terpopuler</h2>
-                        </div>
-
-                        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4 justify-content-center">
-                            <t t-set="popular_products" t-value="list({p.name.strip(): p for p in request.env['product.template'].sudo().search([('website_published', '=', True)]).sorted(key='sales_count', reverse=True)}.values())[:5]"/>
-
-                            <t t-if="popular_products">
-                                <t t-foreach="popular_products" t-as="product">
-                                    <div class="col">
-                                        <t t-call="senjani_website_custom.senjani_custom_product_card"/>
-                                    </div>
-                                </t>
-                            </t>
-                            <t t-else="">
-                                <!-- Mockup fallback cards -->
-                                <t t-foreach="[1,2,3,4,5]" t-as="item">
-                                    <div class="col">
-                                        <t t-call="senjani_website_custom.senjani_mockup_product_card"/>
-                                    </div>
-                                </t>
-                            </t>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Produk Rekomendasi Section -->
-            <section class="senjani-products-section py-4">
-                <div class="container">
-                    <div class="senjani-section-container p-4 p-md-5 rounded-5 shadow-sm">
-                        <div class="senjani-container-title-wrapper">
-                            <h2 class="senjani-container-title">Produk Rekomendasi</h2>
-                        </div>
-
-                        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4 justify-content-center">
-                            <t t-set="rec_products" t-value="list({p.name.strip(): p for p in request.env['product.template'].sudo().search([('website_published', '=', True)]).sorted(key='qty_available', reverse=True)}.values())[:5]"/>
-
-                            <t t-if="rec_products">
-                                <t t-foreach="rec_products" t-as="product">
-                                    <div class="col">
-                                        <t t-call="senjani_website_custom.senjani_custom_product_card"/>
-                                    </div>
-                                </t>
-                            </t>
-                            <t t-else="">
-                                <!-- Mockup fallback cards -->
-                                <t t-foreach="[1,2,3,4,5]" t-as="item">
-                                    <div class="col">
-                                        <t t-call="senjani_website_custom.senjani_mockup_product_card"/>
-                                    </div>
-                                </t>
-                            </t>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Aesthetic Section -->
-            <section class="senjani-aesthetic-section py-5">
-                <div class="container">
-                    <div class="senjani-aesthetic-card p-4 p-md-5 rounded-4 shadow-sm">
-                        <div class="row align-items-center g-5">
-                            <div class="col-md-5">
-                                <div class="senjani-aesthetic-img-container overflow-hidden rounded-3 shadow-md">
-                                    <img src="/senjani_website_custom/static/src/img/Aesthetic_Section.png" class="img-fluid w-100 h-100 object-fit-cover" alt="The Aesthetic of Senjani"/>
-                                </div>
                             </div>
-                            <div class="col-md-7">
-                                <div class="senjani-aesthetic-content px-md-3">
-                                    <h3 class="senjani-aesthetic-subtitle text-uppercase mb-3">Estetika Senjani</h3>
-                                    <p class="senjani-aesthetic-text mb-4">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Produk Terpopuler Section -->
+                <section class="senjani-products-section py-4">
+                    <div class="container">
+                        <div class="senjani-section-container p-4 p-md-5 rounded-5 shadow-sm">
+                            <div class="senjani-container-title-wrapper">
+                                <h2 class="senjani-container-title">Produk Terpopuler</h2>
+                            </div>
+                            
+                            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4 justify-content-center">
+                                <t t-set="popular_products" t-value="list({p.name.strip(): p for p in request.env['product.template'].sudo().search([('website_published', '=', True)]).sorted(key='sales_count', reverse=True)}.values())[:5]"/>
+                                
+                                <t t-if="popular_products">
+                                    <t t-foreach="popular_products" t-as="product">
+                                        <div class="col">
+                                            <t t-call="senjani_website_custom.senjani_custom_product_card"/>
+                                        </div>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <!-- Mockup fallback cards -->
+                                    <t t-foreach="[1,2,3,4,5]" t-as="item">
+                                        <div class="col">
+                                            <t t-call="senjani_website_custom.senjani_mockup_product_card"/>
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Produk Rekomendasi Section -->
+                <section class="senjani-products-section py-4">
+                    <div class="container">
+                        <div class="senjani-section-container p-4 p-md-5 rounded-5 shadow-sm">
+                            <div class="senjani-container-title-wrapper">
+                                <h2 class="senjani-container-title">Produk Rekomendasi</h2>
+                            </div>
+                            
+                            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4 justify-content-center">
+                                <t t-set="rec_products" t-value="list({p.name.strip(): p for p in request.env['product.template'].sudo().search([('website_published', '=', True)]).sorted(key='qty_available', reverse=True)}.values())[:5]"/>
+                                
+                                <t t-if="rec_products">
+                                    <t t-foreach="rec_products" t-as="product">
+                                        <div class="col">
+                                            <t t-call="senjani_website_custom.senjani_custom_product_card"/>
+                                        </div>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <!-- Mockup fallback cards -->
+                                    <t t-foreach="[1,2,3,4,5]" t-as="item">
+                                        <div class="col">
+                                            <t t-call="senjani_website_custom.senjani_mockup_product_card"/>
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Aesthetic Section -->
+                <section class="senjani-aesthetic-section py-5">
+                    <div class="container">
+                        <div class="senjani-aesthetic-card p-4 p-md-5 rounded-4 shadow-sm">
+                            <div class="row align-items-center g-5">
+                                <div class="col-md-5">
+                                    <div class="senjani-aesthetic-img-container overflow-hidden rounded-3 shadow-md">
+                                        <img src="/senjani_website_custom/static/src/img/Aesthetic_Section.png" class="img-fluid w-100 h-100 object-fit-cover" alt="The Aesthetic of Senjani"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="senjani-aesthetic-content px-md-3">
+                                        <h3 class="senjani-aesthetic-subtitle text-uppercase mb-3">Estetika Senjani</h3>
+                                        <p class="senjani-aesthetic-text mb-4">
                                             Senjani Scarf lahir dari apresiasi terhadap keanggunan abadi dan kenyamanan sehari-hari. Terinspirasi oleh warna senja yang hangat dan menenangkan, kami menghadirkan selendang premium yang dirancang untuk melengkapi gaya hidup modern Anda. Setiap helai dibuat dengan cermat menggunakan kain berkualitas tinggi yang jatuh dengan indah, memastikan Anda tampil anggun dan merasa percaya diri sepanjang hari.
-                                    </p>
-                                    <a href="/shop" class="btn btn-lg senjani-btn-aesthetic px-5 py-3 text-uppercase shadow-sm">Telusuri Lebih Lanjut</a>
+                                        </p>
+                                        <a href="/shop" class="btn btn-lg senjani-btn-aesthetic px-5 py-3 text-uppercase shadow-sm">Telusuri Lebih Lanjut</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-        </div>
-    </xpath>
-</template>
-
-<!-- Custom Reusable Product Card (Dynamic Odoo Data) -->
-<template id="senjani_custom_product_card" name="Senjani Custom Product Card">
-    <div class="card h-100 senjani-landing-product-card border-0 shadow-sm overflow-hidden">
-        <div class="position-relative senjani-card-img-container">
-            <a t-attf-href="/shop/product/#{product.id}">
-                <img t-if="product.image_512" t-attf-src="/web/image/product.template/#{product.id}/image_512" class="card-img-top senjani-product-img" t-att-alt="product.name"/>
-                <img t-else="" src="/senjani_website_custom/static/src/img/senjani_placeholder.png" class="card-img-top senjani-product-img" t-att-alt="product.name"/>
-            </a>
-            <!-- Wishlist Heart Icon overlay -->
-            <button class="btn btn-light rounded-circle position-absolute top-0 end-0 m-3 shadow-sm senjani-wishlist-btn o_add_to_wishlist" t-att-data-product-template-id="product.id" t-att-data-product-product-id="product.product_variant_id.id">
-                <i class="fa fa-heart"/>
-            </button>
-        </div>
-        <div class="card-body p-3 d-flex flex-column justify-content-between">
-            <div>
-                <h5 class="card-title mb-1">
-                    <a t-attf-href="/shop/product/#{product.id}" t-esc="product.name" class="text-decoration-none text-dark fw-bold senjani-card-title-link"/>
-                </h5>
-                <!-- Star Ratings -->
-                <div class="senjani-rating-stars mb-2 small">
-                    <i class="fa fa-star text-warning"/>
-                    <i class="fa fa-star text-warning"/>
-                    <i class="fa fa-star text-warning"/>
-                    <i class="fa fa-star text-warning"/>
-                    <i class="fa fa-star-o text-secondary"/>
-                    <span class="text-muted small ms-1">(92)</span>
-                </div>
             </div>
-            <div class="d-flex align-items-center justify-content-between mt-2">
-                <span class="senjani-product-price fw-bold" t-field="product.list_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
-            </div>
-        </div>
-    </div>
-</template>
+        </xpath>
+    </template>
 
-<!-- Custom Reusable Product Card (Mockup Fallback Data) -->
-<template id="senjani_mockup_product_card" name="Senjani Mockup Product Card">
-    <div class="card h-100 senjani-landing-product-card border-0 shadow-sm overflow-hidden">
-        <div class="position-relative senjani-card-img-container">
-            <a href="/shop">
-                <img src="/senjani_website_custom/static/src/img/senjani_placeholder.png" class="card-img-top senjani-product-img" alt="Muslimah Fashion 1"/>
-            </a>
-            <!-- Wishlist Heart Icon overlay -->
-            <button class="btn btn-light rounded-circle position-absolute top-0 end-0 m-3 shadow-sm senjani-wishlist-btn o_add_to_wishlist">
-                <i class="fa fa-heart"/>
-            </button>
-        </div>
-        <div class="card-body p-3 d-flex flex-column justify-content-between">
-            <div>
-                <h5 class="card-title mb-1">
-                    <a href="/shop" class="text-decoration-none text-dark fw-bold senjani-card-title-link">Muslimah Fashion 1</a>
-                </h5>
-                <!-- Star Ratings -->
-                <div class="senjani-rating-stars mb-2 small">
-                    <i class="fa fa-star text-warning"/>
-                    <i class="fa fa-star text-warning"/>
-                    <i class="fa fa-star text-warning"/>
-                    <i class="fa fa-star text-warning"/>
-                    <i class="fa fa-star-o text-secondary"/>
-                    <span class="text-muted small ms-1">(92)</span>
+    <!-- Custom Reusable Product Card (Dynamic Odoo Data) -->
+    <template id="senjani_custom_product_card" name="Senjani Custom Product Card">
+        <div class="card h-100 senjani-landing-product-card border-0 shadow-sm overflow-hidden">
+            <div class="position-relative senjani-card-img-container">
+                <a t-attf-href="/shop/product/#{product.id}">
+                    <img t-if="product.image_512" t-attf-src="/web/image/product.template/#{product.id}/image_512" class="card-img-top senjani-product-img" t-att-alt="product.name"/>
+                    <img t-else="" src="/senjani_website_custom/static/src/img/senjani_placeholder.png" class="card-img-top senjani-product-img" t-att-alt="product.name"/>
+                </a>
+                <!-- Wishlist Heart Icon overlay -->
+                <button class="btn btn-light rounded-circle position-absolute top-0 end-0 m-3 shadow-sm senjani-wishlist-btn o_add_to_wishlist" t-att-data-product-template-id="product.id" t-att-data-product-product-id="product.product_variant_id.id">
+                    <i class="fa fa-heart"/>
+                </button>
+            </div>
+            <div class="card-body p-3 d-flex flex-column justify-content-between">
+                <div>
+                    <h5 class="card-title mb-1">
+                        <a t-attf-href="/shop/product/#{product.id}" t-esc="product.name" class="text-decoration-none text-dark fw-bold senjani-card-title-link"/>
+                    </h5>
+                    <!-- Star Ratings -->
+                    <div class="senjani-rating-stars mb-2 small">
+                        <i class="fa fa-star text-warning"/>
+                        <i class="fa fa-star text-warning"/>
+                        <i class="fa fa-star text-warning"/>
+                        <i class="fa fa-star text-warning"/>
+                        <i class="fa fa-star-o text-secondary"/>
+                        <span class="text-muted small ms-1">(92)</span>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-between mt-2">
+                    <span class="senjani-product-price fw-bold" t-field="product.list_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
                 </div>
             </div>
-            <div class="d-flex align-items-center justify-content-between mt-2">
-                <span class="senjani-product-price fw-bold">Rp 131.000,00</span>
+        </div>
+    </template>
+
+    <!-- Custom Reusable Product Card (Mockup Fallback Data) -->
+    <template id="senjani_mockup_product_card" name="Senjani Mockup Product Card">
+        <div class="card h-100 senjani-landing-product-card border-0 shadow-sm overflow-hidden">
+            <div class="position-relative senjani-card-img-container">
+                <a href="/shop">
+                    <img src="/senjani_website_custom/static/src/img/senjani_placeholder.png" class="card-img-top senjani-product-img" alt="Muslimah Fashion 1"/>
+                </a>
+                <!-- Wishlist Heart Icon overlay -->
+                <button class="btn btn-light rounded-circle position-absolute top-0 end-0 m-3 shadow-sm senjani-wishlist-btn o_add_to_wishlist">
+                    <i class="fa fa-heart"/>
+                </button>
+            </div>
+            <div class="card-body p-3 d-flex flex-column justify-content-between">
+                <div>
+                    <h5 class="card-title mb-1">
+                        <a href="/shop" class="text-decoration-none text-dark fw-bold senjani-card-title-link">Muslimah Fashion 1</a>
+                    </h5>
+                    <!-- Star Ratings -->
+                    <div class="senjani-rating-stars mb-2 small">
+                        <i class="fa fa-star text-warning"/>
+                        <i class="fa fa-star text-warning"/>
+                        <i class="fa fa-star text-warning"/>
+                        <i class="fa fa-star text-warning"/>
+                        <i class="fa fa-star-o text-secondary"/>
+                        <span class="text-muted small ms-1">(92)</span>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-between mt-2">
+                    <span class="senjani-product-price fw-bold">Rp 131.000,00</span>
+                </div>
             </div>
         </div>
-    </div>
-</template>
+    </template>
 
-<!-- Footer Override for Website Layout -->
-<template id="senjani_custom_footer" inherit_id="website.layout" name="Senjani Custom Footer">
-    <xpath expr="//footer" position="replace">
-        <footer id="footer" class="oe_structure oe_structure_solo text-white" style="background-color: #060503; border-top: 5px solid #FFBA64;" t-ignore="true" t-if="not no_footer">
-            <section class="s_text_block pt-5 pb-4">
-                <div class="container">
-                    <div class="row g-4">
-                        <!-- Left Column: Logo -->
-                        <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-                            <div class="senjani-footer-brand mb-3 text-center">
-                                <img src="/senjani_website_custom/static/src/img/Logo_footer.png" class="img-fluid" style="max-height: 220px; width: auto;" alt="Senjani Scarf"/>
+    <!-- Footer Override for Website Layout -->
+    <template id="senjani_custom_footer" inherit_id="website.layout" name="Senjani Custom Footer">
+        <xpath expr="//div[@id='footer']" position="replace">
+            <div id="footer" class="oe_structure oe_structure_solo text-white" style="background-color: #060503; border-top: 5px solid #FFBA64;" t-ignore="true" t-if="not no_footer">
+                <section class="s_text_block pt-5 pb-4">
+                    <div class="container">
+                        <div class="row g-4">
+                            <!-- Left Column: Logo -->
+                            <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
+                                <div class="senjani-footer-brand mb-3 text-center">
+                                    <img src="/senjani_website_custom/static/src/img/Logo_footer.png" class="img-fluid" style="max-height: 220px; width: auto;" alt="Senjani Scarf"/>
+                                </div>
                             </div>
-                        </div>
-
-                        <!-- Column 2: Quick Links -->
-                        <div class="col-lg-3 col-md-6 text-center text-md-start">
-                            <h5 class="text-uppercase fw-bold mb-3 small" style="color: #FFBA64; font-family: 'Outfit', sans-serif; letter-spacing: 1px;">Quick Link</h5>
-                            <ul class="list-unstyled senjani-footer-links">
-                                <li class="mb-2">
-                                    <a href="/" class="text-white-50 text-decoration-none text-lowercase">home</a>
-                                </li>
-                                <li class="mb-2">
-                                    <a href="/shop" class="text-white-50 text-decoration-none text-lowercase">shop</a>
-                                </li>
-                                <li class="mb-2">
-                                    <a href="/about-us" class="text-white-50 text-decoration-none text-lowercase">about us</a>
-                                </li>
-                                <li class="mb-2">
-                                    <a href="/contactus" class="text-white-50 text-decoration-none text-lowercase">contact us</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Column 3: Company Links -->
-                        <div class="col-lg-3 col-md-6 text-center text-md-start">
-                            <h5 class="text-uppercase fw-bold mb-3 small" style="color: #FFBA64; font-family: 'Outfit', sans-serif; letter-spacing: 1px;">Company Link</h5>
-                            <ul class="list-unstyled senjani-footer-links">
-                                <li class="mb-2">
-                                    <a href="/privacy" class="text-white-50 text-decoration-none text-lowercase">privacy policy</a>
-                                </li>
-                                <li class="mb-2">
-                                    <a href="/terms" class="text-white-50 text-decoration-none text-lowercase">terms of services</a>
-                                </li>
-                                <li class="mb-2">
-                                    <a href="/refund" class="text-white-50 text-decoration-none text-lowercase">refund policy</a>
-                                </li>
-                                <li class="mb-2">
-                                    <a href="/shipping" class="text-white-50 text-decoration-none text-lowercase">shipping policy</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Column 4: Contact & Socials -->
-                        <div class="col-lg-3 col-md-6 text-center text-md-start text-white-50">
-                            <h5 class="text-uppercase fw-bold mb-3 small" style="color: #FFBA64; font-family: 'Outfit', sans-serif; letter-spacing: 1px;">Contact</h5>
-
-                            <div class="mb-3">
-                                <h6 class="text-white mb-1 small text-lowercase" style="font-weight: 600;">opening hours</h6>
-                                <p class="small mb-0">mon-fri: 09:00 - 17:00</p>
-                                <p class="small mb-0">sat-sun: 09:00 - 15:00</p>
+                            
+                            <!-- Column 2: Quick Links -->
+                            <div class="col-lg-3 col-md-6 text-center text-md-start">
+                                <h5 class="text-uppercase fw-bold mb-3 small" style="color: #FFBA64; font-family: 'Outfit', sans-serif; letter-spacing: 1px;">Quick Link</h5>
+                                <ul class="list-unstyled senjani-footer-links">
+                                    <li class="mb-2"><a href="/" class="text-white-50 text-decoration-none text-lowercase">home</a></li>
+                                    <li class="mb-2"><a href="/shop" class="text-white-50 text-decoration-none text-lowercase">shop</a></li>
+                                    <li class="mb-2"><a href="/about-us" class="text-white-50 text-decoration-none text-lowercase">about us</a></li>
+                                    <li class="mb-2"><a href="/contactus" class="text-white-50 text-decoration-none text-lowercase">contact us</a></li>
+                                </ul>
                             </div>
-
-                            <div class="mb-3">
-                                <h6 class="text-white mb-1 small text-lowercase" style="font-weight: 600;">email</h6>
-                                <p class="small mb-0">
-                                    <a href="mailto:hello@senjani.com" class="text-white-50 text-decoration-none">hello@senjani.com</a>
-                                </p>
+                            
+                            <!-- Column 3: Company Links -->
+                            <div class="col-lg-3 col-md-6 text-center text-md-start">
+                                <h5 class="text-uppercase fw-bold mb-3 small" style="color: #FFBA64; font-family: 'Outfit', sans-serif; letter-spacing: 1px;">Company Link</h5>
+                                <ul class="list-unstyled senjani-footer-links">
+                                    <li class="mb-2"><a href="/privacy" class="text-white-50 text-decoration-none text-lowercase">privacy policy</a></li>
+                                    <li class="mb-2"><a href="/terms" class="text-white-50 text-decoration-none text-lowercase">terms of services</a></li>
+                                    <li class="mb-2"><a href="/refund" class="text-white-50 text-decoration-none text-lowercase">refund policy</a></li>
+                                    <li class="mb-2"><a href="/shipping" class="text-white-50 text-decoration-none text-lowercase">shipping policy</a></li>
+                                </ul>
                             </div>
-
-                            <div class="senjani-footer-socials d-flex justify-content-center justify-content-md-start gap-3 mt-3">
-                                <a href="https://wa.me/..." target="_blank" class="text-decoration-none">
-                                    <i class="fa fa-whatsapp" style="color: #FFBA64; font-size: 1.5rem;"/>
-                                </a>
-                                <a href="https://instagram.com/..." target="_blank" class="text-decoration-none">
-                                    <i class="fa fa-instagram" style="color: #FFBA64; font-size: 1.5rem;"/>
-                                </a>
+                            
+                            <!-- Column 4: Contact & Socials -->
+                            <div class="col-lg-3 col-md-6 text-center text-md-start text-white-50">
+                                <h5 class="text-uppercase fw-bold mb-3 small" style="color: #FFBA64; font-family: 'Outfit', sans-serif; letter-spacing: 1px;">Contact</h5>
+                                
+                                <div class="mb-3">
+                                    <h6 class="text-white mb-1 small text-lowercase" style="font-weight: 600;">opening hours</h6>
+                                    <p class="small mb-0">mon-fri: 09:00 - 17:00</p>
+                                    <p class="small mb-0">sat-sun: 09:00 - 15:00</p>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <h6 class="text-white mb-1 small text-lowercase" style="font-weight: 600;">email</h6>
+                                    <p class="small mb-0"><a href="mailto:hello@senjani.com" class="text-white-50 text-decoration-none">hello@senjani.com</a></p>
+                                </div>
+                                
+                                <div class="senjani-footer-socials d-flex justify-content-center justify-content-md-start gap-3 mt-3">
+                                    <a href="https://wa.me/..." target="_blank" class="text-decoration-none">
+                                        <i class="fa fa-whatsapp" style="color: #FFBA64; font-size: 1.5rem;"/>
+                                    </a>
+                                    <a href="https://instagram.com/..." target="_blank" class="text-decoration-none">
+                                        <i class="fa fa-instagram" style="color: #FFBA64; font-size: 1.5rem;"/>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </footer>
-    </xpath>
-</template>
+                </section>
+            </div>
+        </xpath>
+    </template>
 
-<!-- Load Google Fonts in the website layout head -->
-<template id="senjani_fonts" inherit_id="website.layout" name="Senjani Fonts">
-    <xpath expr="//head" position="inside">
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
-        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
-    </xpath>
-</template>
+    <!-- Load Google Fonts in the website layout head -->
+    <template id="senjani_fonts" inherit_id="website.layout" name="Senjani Fonts">
+        <xpath expr="//head" position="inside">
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+            <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+        </xpath>
+    </template>
 
-<!-- Header Logo Override -->
-<template id="senjani_header_logo" inherit_id="website.option_header_brand_logo" name="Senjani Header Logo Override">
-    <xpath expr="//a[@data-name='Navbar Logo']" position="replace">
-        <a data-name="Navbar Logo" href="/" t-attf-class="navbar-brand logo #{_link_class}">
-            <img src="/senjani_website_custom/static/src/img/Logo_header.png" class="img-fluid" style="max-height: 48px; width: auto;" alt="Senjani Scarf"/>
-        </a>
-    </xpath>
-</template>
+    <!-- Header Logo Override -->
+    <template id="senjani_header_logo" inherit_id="website.option_header_brand_logo" name="Senjani Header Logo Override">
+        <xpath expr="//a[@data-name='Navbar Logo']" position="replace">
+            <a data-name="Navbar Logo" href="/" t-attf-class="navbar-brand logo #{_link_class}">
+                <img src="/senjani_website_custom/static/src/img/Logo_header.png" class="img-fluid" style="max-height: 48px; width: auto;" alt="Senjani Scarf"/>
+            </a>
+        </xpath>
+    </template>
 </odoo>
