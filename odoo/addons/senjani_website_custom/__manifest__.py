@@ -12,7 +12,6 @@
         'views/products_templates.xml',
         'views/pdp_templates.xml',
         'views/order_detail_templates.xml',
-        'views/ir_asset_data.xml',
         'views/website_layout_templates.xml',
         'views/login_templates.xml',
         'views/cart_templates.xml',
