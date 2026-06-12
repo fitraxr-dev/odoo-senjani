@@ -1,5 +1,4 @@
 from odoo import models, fields, api, _
-# pyrefly: ignore [missing-import]
 from odoo.exceptions import UserError
 import logging
 
@@ -8,6 +7,9 @@ _logger = logging.getLogger(__name__)
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
+    # ===========================
+    # Custom Fields untuk Pengiriman JNE
+    # ===========================
     x_no_resi = fields.Char(
         string='No. Resi',
         copy=False,
@@ -38,6 +40,9 @@ class StockPicking(models.Model):
         store=True
     )
 
+    # ===========================
+    # Compute Methods
+    # ===========================
     def _compute_x_tracking_link(self):
         """Generate link tracking berdasarkan nomor resi dan carrier"""
         for picking in self:
@@ -57,8 +62,13 @@ class StockPicking(models.Model):
                 # Default: tidak ada link
                 picking.x_tracking_link = False
 
+    # ===========================
+    # Override Methods
+    # ===========================
     def action_confirm(self):
+        """Override jika perlu aksi khusus saat konfirmasi picking"""
         res = super(StockPicking, self).action_confirm()
+        # Bisa tambahkan logika disini jika diperlukan
         return res
 
     def button_validate(self):
@@ -79,6 +89,7 @@ class StockPicking(models.Model):
         return res
 
     def action_open_tracking_link(self):
+        """Action untuk membuka link tracking dari tree/form"""
         self.ensure_one()
         if self.x_tracking_link:
             return {
@@ -95,6 +106,9 @@ class StockPicking(models.Model):
             raise UserError(_('Belum ada nomor resi.'))
         self.x_tracking_status = "Tracking resi " + self.x_no_resi + " berhasil diperbarui."
 
+    # ===========================
+    # Helper Methods untuk Integrasi
+    # ===========================
     def _get_shipping_weight(self):
         """Hitung total berat picking dalam gram untuk kebutuhan API"""
         total_kg = sum(move.product_id.weight * move.product_uom_qty for move in self.move_ids if move.product_id.weight)
