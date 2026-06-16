@@ -5,7 +5,8 @@
     'author': 'Tim Senjani',
     'license': 'LGPL-3',
     'category': 'Sales/Sales',
-    'depends': ['sale', 'account', 'senjani_website_custom'],
+    'depends': ['sale', 'account', 'senjani_odoo_core'],
+    'auto_install': True,
     'data': [
         'views/sale_order_views.xml',
         'views/sale_make_invoice_advance_views.xml',
