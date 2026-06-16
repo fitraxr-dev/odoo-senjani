@@ -16,6 +16,7 @@
         'views/login_templates.xml',
         'views/cart_templates.xml',
         'views/homepage_templates.xml',
+        'views/address_templates.xml',
     ],
     'assets': {
         'web.assets_frontend': [
@@ -24,6 +25,7 @@
             'senjani_website_custom/static/src/css/product_reviews.css',
             'senjani_website_custom/static/src/css/order_detail.css',
             'senjani_website_custom/static/src/css/theme_styles.css',
+            'senjani_website_custom/static/src/css/address_form.css',
             'senjani_website_custom/static/src/xml/stock_availability.xml',
             'senjani_website_custom/static/src/css/homepage.css',
             'senjani_website_custom/static/src/js/cart_discount.js',
