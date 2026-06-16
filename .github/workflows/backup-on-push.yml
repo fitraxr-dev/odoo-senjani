@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             echo "🔗 Terhubung ke server. Memulai script backup..."
-            /home/azureuser/scripts/backup_odoo.sh
+            bash /home/azureuser/scripts/backup_odoo.sh
             
       - name: Backup Completed
         if: success()
