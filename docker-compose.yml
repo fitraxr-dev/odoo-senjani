@@ -24,16 +24,32 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      mailhog:
+        condition: service_started
     ports:
       - "8069:8069"
     environment:
       HOST: db
       USER: odoo
       PASSWORD: odoo
+      # --- Konfigurasi SMTP untuk Mailhog ---
+      SMTP_SERVER: mailhog
+      SMTP_PORT: 1025
+      SMTP_USER: ""
+      SMTP_PASSWORD: ""
+      SMTP_SSL: False
     volumes:
       - odoo_data:/var/lib/odoo
       - ./odoo/conf/odoo.conf:/etc/odoo/odoo.conf
       - ./odoo/addons:/mnt/extra-addons
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: odoo18-mailhog
+    restart: unless-stopped
+    ports:
+      - "1025:1025"
+      - "8025:8025"
 
 volumes:
   postgres_data:
