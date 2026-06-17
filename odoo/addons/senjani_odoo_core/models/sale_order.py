@@ -5,11 +5,10 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     senjani_order_status = fields.Selection([
-        ('pending', 'Pending'),
-        ('diproses', 'Diproses'),
-        ('dikirim', 'Dikirim'),
-        ('diterima', 'Diterima'),
-        ('selesai', 'Selesai'),
+        ('PENDING', 'Pending'),
+        ('PROCESSED', 'Diproses'),
+        ('IN_DELIVERY', 'Dikirim'),
+        ('DONE', 'Selesai'),
     ], string='Senjani Order Status', compute='_compute_senjani_order_status', store=True)
 
     senjani_tracking_ref = fields.Char(
