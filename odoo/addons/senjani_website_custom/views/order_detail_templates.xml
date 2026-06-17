@@ -545,7 +545,7 @@
                                         <div class="senjani-order-item-variant">
                                             <t t-foreach="variant_values" t-as="ptav">
                                                 <t t-out="ptav.display_name"/>
-                                                <t t-if="not ptav_foreach.last">, </t>
+                                                <t t-if="not ptav_last">, </t>
                                             </t>
                                         </div>
                                     </t>
