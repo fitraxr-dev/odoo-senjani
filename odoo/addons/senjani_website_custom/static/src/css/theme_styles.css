@@ -340,63 +340,7 @@ footer#bottom.o_footer {
     color: var(--senjani-gold) !important;
 }
 
-/* Divider "Or" */
-.senjani-login-divider {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: var(--senjani-gray);
-    font-size: 0.9rem;
-    margin: 2rem 0;
-}
 
-.senjani-login-divider::before,
-.senjani-login-divider::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #E5E5E5;
-}
-
-.senjani-login-divider:not(:empty)::before {
-    margin-right: 1.5em;
-}
-
-.senjani-login-divider:not(:empty)::after {
-    margin-left: 1.5em;
-}
-
-/* Social Login Buttons */
-.senjani-social-buttons {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 2.5rem;
-}
-
-.btn-senjani-social {
-    flex: 1;
-    background-color: #FFFFFF !important;
-    border: 1px solid #E5E5E5 !important;
-    border-radius: 8px !important;
-    padding: 10px !important;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--senjani-dark) !important;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    text-decoration: none !important;
-    transition: background-color 0.2s ease;
-}
-
-.btn-senjani-social:hover {
-    background-color: #FAFAFA !important;
-}
-
-.btn-senjani-social img {
-    height: 18px;
-    width: auto;
-}
 
 /* Signup Redirect link */
 .senjani-login-footer {
