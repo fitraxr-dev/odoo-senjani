@@ -7,6 +7,7 @@
     'auto_install': True,
     'data': [
         'views/delivery_carrier_views.xml',
+        'views/stock_picking_views.xml',
     ],
     'installable': True,
     'application': False,

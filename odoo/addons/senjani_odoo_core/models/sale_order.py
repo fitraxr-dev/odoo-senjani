@@ -37,24 +37,23 @@ class SaleOrder(models.Model):
 
             if not pickings or all(p.state == 'cancel' for p in pickings):
                 if order.state == 'done':
-                    order.senjani_order_status = 'selesai'
+                    order.senjani_order_status = 'DONE'
                 elif order.state == 'sale':
-                    order.senjani_order_status = 'pending'
+                    order.senjani_order_status = 'PENDING'
                 else:
-                    order.senjani_order_status = 'pending'
+                    order.senjani_order_status = 'PENDING'
             elif all(p.state in ('done', 'cancel') for p in pickings):
                 if order.state == 'done':
-                    order.senjani_order_status = 'selesai'
+                    order.senjani_order_status = 'DONE'
                 else:
-                    order.senjani_order_status = 'diterima'
-            elif done_pickings and not active_pickings:
-                order.senjani_order_status = 'diterima'
+                    # Semua pengiriman selesai, order belum di-done → Dikirim
+                    order.senjani_order_status = 'IN_DELIVERY'
             elif done_pickings:
-                order.senjani_order_status = 'dikirim'
+                order.senjani_order_status = 'IN_DELIVERY'
             elif active_pickings:
-                order.senjani_order_status = 'diproses'
+                order.senjani_order_status = 'PROCESSED'
             else:
-                order.senjani_order_status = 'pending'
+                order.senjani_order_status = 'PENDING'
 
     def _compute_senjani_tracking_info(self):
         for order in self:
