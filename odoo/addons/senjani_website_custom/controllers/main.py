@@ -2,6 +2,7 @@ from odoo import http
 from odoo.http import request
 from odoo.addons.website_sale.controllers.main import WebsiteSale
 from odoo.osv import expression
+from odoo.addons.portal.controllers.portal import CustomerPortal
 
 class SenjaniWebsiteSale(WebsiteSale):
     def _get_shop_domain(self, search, category, attrib_values, search_in_description=True):
@@ -64,3 +65,23 @@ class SenjaniWebsiteSale(WebsiteSale):
             'category_id': request.httprequest.args.getlist('category_id'),
         })
         return res
+
+
+class SenjaniPortal(CustomerPortal):
+
+    @http.route(['/my/orders/<int:order_id>/mark-received'], type='http',
+                auth='user', methods=['POST'], website=True, csrf=True)
+    def portal_mark_order_received(self, order_id, **kw):
+        """Endpoint untuk pelanggan menandai pesanan sudah diterima."""
+        order = request.env['sale.order'].sudo().search([
+            ('id', '=', order_id),
+            ('partner_id', '=', request.env.user.partner_id.id),
+        ], limit=1)
+
+        if not order:
+            return request.redirect('/my/orders')
+
+        if order.senjani_order_status == 'IN_DELIVERY':
+            order.sudo().write({'senjani_order_status': 'DONE'})
+
+        return request.redirect(order.get_portal_url())
