@@ -9,7 +9,7 @@
         <!-- Override the cart page heading and add breadcrumb -->
         <template id="shop_cart_senjani" inherit_id="website_sale.cart" name="Senjani Cart Page">
             <!-- Replace the default "Order overview" h3 with Senjani-styled heading + breadcrumb -->
-            <xpath expr="//h3[contains(text(),'Order overview')]" position="replace">
+            <xpath expr="//div[@class='col']/h3" position="replace">
                 <!-- Google Fonts Link for Poppins -->
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
@@ -84,10 +84,23 @@
                                          </div>
                                      </t>
                                      
-                                     <!-- Variant drop-down badge / label -->
-                                     <div class="cart-product-variant-badge d-flex align-items-center gap-1">
-                                         <span class="cart-product-variant-text">Type</span>
-                                         <i class="fa fa-caret-down text-dark opacity-50"/>
+                                     <!-- Variant drop-down badge / label with details -->
+                                     <div class="dropdown">
+                                         <button class="btn p-0 border-0 cart-product-variant-badge d-flex align-items-center gap-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                             <span class="cart-product-variant-text">Type</span>
+                                         </button>
+                                         <ul class="dropdown-menu p-3 shadow-sm border-0" style="border-radius: 8px; font-size: 14px;">
+                                             <t t-if="line.product_id.product_template_attribute_value_ids">
+                                                 <t t-foreach="line.product_id.product_template_attribute_value_ids" t-as="ptav">
+                                                     <li class="mb-1 text-start">
+                                                         <span class="fw-bold" t-esc="ptav.attribute_id.name"/>: <span class="text-muted" t-esc="ptav.name"/>
+                                                     </li>
+                                                 </t>
+                                             </t>
+                                             <t t-else="">
+                                                 <li class="text-muted text-start">Standard</li>
+                                             </t>
+                                         </ul>
                                      </div>
 
                                      <!-- Odoo Wishlist / delete container target -->
@@ -165,7 +178,7 @@
         <!-- Override the coupon form -->
         <template id="coupon_form_senjani" inherit_id="website_sale.coupon_form" name="Senjani Coupon Form">
             <xpath expr="//input[@name='promo']" position="attributes">
-                <attribute name="placeholder">Coupon code....</attribute>
+                <attribute name="placeholder">Coupun code....</attribute>
             </xpath>
             <xpath expr="//a[contains(@class, 'a-submit')]" position="replace">
                 <a href="#" role="button" class="btn btn-secondary a-submit">Terapkan</a>
@@ -177,8 +190,12 @@
         <template id="total_senjani" inherit_id="website_sale.total" name="Senjani Total Override">
             <!-- Remove delivery row from order summary -->
             <xpath expr="//tr[@id='order_delivery']" position="replace"/>
+            <!-- Rename Taxes to Tax Fee in summary -->
+            <xpath expr="//tr[@id='order_total_taxes']/td[1]" position="replace">
+                <td colspan="2" class="text-muted border-0 ps-0 pt-0 pb-3">Tax Fee</td>
+            </xpath>
             <xpath expr="//tr[@id='order_total']" position="before">
-                <tr t-if="not hide_promotions" id="senjani_promo_row">
+                <tr id="senjani_promo_row">
                     <td colspan="3" class="border-0 p-0 pb-4">
                         <span>
                             <t t-set="force_coupon" t-value="website_sale_order.pricelist_id.code"/>

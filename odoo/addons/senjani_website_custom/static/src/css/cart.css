@@ -13,8 +13,8 @@
 }
 
 /* Page background & base layout overrides */
-#wrapwrap:has(.oe_website_sale_checkout),
-body:has(.oe_website_sale_checkout) {
+#wrapwrap:has(.o_website_sale_checkout),
+body:has(.o_website_sale_checkout) {
     background-color: #F5F5F5 !important;
     font-family: 'Poppins', Helvetica, sans-serif !important;
 }
@@ -26,22 +26,22 @@ body.o_wsale_cart #wrapwrap {
 }
 
 /* Apply Poppins font globally to checkout container elements, excluding FontAwesome and Odoo icons */
-.oe_website_sale_checkout,
-.oe_website_sale_checkout *:not(.fa):not(.oi) {
+.o_website_sale_checkout,
+.o_website_sale_checkout *:not(.fa):not(.oi) {
     font-family: 'Poppins', Helvetica, sans-serif !important;
 }
 
 /* Base checkout container padding */
-.oe_website_sale_checkout {
+.o_website_sale_checkout {
     background-color: transparent !important;
-    padding: 60px 24px 100px !important;
+    padding: 30px 24px 100px !important;
     max-width: 1320px !important;
     width: 100% !important;
     margin: 0 auto !important;
 }
 
 @media (min-width: 1400px) {
-    .oe_website_sale_checkout {
+    .o_website_sale_checkout {
         max-width: 1600px !important;
         padding-left: 80px !important;
         padding-right: 80px !important;
@@ -49,17 +49,17 @@ body.o_wsale_cart #wrapwrap {
 }
 
 /* Hide default Odoo step indicators / wizard and parent col-12 wrapper */
-.oe_website_sale_checkout .o_wsale_steps_bar,
-.oe_website_sale_checkout .wizard,
-.oe_website_sale_checkout .o_wizard,
-.oe_website_sale_checkout .dropdown.d-md-none,
-.oe_website_sale_checkout .d-md-none.fw-bold.small {
+.o_website_sale_checkout .o_wsale_steps_bar,
+.o_website_sale_checkout .wizard,
+.o_website_sale_checkout .o_wizard,
+.o_website_sale_checkout .dropdown.d-md-none,
+.o_website_sale_checkout .d-md-none.fw-bold.small {
     display: none !important;
 }
 
-.oe_website_sale_checkout > .row > .col-12:has(.o_wizard),
-.oe_website_sale_checkout > .row > .col-12:has(.dropdown.d-md-none),
-.oe_website_sale_checkout > .row > .col-12:has(.d-md-none.fw-bold.small) {
+.o_website_sale_checkout > .row > .col-12:has(.o_wizard),
+.o_website_sale_checkout > .row > .col-12:has(.dropdown.d-md-none),
+.o_website_sale_checkout > .row > .col-12:has(.d-md-none.fw-bold.small) {
     display: none !important;
 }
 
@@ -82,9 +82,9 @@ body.o_wsale_cart #wrapwrap {
 .senjani-cart-breadcrumb .breadcrumb-item,
 .senjani-cart-breadcrumb .breadcrumb-item a {
     font-family: 'Poppins', sans-serif !important;
-    font-size: 32px !important;
+    font-size: 16px !important;
     font-weight: 400 !important;
-    letter-spacing: 3.2px !important;
+    letter-spacing: 1.6px !important;
     color: #4D5057 !important;
     text-decoration: none !important;
 }
@@ -101,47 +101,48 @@ body.o_wsale_cart #wrapwrap {
 }
 
 /* ---- Shopping Cart Title ---- */
-.oe_website_sale_checkout h3.mb-4 {
+.o_website_sale_checkout h3.mb-4 {
     font-family: 'Poppins', sans-serif !important;
     font-weight: 700 !important;
-    font-size: 40px !important;
+    font-size: 28px !important;
     color: #060503 !important;
     margin-top: 0 !important;
-    margin-bottom: 40px !important;
+    margin-bottom: 30px !important;
 }
 
 /* ---- Outer layout alignment ---- */
-.oe_website_sale_checkout > .row {
+.o_website_sale_checkout > .row {
     display: flex !important;
     justify-content: space-between !important;
     align-items: flex-start !important;
 }
 
 @media (min-width: 992px) {
-    .oe_website_sale_checkout > .row {
+    .o_website_sale_checkout > .row {
         display: flex !important;
         justify-content: space-between !important;
         flex-wrap: nowrap !important;
         width: 100% !important;
     }
-    .oe_website_sale_checkout .oe_cart {
-        flex: 1 1 auto !important;
-        width: calc(100% - 510px) !important;
-        max-width: calc(100% - 510px) !important;
+    .o_website_sale_checkout .oe_cart {
+        flex: 0 0 65% !important;
+        width: 65% !important;
+        max-width: 65% !important;
         padding-right: 40px !important;
         background-color: transparent !important;
     }
-    .oe_website_sale_checkout #o_cart_summary {
-        flex: 0 0 480px !important;
-        width: 480px !important;
-        max-width: 480px !important;
-        margin-left: 30px !important;
+    .o_website_sale_checkout #o_cart_summary {
+        flex: 0 0 30% !important;
+        width: 30% !important;
+        max-width: 30% !important;
+        margin-left: auto !important;
+        margin-right: 0 !important;
         background-color: transparent !important;
         padding: 0 !important;
     }
     /* Align order summary card with the top of the product table */
-    .oe_website_sale_checkout #o_cart_summary .card {
-        margin-top: 110px !important;
+    .o_website_sale_checkout #o_cart_summary .card {
+        margin-top: 80px !important;
     }
 }
 
@@ -151,7 +152,7 @@ body.o_wsale_cart #wrapwrap {
     align-items: center !important;
     justify-content: space-between !important;
     font-family: 'Poppins', sans-serif !important;
-    font-size: 20px !important;
+    font-size: 14px !important;
     font-weight: 600 !important;
     color: #4D5057 !important;
     margin-bottom: 20px !important;
@@ -182,7 +183,7 @@ body.o_wsale_cart #wrapwrap {
 }
 
 /* ---- Cart product rows ---- */
-.oe_website_sale_checkout .o_cart_product {
+.o_website_sale_checkout .o_cart_product {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
@@ -190,7 +191,7 @@ body.o_wsale_cart #wrapwrap {
     border-bottom: 1.5px solid #FFBA63 !important;
     background: transparent !important;
 }
-.oe_website_sale_checkout .o_cart_product:last-child {
+.o_website_sale_checkout .o_cart_product:last-child {
     border-bottom: 1.5px solid #FFBA63 !important;
 }
 
@@ -227,7 +228,7 @@ body.o_wsale_cart #wrapwrap {
 .cart-product-name {
     font-family: 'Poppins', sans-serif !important;
     font-weight: 600 !important;
-    font-size: 20px !important;
+    font-size: 16px !important;
     color: #060503 !important;
 }
 
@@ -281,7 +282,7 @@ body.o_wsale_cart #wrapwrap {
 .cart-product-total-price span {
     font-family: 'Poppins', sans-serif !important;
     font-weight: 600 !important;
-    font-size: 20px !important;
+    font-size: 16px !important;
     color: #060503 !important;
 }
 
@@ -304,8 +305,8 @@ body.o_wsale_cart #wrapwrap {
 }
 
 /* ---- Quantity controls ---- */
-.oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity.input-group,
-.oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity {
+.o_website_sale_checkout .cart-product-qty-wrapper .css_quantity.input-group,
+.o_website_sale_checkout .cart-product-qty-wrapper .css_quantity {
     background-color: #FFBA63 !important;
     border-radius: 6px !important;
     border: none !important;
@@ -318,8 +319,8 @@ body.o_wsale_cart #wrapwrap {
     gap: 12px !important;
     flex-wrap: nowrap !important;
 }
-.oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity .btn,
-.oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity .js_add_cart_json {
+.o_website_sale_checkout .cart-product-qty-wrapper .css_quantity .btn,
+.o_website_sale_checkout .cart-product-qty-wrapper .css_quantity .js_add_cart_json {
     background: transparent !important;
     border: none !important;
     color: #060503 !important;
@@ -333,13 +334,13 @@ body.o_wsale_cart #wrapwrap {
     justify-content: center !important;
     cursor: pointer !important;
 }
-.oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity input.quantity {
+.o_website_sale_checkout .cart-product-qty-wrapper .css_quantity input.quantity {
     background: transparent !important;
     border: none !important;
     color: #060503 !important;
     font-family: 'Poppins', sans-serif !important;
     font-weight: 600 !important;
-    font-size: 20px !important;
+    font-size: 16px !important;
     width: 32px !important;
     height: auto !important;
     padding: 0 !important;
@@ -348,25 +349,25 @@ body.o_wsale_cart #wrapwrap {
 }
 
 /* ---- Order Summary sidebar ---- */
-.oe_website_sale_checkout .card,
-.oe_website_sale_checkout .oe_cart,
-.oe_website_sale_checkout .oe_cart .card,
-.oe_website_sale_checkout .o_total_card,
-.oe_website_sale_checkout .o_total_card .card-body,
-.oe_website_sale_checkout .o_total_card .card-body > div,
-.oe_website_sale_checkout #cart_total {
+.o_website_sale_checkout .card,
+.o_website_sale_checkout .oe_cart,
+.o_website_sale_checkout .oe_cart .card,
+.o_website_sale_checkout .o_total_card,
+.o_website_sale_checkout .o_total_card .card-body,
+.o_website_sale_checkout .o_total_card .card-body > div,
+.o_website_sale_checkout #cart_total {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
     width: 100% !important;
 }
-.oe_website_sale_checkout .o_total_card .card-body {
+.o_website_sale_checkout .o_total_card .card-body {
     padding: 0 !important;
 }
 
 /* Redesign Order Summary as a premium standalone card */
-.oe_website_sale_checkout #o_cart_summary .card {
+.o_website_sale_checkout #o_cart_summary .card {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
@@ -375,24 +376,24 @@ body.o_wsale_cart #wrapwrap {
 }
 
 /* Order Summary Header */
-.oe_website_sale_checkout .o_total_card h5,
-.oe_website_sale_checkout #cart_total h5,
-.oe_website_sale_checkout .o_order_summary_title,
-.oe_website_sale_checkout .o_checkout_col h5 {
+.o_website_sale_checkout .o_total_card h5,
+.o_website_sale_checkout #cart_total h5,
+.o_website_sale_checkout .o_order_summary_title,
+.o_website_sale_checkout .o_checkout_col h5 {
     display: none !important; /* Hide original Odoo heading if exists */
 }
-.oe_website_sale_checkout #cart_total::before {
+.o_website_sale_checkout #cart_total::before {
     content: "Order Summary" !important;
     display: block !important;
     font-family: 'Poppins', sans-serif !important;
     font-weight: 600 !important;
-    font-size: 20px !important;
+    font-size: 16px !important;
     color: #4D5057 !important;
     margin-bottom: 20px !important;
 }
 
 /* Dividers in summary */
-.oe_website_sale_checkout #cart_total {
+.o_website_sale_checkout #cart_total {
     border-bottom: 1.5px solid #e0e0e0 !important; /* clean border color */
     padding-bottom: 24px !important;
     margin-bottom: 24px !important;
@@ -408,14 +409,14 @@ tr[id*="discount"],
 }
 
 /* Summary table */
-.oe_website_sale_checkout #cart_total table,
-.oe_website_sale_checkout #cart_total tbody {
+.o_website_sale_checkout #cart_total table,
+.o_website_sale_checkout #cart_total tbody {
     display: block !important;
     border: none !important;
     width: 100% !important;
     margin: 0 !important;
 }
-.oe_website_sale_checkout #cart_total table tr {
+.o_website_sale_checkout #cart_total table tr {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
@@ -424,43 +425,43 @@ tr[id*="discount"],
     border: none !important;
     width: 100% !important;
 }
-.oe_website_sale_checkout #cart_total table tr:last-child {
+.o_website_sale_checkout #cart_total table tr:last-child {
     margin-bottom: 0 !important;
 }
-.oe_website_sale_checkout #cart_total table tr:has(#order_delivery) {
+.o_website_sale_checkout #cart_total table tr:has(#order_delivery) {
     display: none !important; /* Double check delivery row is hidden */
 }
-.oe_website_sale_checkout #cart_total table td {
+.o_website_sale_checkout #cart_total table td {
     padding: 0 !important;
     background: transparent !important;
     border: none !important;
 }
 
 /* Subtotal & Taxes Label styling */
-.oe_website_sale_checkout #cart_total_subtotal,
-.oe_website_sale_checkout #order_total_taxes td:first-child {
+.o_website_sale_checkout #cart_total_subtotal,
+.o_website_sale_checkout #order_total_taxes td:first-child {
     font-family: 'Poppins', sans-serif !important;
     font-weight: 600 !important;
     font-size: 20px !important;
     color: #4D5057 !important;
 }
 /* Subtotal & Taxes styling */
-#cart_total table tr:not(#order_total) td:first-child,
-#cart_total table tr:not(#order_total) td:first-child *,
-.oe_website_sale_checkout #cart_total_subtotal,
-.oe_website_sale_checkout #order_total_taxes td:first-child {
+#cart_total table tr:not(#order_total):not(#senjani_promo_row) td:first-child,
+#cart_total table tr:not(#order_total):not(#senjani_promo_row) td:first-child *,
+.o_website_sale_checkout #cart_total_subtotal,
+.o_website_sale_checkout #order_total_taxes td:first-child {
     font-family: 'Poppins', sans-serif !important;
     font-weight: 500 !important;
-    font-size: 20px !important;
+    font-size: 15px !important;
     color: #4D5057 !important;
     background: transparent !important;
     border: none !important;
 }
-#cart_total table tr:not(#order_total) td:last-child,
-#cart_total table tr:not(#order_total) td:last-child * {
+#cart_total table tr:not(#order_total):not(#senjani_promo_row) td:last-child,
+#cart_total table tr:not(#order_total):not(#senjani_promo_row) td:last-child * {
     font-family: 'Poppins', sans-serif !important;
     font-weight: 600 !important;
-    font-size: 20px !important;
+    font-size: 15px !important;
     color: #060503 !important;
     text-align: right !important;
     background: transparent !important;
@@ -468,70 +469,92 @@ tr[id*="discount"],
 }
 
 /* ---- Promo coupon form inside summary ---- */
-.oe_website_sale_checkout #cart_total .coupon_form,
-.oe_website_sale_checkout .coupon_form,
+#senjani_promo_row {
+    display: block !important;
+    width: 100% !important;
+    margin-bottom: 24px !important;
+    border: none !important;
+    background: transparent !important;
+}
+#senjani_promo_row td {
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+}
+#senjani_promo_row span {
+    display: block !important;
+    width: 100% !important;
+}
+
+.o_website_sale_checkout #cart_total .coupon_form,
+.o_website_sale_checkout .coupon_form,
 #o_cart_summary .coupon_form,
 #o_cart_summary form[name="coupon_code"] {
     width: 100% !important;
     margin-top: 16px !important;
 }
 
-.oe_website_sale_checkout .coupon_form form {
+.o_website_sale_checkout .coupon_form form {
     width: 100% !important;
     display: block !important;
 }
 
-.oe_website_sale_checkout form .input-group,
-.oe_website_sale_checkout .coupon_form .input-group,
+.o_website_sale_checkout form .input-group,
+.o_website_sale_checkout .coupon_form .input-group,
 #o_cart_summary form[name="coupon_code"] .input-group,
 #senjani_promo_row .input-group {
-    background-color: #FFFFFF !important;
-    border: 1px solid #D5D5D5 !important;
+    background-color: #F5F5F5 !important;
+    border: 1px solid #CCCCCC !important;
     border-radius: 8px !important;
-    padding: 4px !important; /* Space for the floating button inside the field */
+    padding: 0 !important; /* Touch the borders directly without floating margin */
     overflow: hidden !important;
     display: flex !important;
-    align-items: center !important;
+    align-items: stretch !important; /* Stretch input and button to fill the height */
     flex-wrap: nowrap !important;
-    height: 52px !important;
+    height: 48px !important;
+    box-shadow: none !important;
 }
 
-.oe_website_sale_checkout form input[name="promo"],
-.oe_website_sale_checkout .coupon_form input[name="promo"],
+.o_website_sale_checkout form input[name="promo"],
+.o_website_sale_checkout .coupon_form input[name="promo"],
 #o_cart_summary form[name="coupon_code"] input[name="promo"],
 #senjani_promo_row input[name="promo"] {
     background-color: transparent !important;
     border: none !important;
-    color: #333333 !important;
+    color: #4D5057 !important;
     font-family: 'Poppins', sans-serif !important;
     font-weight: 500 !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
     padding: 0 16px !important;
     height: 100% !important;
     box-shadow: none !important;
     flex: 1 1 auto !important;
+    border-radius: 0 !important;
+    text-align: left !important;
 }
 
-.oe_website_sale_checkout form input[name="promo"]::placeholder,
-.oe_website_sale_checkout .coupon_form input[name="promo"]::placeholder,
+.o_website_sale_checkout form input[name="promo"]::placeholder,
+.o_website_sale_checkout .coupon_form input[name="promo"]::placeholder,
 #o_cart_summary form[name="coupon_code"] input[name="promo"]::placeholder,
 #senjani_promo_row input[name="promo"]::placeholder {
-    color: #999999 !important;
-    opacity: 0.8 !important;
+    color: #7F7F7F !important;
+    opacity: 0.85 !important;
 }
 
-.oe_website_sale_checkout form .a-submit,
-.oe_website_sale_checkout .coupon_form .a-submit,
+.o_website_sale_checkout form .a-submit,
+.o_website_sale_checkout .coupon_form .a-submit,
 #o_cart_summary form[name="coupon_code"] .a-submit,
 #senjani_promo_row .a-submit {
-    background-color: #4A4A4A !important; /* solid dark background */
-    color: #FFFFFF !important; /* white text */
+    background-color: #474B51 !important; /* Solid dark grey button background */
+    color: #FFF5EA !important; /* Cream colored text */
     border: none !important;
     font-family: 'Poppins', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 16px !important;
-    padding: 0 24px !important;
-    border-radius: 6px !important; /* rounded corners */
+    font-weight: 500 !important;
+    font-size: 15px !important;
+    padding: 0 28px !important;
+    border-radius: 0 8px 8px 0 !important; /* Round only the outer right corners to match container */
     height: 100% !important;
     display: inline-flex !important;
     align-items: center !important;
@@ -540,17 +563,19 @@ tr[id*="discount"],
     text-decoration: none !important;
     white-space: nowrap !important;
     transition: background-color 0.2s ease !important;
+    margin: 0 !important;
 }
 
-.oe_website_sale_checkout form .a-submit:hover,
-.oe_website_sale_checkout .coupon_form .a-submit:hover,
+.o_website_sale_checkout form .a-submit:hover,
+.o_website_sale_checkout .coupon_form .a-submit:hover,
 #o_cart_summary form[name="coupon_code"] .a-submit:hover,
 #senjani_promo_row .a-submit:hover {
-    background-color: #333333 !important;
+    background-color: #383A3F !important;
+    color: #FFF5EA !important;
 }
 
 /* ---- Total amount row ---- */
-.oe_website_sale_checkout #order_total {
+.o_website_sale_checkout #order_total {
     border-top: 1.5px solid #e0e0e0 !important; /* clean light gray border */
     padding-top: 24px !important;
     margin-top: 16px !important;
@@ -560,30 +585,30 @@ tr[id*="discount"],
     margin-bottom: 40px !important;
     width: 100% !important;
 }
-.oe_website_sale_checkout #order_total td {
+.o_website_sale_checkout #order_total td {
     padding: 0 !important;
     background: transparent !important;
     border: none !important;
 }
-.oe_website_sale_checkout #order_total td:first-child strong,
-.oe_website_sale_checkout #order_total td:first-child {
+.o_website_sale_checkout #order_total td:first-child strong,
+.o_website_sale_checkout #order_total td:first-child {
     font-family: 'Poppins', sans-serif !important;
     font-weight: 500 !important;
-    font-size: 32px !important;
+    font-size: 24px !important;
     color: #060503 !important;
 }
-.oe_website_sale_checkout #order_total td:last-child strong,
-.oe_website_sale_checkout #order_total td:last-child .monetary_field,
-.oe_website_sale_checkout #order_total td:last-child {
+.o_website_sale_checkout #order_total td:last-child strong,
+.o_website_sale_checkout #order_total td:last-child .monetary_field,
+.o_website_sale_checkout #order_total td:last-child {
     font-family: 'Poppins', sans-serif !important;
     font-weight: 700 !important;
-    font-size: 32px !important;
+    font-size: 24px !important;
     color: #060503 !important;
 }
 
 /* ---- Navigation buttons (Checkout & Continue Shopping) ---- */
-.oe_website_sale_checkout .o_total_card .card-body > div.pt-4,
-.oe_website_sale_checkout .o_cta_navigation_container,
+.o_website_sale_checkout .o_total_card .card-body > div.pt-4,
+.o_website_sale_checkout .o_cta_navigation_container,
 #o_cart_summary .card-body,
 #o_cart_summary .card-body > div {
     padding-top: 0 !important;
@@ -595,9 +620,9 @@ tr[id*="discount"],
 }
 
 /* Checkout Button */
-.oe_website_sale_checkout a[href*="/shop/checkout"],
-.oe_website_sale_checkout a.btn-primary.float-end,
-.oe_website_sale_checkout a[name="website_sale_main_button"],
+.o_website_sale_checkout a[href*="/shop/checkout"],
+.o_website_sale_checkout a.btn-primary.float-end,
+.o_website_sale_checkout a[name="website_sale_main_button"],
 #o_cart_summary a.btn-primary,
 #o_cart_summary a[name="website_sale_main_button"] {
     background-color: #FFBA63 !important;
@@ -606,8 +631,8 @@ tr[id*="discount"],
     border: none !important;
     font-family: 'Poppins', sans-serif !important;
     font-weight: 700 !important;
-    font-size: 32px !important;
-    padding: 16px 40px !important;
+    font-size: 18px !important;
+    padding: 12px 40px !important;
     text-align: center !important;
     width: 100% !important;
     display: block !important;
@@ -617,23 +642,23 @@ tr[id*="discount"],
     text-transform: capitalize !important;
     order: 1 !important;
 }
-.oe_website_sale_checkout a[href*="/shop/checkout"]:hover,
-.oe_website_sale_checkout a[name="website_sale_main_button"]:hover,
+.o_website_sale_checkout a[href*="/shop/checkout"]:hover,
+.o_website_sale_checkout a[name="website_sale_main_button"]:hover,
 #o_cart_summary a.btn-primary:hover {
     background-color: #E6A759 !important;
     color: #060503 !important;
     transform: translateY(-1px) !important;
 }
-.oe_website_sale_checkout a[href*="/shop/checkout"] i,
-.oe_website_sale_checkout a[name="website_sale_main_button"] i,
+.o_website_sale_checkout a[href*="/shop/checkout"] i,
+.o_website_sale_checkout a[name="website_sale_main_button"] i,
 #o_cart_summary a.btn-primary i {
     display: none !important; /* Hide chevron icon */
 }
 
 /* Style the "or" separator in Odoo's navigation buttons */
-.oe_website_sale_checkout .o_cta_navigation_container .my-2,
-.oe_website_sale_checkout .o_total_card .card-body > div.pt-4 > .my-2,
-.oe_website_sale_checkout .my-2,
+.o_website_sale_checkout .o_cta_navigation_container .my-2,
+.o_website_sale_checkout .o_total_card .card-body > div.pt-4 > .my-2,
+.o_website_sale_checkout .my-2,
 #o_cart_summary .my-2,
 #o_cart_summary .my-2.opacity-75 {
     display: block !important;
@@ -647,15 +672,15 @@ tr[id*="discount"],
 }
 
 /* Continue Shopping Link */
-.oe_website_sale_checkout a[href="/shop"],
+.o_website_sale_checkout a[href="/shop"],
 #o_cart_summary a[href="/shop"],
-.oe_website_sale_checkout a.btn-link,
+.o_website_sale_checkout a.btn-link,
 #o_cart_summary a.btn-link,
-.oe_website_sale_checkout .o_total_card .card-body > div.pt-4 a.text-center,
-.oe_website_sale_checkout .o_cta_navigation_container a.text-center {
+.o_website_sale_checkout .o_total_card .card-body > div.pt-4 a.text-center,
+.o_website_sale_checkout .o_cta_navigation_container a.text-center {
     font-family: 'Poppins', sans-serif !important;
     font-weight: 600 !important;
-    font-size: 20px !important;
+    font-size: 15px !important;
     color: #FFBA63 !important;
     text-decoration: none !important;
     display: inline-block !important;
@@ -667,28 +692,28 @@ tr[id*="discount"],
     margin: 0 !important;
     text-transform: capitalize !important;
 }
-.oe_website_sale_checkout a[href="/shop"]:hover,
+.o_website_sale_checkout a[href="/shop"]:hover,
 #o_cart_summary a[href="/shop"]:hover {
     color: #E6A759 !important;
     text-decoration: underline !important;
 }
-.oe_website_sale_checkout a[href="/shop"] i,
+.o_website_sale_checkout a[href="/shop"] i,
 #o_cart_summary a[href="/shop"] i,
-.oe_website_sale_checkout a.btn-link i {
+.o_website_sale_checkout a.btn-link i {
     display: none !important; /* Hide back chevron */
 }
-.oe_website_sale_checkout .o_total_card .card-body > div.pt-4 a.text-center:hover,
-.oe_website_sale_checkout .o_cta_navigation_container a.text-center:hover {
+.o_website_sale_checkout .o_total_card .card-body > div.pt-4 a.text-center:hover,
+.o_website_sale_checkout .o_cta_navigation_container a.text-center:hover {
     color: #E6A759 !important;
     text-decoration: underline !important;
 }
-.oe_website_sale_checkout .o_total_card .card-body > div.pt-4 a.text-center i,
-.oe_website_sale_checkout .o_cta_navigation_container a.text-center i {
+.o_website_sale_checkout .o_total_card .card-body > div.pt-4 a.text-center i,
+.o_website_sale_checkout .o_cta_navigation_container a.text-center i {
     display: none !important; /* Hide back chevron */
 }
 
 /* Empty cart alert box */
-.oe_website_sale_checkout .js_cart_lines.alert-info {
+.o_website_sale_checkout .js_cart_lines.alert-info {
     font-family: 'Poppins', sans-serif !important;
     background-color: #ffffff !important;
     border: 1px solid #e0e0e0 !important;
@@ -700,18 +725,18 @@ tr[id*="discount"],
 
 /* ---- Responsive Styles ---- */
 @media (max-width: 991.98px) {
-    .oe_website_sale_checkout {
+    .o_website_sale_checkout {
         padding: 20px 16px 100px !important;
     }
-    .oe_website_sale_checkout > .row {
+    .o_website_sale_checkout > .row {
         flex-direction: column !important;
     }
-    .oe_website_sale_checkout .oe_cart {
+    .o_website_sale_checkout .oe_cart {
         width: 100% !important;
         padding-right: 0 !important;
         margin-bottom: 40px !important;
     }
-    .oe_website_sale_checkout #o_cart_summary {
+    .o_website_sale_checkout #o_cart_summary {
         width: 100% !important;
         max-width: 100% !important;
         margin-left: 0 !important;
@@ -722,7 +747,7 @@ tr[id*="discount"],
     .cart-header-row {
         display: none !important;
     }
-    .oe_website_sale_checkout .o_cart_product {
+    .o_website_sale_checkout .o_cart_product {
         flex-direction: column !important;
         align-items: flex-start !important;
         gap: 16px !important;
@@ -757,7 +782,7 @@ tr[id*="discount"],
     .senjani-cart-breadcrumb .breadcrumb-item a {
         font-size: 24px !important;
     }
-    .oe_website_sale_checkout h3.mb-4 {
+    .o_website_sale_checkout h3.mb-4 {
         font-size: 32px !important;
         margin-bottom: 24px !important;
     }
@@ -767,7 +792,7 @@ tr[id*="discount"],
 }
 
 @media (max-width: 575.98px) {
-    .oe_website_sale_checkout {
+    .o_website_sale_checkout {
         padding: 15px 12px 60px !important;
     }
     .senjani-cart-breadcrumb .breadcrumb-item,
@@ -775,7 +800,7 @@ tr[id*="discount"],
         font-size: 18px !important;
         letter-spacing: 1.5px !important;
     }
-    .oe_website_sale_checkout h3.mb-4 {
+    .o_website_sale_checkout h3.mb-4 {
         font-size: 26px !important;
         margin-bottom: 20px !important;
     }
@@ -795,11 +820,11 @@ tr[id*="discount"],
     .cart-product-total-price span {
         font-size: 16px !important;
     }
-    .oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity.input-group {
+    .o_website_sale_checkout .cart-product-qty-wrapper .css_quantity.input-group {
         padding: 2px 8px !important;
         gap: 8px !important;
     }
-    .oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity input.quantity {
+    .o_website_sale_checkout .cart-product-qty-wrapper .css_quantity input.quantity {
         font-size: 16px !important;
         width: 24px !important;
     }
@@ -808,33 +833,33 @@ tr[id*="discount"],
     }
     
     /* Order summary adjustments for small mobile */
-    .oe_website_sale_checkout #cart_total::before {
+    .o_website_sale_checkout #cart_total::before {
         font-size: 18px !important;
     }
-    .oe_website_sale_checkout #cart_total_subtotal,
-    .oe_website_sale_checkout #order_delivery td:first-child,
-    .oe_website_sale_checkout #order_total_taxes td:first-child {
+    .o_website_sale_checkout #cart_total_subtotal,
+    .o_website_sale_checkout #order_delivery td:first-child,
+    .o_website_sale_checkout #order_total_taxes td:first-child {
         font-size: 16px !important;
     }
-    .oe_website_sale_checkout #cart_total td:last-child {
+    .o_website_sale_checkout #cart_total td:last-child {
         font-size: 16px !important;
     }
-    .oe_website_sale_checkout #order_total td:first-child strong {
+    .o_website_sale_checkout #order_total td:first-child strong {
         font-size: 24px !important;
     }
-    .oe_website_sale_checkout #order_total td:last-child strong,
-    .oe_website_sale_checkout #order_total td:last-child .monetary_field {
+    .o_website_sale_checkout #order_total td:last-child strong,
+    .o_website_sale_checkout #order_total td:last-child .monetary_field {
         font-size: 24px !important;
     }
-    .oe_website_sale_checkout a[name="website_sale_main_button"] {
+    .o_website_sale_checkout a[name="website_sale_main_button"] {
         font-size: 24px !important;
         padding: 12px 20px !important;
     }
-    .oe_website_sale_checkout form[name="coupon_code"] input[name="promo"] {
+    .o_website_sale_checkout form[name="coupon_code"] input[name="promo"] {
         font-size: 14px !important;
         padding: 0 12px !important;
     }
-    .oe_website_sale_checkout form[name="coupon_code"] .a-submit {
+    .o_website_sale_checkout form[name="coupon_code"] .a-submit {
         font-size: 14px !important;
         padding: 0 16px !important;
     }

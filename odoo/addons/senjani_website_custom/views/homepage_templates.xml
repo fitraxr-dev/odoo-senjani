@@ -33,8 +33,9 @@
                                 
                                 <t t-if="public_categories">
                                     <t t-foreach="public_categories" t-as="cat">
+                                        <t t-set="int_cat" t-value="request.env['product.category'].sudo().search([('name', '=ilike', cat.name)], limit=1)"/>
                                         <div class="col text-center">
-                                            <a t-attf-href="/shop?category=#{cat.id}" class="senjani-category-link text-decoration-none">
+                                            <a t-att-href="'/shop?category_id=' + str(int_cat.id) if int_cat else '/shop'" class="senjani-category-link text-decoration-none">
                                                 <div class="senjani-category-img-wrapper mb-3 mx-auto shadow-sm">
                                                     <img t-if="cat.image_1920" t-attf-src="/web/image/product.public.category/#{cat.id}/image_1920" class="img-fluid senjani-category-img" t-att-alt="cat.name"/>
                                                     <img t-else="" src="/senjani_website_custom/static/src/img/Category_Section_placeholder.png" class="img-fluid senjani-category-img" t-att-alt="cat.name"/>
@@ -59,8 +60,9 @@
                                         {'name': 'Baju Koko'}
                                     ]"/>
                                     <t t-foreach="mockup_cats" t-as="cat">
+                                        <t t-set="real_cat" t-value="request.env['product.category'].sudo().search([('name', '=ilike', cat['name'])], limit=1)"/>
                                         <div class="col text-center">
-                                            <a href="/shop" class="senjani-category-link text-decoration-none">
+                                            <a t-att-href="'/shop?category_id=' + str(real_cat.id) if real_cat else '/shop'" class="senjani-category-link text-decoration-none">
                                                 <div class="senjani-category-img-wrapper mb-3 mx-auto shadow-sm">
                                                     <img src="/senjani_website_custom/static/src/img/Category_Section_placeholder.png" class="img-fluid senjani-category-img" t-att-alt="cat['name']"/>
                                                 </div>
