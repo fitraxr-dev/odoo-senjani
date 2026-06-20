@@ -35,6 +35,8 @@
         'payment',
         # Communication
         'mail',
+        # Core
+        'senjani_odoo_core',
     ],
     'data': [
         'security/groups.xml',
@@ -54,6 +56,6 @@
     },
     'application': True,
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
     'images': ['static/description/icon.png'],
 }

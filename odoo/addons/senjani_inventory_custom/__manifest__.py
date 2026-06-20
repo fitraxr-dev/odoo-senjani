@@ -3,9 +3,11 @@
     'version': '1.0',
     'category': 'Inventory/Delivery',
     'summary': 'Custom Delivery Carrier menggunakan API RajaOngkir Komerce',
-    'depends': ['delivery', 'sale'],
+    'depends': ['delivery', 'sale', 'senjani_odoo_core'],
+    'auto_install': True,
     'data': [
         'views/delivery_carrier_views.xml',
+        'views/stock_picking_views.xml',
     ],
     'installable': True,
     'application': False,

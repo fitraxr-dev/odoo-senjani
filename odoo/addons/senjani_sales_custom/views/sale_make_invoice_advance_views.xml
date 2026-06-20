@@ -5,13 +5,8 @@
         <field name="model">sale.advance.payment.inv</field>
         <field name="inherit_id" ref="sale.view_sale_advance_payment_inv"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='down_payment']" position="attributes" raise_if_not_found="false">
-                <attribute name="invisible">1</attribute>
-            </xpath>
-            <xpath expr="//field[@name='amount']" position="attributes" raise_if_not_found="false">
-                <attribute name="invisible">1</attribute>
-            </xpath>
-            <xpath expr="//field[@name='deduct_down_payments']" position="attributes" raise_if_not_found="false">
+            <!-- Hide the standard percentage amount field -->
+            <xpath expr="//field[@name='amount']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
         </field>

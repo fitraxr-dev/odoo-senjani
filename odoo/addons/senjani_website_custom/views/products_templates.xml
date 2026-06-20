@@ -33,4 +33,89 @@
             </div>
         </xpath>
     </template>
+
+    <!-- Inherit products_attributes to add category filters on desktop sidebar -->
+    <template id="senjani_products_attributes" inherit_id="website_sale.products_attributes" name="Senjani Products Attributes">
+        <!-- Update t-if on the collapse div so that it renders when there are categories to display -->
+        <xpath expr="//div[@id='wsale_products_attributes_collapse']" position="attributes">
+            <attribute name="t-if">attributes or all_tags or filter_categories</attribute>
+        </xpath>
+
+        <!-- Insert Category Filter Checkboxes before Attributes loop -->
+        <xpath expr="//form[hasclass('js_attributes')]//t[@t-foreach='attributes']" position="before">
+            <div t-if="filter_categories" class="accordion-item nav-item mb-1 rounded-0">
+                <h6 class="mb-3">
+                    <b>Categories</b>
+                </h6>
+                <div class="flex-column mb-3">
+                    <t t-foreach="filter_categories" t-as="c_filter">
+                        <div class="form-check mb-1">
+                            <input type="checkbox"
+                                   name="category_id"
+                                   class="form-check-input"
+                                   t-att-id="'cat-%s' % c_filter.id"
+                                   t-att-value="c_filter.id"
+                                   t-att-checked="'checked' if c_filter.id in selected_category_ids else None"/>
+                            <label class="form-check-label fw-normal" t-att-for="'cat-%s' % c_filter.id" t-field="c_filter.name"/>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- Update Clear Filters button condition and link to support category_id -->
+        <xpath expr="//form[hasclass('js_attributes')]//div[contains(@class, 'py-3')]" position="attributes">
+            <attribute name="t-if">attrib_values or tags or selected_category_ids</attribute>
+        </xpath>
+        <xpath expr="//form[hasclass('js_attributes')]//div[contains(@class, 'py-3')]/a" position="attributes">
+            <attribute name="t-att-href">keep('/shop' + ('/category/' + slug(category)) if category else None, attribute_value=0, tags=0, category_id=0)</attribute>
+        </xpath>
+    </template>
+
+    <!-- Inherit o_wsale_offcanvas to add category filters on mobile filter drawer -->
+    <template id="senjani_o_wsale_offcanvas" inherit_id="website_sale.o_wsale_offcanvas" name="Senjani Offcanvas Filter">
+        <!-- Insert Category Filter Checkboxes inside offcanvas form before attributes -->
+        <xpath expr="//form[contains(@t-attf-class, 'js_attributes')]//t[@t-foreach='attributes']" position="before">
+            <div t-if="filter_categories" class="accordion-item border-top-0 order-0">
+                <h2 class="accordion-header mb-0" id="o_wsale_offcanvas_categories_filter_header">
+                    <button class="o_wsale_offcanvas_title accordion-button rounded-0"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#o_wsale_offcanvas_categories_filter"
+                            aria-expanded="true"
+                            aria-controls="o_wsale_offcanvas_categories_filter">
+                            <b>Categories</b>
+                    </button>
+                </h2>
+                <div id="o_wsale_offcanvas_categories_filter"
+                     class="accordion-collapse collapse show"
+                     aria-labelledby="o_wsale_offcanvas_categories_filter_header">
+                    <div class="accordion-body pt-0">
+                        <div class="list-group list-group-flush">
+                            <t t-foreach="filter_categories" t-as="c_filter">
+                                <div class="list-group-item border-0 ps-0 pb-0">
+                                    <div class="form-check mb-1">
+                                        <input type="checkbox"
+                                               name="category_id"
+                                               class="form-check-input"
+                                               t-att-id="'cat-off-%s' % c_filter.id"
+                                               t-att-value="c_filter.id"
+                                               t-att-checked="'checked' if c_filter.id in selected_category_ids else None"/>
+                                        <label class="form-check-label fw-normal" t-att-for="'cat-off-%s' % c_filter.id" t-field="c_filter.name"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- Update offcanvas Clear Filters button disabled logic to support category_id -->
+        <xpath expr="//aside[@id='o_wsale_offcanvas']/div[hasclass('border-top')]/a" position="attributes">
+            <attribute name="t-attf-class">btn btn-{{navClass}} d-flex py-1 mb-2 {{(not attrib_values and not isFilteringByPrice and not tags and not selected_category_ids) and 'disabled' }}</attribute>
+            <attribute name="t-att-aria-disabled">(not attrib_values and not isFilteringByPrice and not tags and not selected_category_ids) and 'true' or 'false'</attribute>
+        </xpath>
+    </template>
+
 </odoo>

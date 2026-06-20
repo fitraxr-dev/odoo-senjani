@@ -1,0 +1,169 @@
+/* ==========================================================================
+   Senjani Custom Checkout Address Form Styles
+   ========================================================================== */
+
+/* Page background and general typography */
+.o_wsale_address_fill {
+    background-color: #F8F9FA !important;
+    min-height: 100vh;
+    padding-top: 2rem !important;
+    padding-bottom: 4rem !important;
+    font-family: 'Outfit', sans-serif !important;
+}
+
+/* Breadcrumb trail styling */
+.senjani-breadcrumbs {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #6C757D;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.2px;
+}
+
+.senjani-breadcrumbs span {
+    display: inline-block;
+}
+
+.senjani-active-breadcrumb {
+    color: var(--senjani-4, #FFBA64) !important;
+    font-weight: 600;
+}
+
+/* Main Page Heading */
+.senjani-address-title {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    color: var(--senjani-4, #FFBA64) !important;
+    margin-top: 0.25rem;
+    margin-bottom: 2rem !important;
+    letter-spacing: -0.5px;
+}
+
+/* Form Card Container */
+.senjani-address-card {
+    background: #FFFFFF !important;
+    border: 1px solid var(--senjani-1, #FFEACF) !important;
+    border-radius: 16px !important;
+    padding: 2.5rem !important;
+    box-shadow: 0 10px 30px rgba(6, 5, 3, 0.04) !important;
+    margin-bottom: 2rem !important;
+}
+
+/* Form inputs & dropdowns styling */
+.senjani-address-card .form-control,
+.senjani-address-card .form-select {
+    background-color: #FFFFFF !important;
+    border: 1px solid var(--senjani-1, #FFEACF) !important;
+    border-radius: 8px !important;
+    height: 48px !important;
+    padding: 10px 16px !important;
+    font-size: 0.95rem !important;
+    color: var(--senjani-5, #060503) !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+/* Focus styles for inputs & dropdowns */
+.senjani-address-card .form-control:focus,
+.senjani-address-card .form-select:focus {
+    border-color: var(--senjani-4, #FFBA64) !important;
+    box-shadow: 0 0 0 3px rgba(255, 186, 100, 0.15) !important;
+    background-color: #FFFFFF !important;
+}
+
+/* Label styling */
+.senjani-address-card .col-form-label {
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    color: var(--senjani-5, #060503) !important;
+    margin-bottom: 0.4rem !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    text-transform: none !important;
+}
+
+/* Optional field suffix */
+.senjani-address-card .label-optional::after {
+    content: " (optional)" !important;
+    font-weight: 400 !important;
+    color: #999999 !important;
+    font-size: 0.8rem !important;
+}
+
+/* Actions Row (Buttons container) */
+.senjani-address-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-top: 2.5rem !important;
+    margin-bottom: 0 !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+}
+
+/* Pill-shaped Discard/Back Button */
+.senjani-btn-address-discard {
+    background-color: transparent !important;
+    color: var(--senjani-4, #FFBA64) !important;
+    font-weight: 600 !important;
+    border: 2px solid var(--senjani-4, #FFBA64) !important;
+    border-radius: 50px !important;
+    padding: 0.75rem 2.25rem !important;
+    font-size: 0.95rem !important;
+    transition: all 0.25s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+}
+
+.senjani-btn-address-discard:hover {
+    border-color: var(--senjani-5, #060503) !important;
+    background-color: var(--senjani-2, #FFF8F0) !important;
+    color: var(--senjani-5, #060503) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Pill-shaped Save Button */
+.senjani-btn-address-save {
+    background-color: var(--senjani-4, #FFBA64) !important;
+    color: var(--senjani-5, #060503) !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 50px !important;
+    padding: 0.75rem 2.5rem !important;
+    font-size: 0.95rem !important;
+    transition: all 0.25s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 12px rgba(255, 186, 100, 0.2) !important;
+    cursor: pointer !important;
+}
+
+.senjani-btn-address-save:hover {
+    background-color: var(--senjani-5, #060503) !important;
+    color: #FFFFFF !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 15px rgba(6, 5, 3, 0.15) !important;
+}
+
+/* Handle mobile responsiveness */
+@media (max-width: 768px) {
+    .senjani-address-card {
+        padding: 1.5rem !important;
+    }
+    
+    .senjani-address-actions {
+        flex-direction: column-reverse !important;
+        gap: 1rem !important;
+    }
+    
+    .senjani-btn-address-save,
+    .senjani-btn-address-discard {
+        width: 100% !important;
+        padding: 0.75rem 1.5rem !important;
+    }
+}

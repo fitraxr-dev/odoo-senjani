@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Fallback stylesheet template for Address Form UI to bypass asset bundling issues -->
+    <template id="senjani_address_styles" name="Senjani Address Styles">
+        <style>
+            .o_wsale_address_fill {
+                background-color: #F8F9FA !important;
+                min-height: 100vh;
+                padding-top: 2rem !important;
+                padding-bottom: 4rem !important;
+                font-family: 'Outfit', sans-serif !important;
+            }
+            .senjani-breadcrumbs {
+                font-size: 0.95rem;
+                font-weight: 500;
+                color: #6C757D;
+                margin-bottom: 0.75rem;
+                letter-spacing: 0.2px;
+            }
+            .senjani-breadcrumbs span {
+                display: inline-block;
+            }
+            .senjani-active-breadcrumb {
+                color: var(--senjani-4, #FFBA64) !important;
+                font-weight: 600;
+            }
+            .senjani-address-title {
+                font-size: 2rem !important;
+                font-weight: 700 !important;
+                color: var(--senjani-4, #FFBA64) !important;
+                margin-top: 0.25rem;
+                margin-bottom: 2rem !important;
+                letter-spacing: -0.5px;
+            }
+            .senjani-address-card {
+                background: #FFFFFF !important;
+                border: 1px solid var(--senjani-1, #FFEACF) !important;
+                border-radius: 16px !important;
+                padding: 2.5rem !important;
+                box-shadow: 0 10px 30px rgba(6, 5, 3, 0.04) !important;
+                margin-bottom: 2rem !important;
+            }
+            .senjani-address-card .form-control,
+            .senjani-address-card .form-select {
+                background-color: #FFFFFF !important;
+                border: 1px solid var(--senjani-1, #FFEACF) !important;
+                border-radius: 8px !important;
+                height: 48px !important;
+                padding: 10px 16px !important;
+                font-size: 0.95rem !important;
+                color: var(--senjani-5, #060503) !important;
+                box-shadow: none !important;
+                transition: all 0.2s ease-in-out !important;
+            }
+            .senjani-address-card .form-control:focus,
+            .senjani-address-card .form-select:focus {
+                border-color: var(--senjani-4, #FFBA64) !important;
+                box-shadow: 0 0 0 3px rgba(255, 186, 100, 0.15) !important;
+                background-color: #FFFFFF !important;
+            }
+            .senjani-address-card .col-form-label {
+                font-weight: 600 !important;
+                font-size: 0.9rem !important;
+                color: var(--senjani-5, #060503) !important;
+                margin-bottom: 0.4rem !important;
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+                text-transform: none !important;
+            }
+            .senjani-address-card .label-optional::after {
+                content: " (optional)" !important;
+                font-weight: 400 !important;
+                color: #999999 !important;
+                font-size: 0.8rem !important;
+            }
+            .senjani-address-actions {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                margin-top: 2.5rem !important;
+                margin-bottom: 0 !important;
+                gap: 1.5rem !important;
+                width: 100% !important;
+            }
+            .senjani-btn-address-discard {
+                background-color: transparent !important;
+                color: var(--senjani-4, #FFBA64) !important;
+                font-weight: 600 !important;
+                border: 2px solid var(--senjani-4, #FFBA64) !important;
+                border-radius: 50px !important;
+                padding: 0.75rem 2.25rem !important;
+                font-size: 0.95rem !important;
+                transition: all 0.25s ease !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-decoration: none !important;
+                cursor: pointer !important;
+            }
+            .senjani-btn-address-discard:hover {
+                border-color: var(--senjani-5, #060503) !important;
+                background-color: var(--senjani-2, #FFF8F0) !important;
+                color: var(--senjani-5, #060503) !important;
+                transform: translateY(-1px) !important;
+            }
+            .senjani-btn-address-save {
+                background-color: var(--senjani-4, #FFBA64) !important;
+                color: var(--senjani-5, #060503) !important;
+                font-weight: 700 !important;
+                border: none !important;
+                border-radius: 50px !important;
+                padding: 0.75rem 2.5rem !important;
+                font-size: 0.95rem !important;
+                transition: all 0.25s ease !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                box-shadow: 0 4px 12px rgba(255, 186, 100, 0.2) !important;
+                cursor: pointer !important;
+            }
+            .senjani-btn-address-save:hover {
+                background-color: var(--senjani-5, #060503) !important;
+                color: #FFFFFF !important;
+                transform: translateY(-2px) !important;
+                box-shadow: 0 6px 15px rgba(6, 5, 3, 0.15) !important;
+            }
+            @media (max-width: 768px) {
+                .senjani-address-card {
+                    padding: 1.5rem !important;
+                }
+                .senjani-address-actions {
+                    flex-direction: column-reverse !important;
+                    gap: 1rem !important;
+                }
+                .senjani-btn-address-save,
+                .senjani-btn-address-discard {
+                    width: 100% !important;
+                    padding: 0.75rem 1.5rem !important;
+                }
+            }
+        </style>
+    </template>
+
+    <template id="senjani_address_form"
+              inherit_id="website_sale.address"
+              name="Senjani Address Form">
+        
+        <!-- Inject styles & custom breadcrumbs/heading at the top of the form layout -->
+        <xpath expr="//div[hasclass('oe_cart')]" position="before">
+            <t t-call="senjani_website_custom.senjani_address_styles"/>
+            <div class="senjani-breadcrumbs">
+                <span>Cart</span> / 
+                <span>Checkout</span> / 
+                <span class="senjani-active-breadcrumb">Set Address</span>
+            </div>
+            <h2 class="senjani-address-title">Alamat Baru</h2>
+        </xpath>
+
+        <!-- Replace wizard checkout steps with custom breadcrumbs -->
+        <xpath expr="//t[@t-call='website_sale.wizard_checkout']" position="replace"/>
+
+        <!-- Card wrapper around the form -->
+        <xpath expr="//div[hasclass('oe_cart')]/div" position="attributes">
+            <attribute name="class" add="senjani-address-card" separator=" "/>
+        </xpath>
+
+        <!-- Remove B2B fields (company_name, vat) -->
+        <xpath expr="//t[@t-if='website._display_partner_b2b_fields()']" position="replace"/>
+
+        <!-- Remove "Already have an account?" sign-in prompt for anonymous -->
+        <xpath expr="//div[hasclass('align-items-center')][.//span[contains(text(), 'Already have an account')]]" position="replace"/>
+
+        <!-- Remove dynamic default h3 headings inside the card -->
+        <xpath expr="//t[@t-if='not is_anonymous_cart']" position="replace"/>
+        
+        <!-- Remove h4 "Fill in your address" -->
+        <xpath expr="//h4[hasclass('mt-5')]" position="replace"/>
+
+        <!-- Replace Labels with Indonesian counterparts -->
+        <xpath expr="//label[@for='o_name']" position="replace">
+            <label class="col-form-label" for="o_name">Nama Lengkap</label>
+        </xpath>
+        <xpath expr="//div[@id='div_email_public']//label[@for='o_email']" position="replace">
+            <label class="col-form-label" for="o_email">Email</label>
+        </xpath>
+        <xpath expr="//div[@id='div_email']//label[@for='o_email']" position="replace">
+            <label class="col-form-label" for="o_email">Email</label>
+        </xpath>
+        <xpath expr="//label[@for='o_phone']" position="replace">
+            <label class="col-form-label" for="o_phone">Nomor Telepon</label>
+        </xpath>
+        <xpath expr="//label[@for='o_street']" position="replace">
+            <label class="col-form-label" for="o_street">Jalan dan Nomor</label>
+        </xpath>
+        <xpath expr="//label[@for='o_street2']" position="replace">
+            <label class="col-form-label label-optional" for="o_street2">Apartment, Suite, dsb.</label>
+        </xpath>
+        <xpath expr="//label[@for='o_city']" position="replace">
+            <label class="col-form-label" for="o_city">Kota</label>
+        </xpath>
+        <xpath expr="//t[@t-if='zip_before_city']//label[@for='o_zip']" position="replace">
+            <label class="col-form-label label-optional" for="o_zip">Kode Pos</label>
+        </xpath>
+        <xpath expr="//t[@t-if='not zip_before_city']//label[@for='o_zip']" position="replace">
+            <label class="col-form-label label-optional" for="o_zip">Kode Pos</label>
+        </xpath>
+        <xpath expr="//label[@for='o_country_id']" position="replace">
+            <label class="col-form-label" for="o_country_id">Negara</label>
+        </xpath>
+        <xpath expr="//label[@for='o_state_id']" position="replace">
+            <label class="col-form-label" for="o_state_id">Provinsi</label>
+        </xpath>
+
+        <!-- Force Country and State fields to be full width so they stack correctly -->
+        <xpath expr="//div[@id='div_country']" position="attributes">
+            <attribute name="class" remove="col-lg-6" add="col-lg-12" separator=" "/>
+        </xpath>
+        <xpath expr="//div[@id='div_state']" position="attributes">
+            <attribute name="class" remove="col-lg-6" add="col-lg-12" separator=" "/>
+        </xpath>
+
+        <!-- Style the CTA buttons row container -->
+        <xpath expr="//div[hasclass('mt32')][hasclass('mb32')]" position="attributes">
+            <attribute name="class" remove="d-flex flex-column flex-md-row align-items-center justify-content-between mt32 mb32" add="senjani-address-actions" separator=" "/>
+        </xpath>
+
+        <!-- Style Discard button -->
+        <xpath expr="//a[hasclass('btn-outline-secondary')]" position="replace">
+            <a role="button" t-att-href="discard_url" class="senjani-btn-address-discard">
+                &lt; Back
+            </a>
+        </xpath>
+
+        <!-- Remove mobile "or" separator between buttons -->
+        <xpath expr="//div[hasclass('d-md-none')]" position="replace"/>
+
+        <!-- Style Save button -->
+        <xpath expr="//button[@id='save_address']" position="replace">
+            <button id="save_address" class="senjani-btn-address-save">
+                Simpan Alamat &gt;
+            </button>
+        </xpath>
+    </template>
+
+    <template id="senjani_portal_my_details_fields"
+              inherit_id="portal.portal_my_details_fields"
+              name="Senjani Portal My Details Fields">
+        <!-- Remove company_name/VAT cannot be changed warning -->
+        <xpath expr="//div[@t-if='not partner_can_edit_vat'][hasclass('col-12')]" position="replace"/>
+
+        <!-- Remove company_name field (parent div of the input) -->
+        <xpath expr="//input[@name='company_name']/.." position="replace"/>
+
+        <!-- Remove vat field (parent div of the input) -->
+        <xpath expr="//input[@name='vat']/.." position="replace"/>
+
+        <!-- Remove country change warning -->
+        <xpath expr="//small[contains(text(), 'Changing the country is not allowed')]" position="replace"/>
+    </template>
+
+    <template id="senjani_portal_my_details"
+              inherit_id="portal.portal_my_details"
+              name="Senjani Portal My Details Wrapper">
+        
+        <!-- Inject styles fallback for portal my details page -->
+        <xpath expr="//div[hasclass('o_portal_details')]" position="before">
+            <t t-call="senjani_website_custom.senjani_address_styles"/>
+        </xpath>
+
+        <!-- Card wrapper -->
+        <xpath expr="//div[hasclass('o_portal_details')]/div[hasclass('col-lg-8')]" position="attributes">
+            <attribute name="class" add="senjani-address-card" separator=" "/>
+        </xpath>
+
+        <!-- Style Save button -->
+        <xpath expr="//button[@type='submit'][hasclass('btn-primary')]" position="attributes">
+            <attribute name="class" remove="btn-primary" add="senjani-btn-address-save" separator=" "/>
+        </xpath>
+
+        <!-- Style Discard button -->
+        <xpath expr="//a[hasclass('btn-light')]" position="attributes">
+            <attribute name="class" remove="btn-light" add="senjani-btn-address-discard" separator=" "/>
+        </xpath>
+    </template>
+
+</odoo>
