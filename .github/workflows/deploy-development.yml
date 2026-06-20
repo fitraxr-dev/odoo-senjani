@@ -27,5 +27,5 @@ jobs:
             docker compose exec odoo odoo \
             -c /etc/odoo/odoo.conf \
             -u senjani_website_custom \
-            -d <DATABASE_NAME> \
+            -d senjani-dev-db \
             --stop-after-init
