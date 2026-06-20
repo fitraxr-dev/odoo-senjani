@@ -35,10 +35,9 @@
                         <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 text-center text-md-start">
                             <h5 class="senjani-footer-title">Quick Link</h5>
                             <ul class="senjani-footer-links">
-                                <li><a href="/">home</a></li>
-                                <li><a href="/shop">shop</a></li>
-                                <li><a href="/aboutus">about us</a></li>
-                                <li><a href="/contactus">contact us</a></li>
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/shop">Shop</a></li>
+                                <li><a href="/aboutus">About Us</a></li>
                             </ul>
                         </div>
 
@@ -46,10 +45,10 @@
                         <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 text-center text-md-start">
                             <h5 class="senjani-footer-title">Company Link</h5>
                             <ul class="senjani-footer-links">
-                                <li><a href="/privacy">privacy policy</a></li>
-                                <li><a href="/terms">terms of services</a></li>
-                                <li><a href="/refund">refund policy</a></li>
-                                <li><a href="/shipping">shipping policy</a></li>
+                                <li><a href="/privacy">Privacy Policy</a></li>
+                                <li><a href="/terms">Terms Of Services</a></li>
+                                <li><a href="/refund">Refund Policy</a></li>
+                                <li><a href="/shipping">Shipping Policy</a></li>
                             </ul>
                         </div>
 
@@ -69,7 +68,7 @@
                             </p>
 
                             <div class="senjani-footer-socials justify-content-center justify-content-md-start">
-                                <a href="https://wa.me/628123456789" target="_blank" class="senjani-footer-social-link whatsapp" aria-label="WhatsApp">
+                                <a href="https://wa.me/6285951587543" target="_blank" class="senjani-footer-social-link whatsapp" aria-label="WhatsApp">
                                     <i class="fa fa-whatsapp"></i>
                                 </a>
                                 <a href="https://instagram.com/senjani.scarf" target="_blank" class="senjani-footer-social-link instagram" aria-label="Instagram">
