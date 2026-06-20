@@ -10,34 +10,30 @@ class DeliveryCarrier(models.Model):
     )
     rajaongkir_api_key = fields.Char(string="API Key RajaOngkir")
 
-    # Fungsi Baru: Cek ID dinamis menggunakan API Search RajaOngkir
-    def _get_ro_id_from_api(self, zip_code):
+    # Fungsi Mapping: Ubah Kode Pos (Zip) menjadi ID Kecamatan RajaOngkir
+    def _get_ro_district_id_by_zip(self, zip_code):
+        # Jika pelanggan tidak mengisi kode pos, langsung default ke Garut
         if not zip_code:
-            return False
+            return '1805' # Ganti '1805' dengan ID asli Garut dari RajaOngkir nanti
             
+        # Bersihkan spasi (berjaga-jaga jika admin salah ketik spasi di ujung)
         zip_clean = str(zip_code).strip()
-        
-        try:
-            # Menembak endpoint pencarian langsung (bisa menggunakan kode pos)
-            url = f"https://rajaongkir.komerce.id/api/v1/destination/search?search={zip_clean}"
-            headers = {
-                'Key': self.rajaongkir_api_key or '',
-                'Accept': 'application/json'
-            }
-            
-            # Tambahkan timeout 5 detik agar jika server RajaOngkir lambat, Odoo tidak ikut nge-hang
-            response = requests.get(url, headers=headers, timeout=5)
-            response_data = response.json()
-            
-            # Jika status sukses dan ada data yang cocok dengan kode pos tersebut
-            if response_data.get('meta', {}).get('status') == 'success' and len(response_data.get('data', [])) > 0:
-                # API akan mengembalikan list wilayah. Kita langsung ambil ID urutan pertama (index 0).
-                return str(response_data['data'][0]['id'])
-                
-        except Exception as e:
-            pass # Abaikan jika error, nanti ditangkap di fungsi utama
-            
-        return False
+
+        # KAMUS KODE POS -> ID RAJAONGKIR
+        zip_to_ro_id = {
+            '44181': '1805', # Alamat Toko (Garut) -> ID Dummy: 1805
+            '55434': '5543', # ID Dummy: 5543
+            '40559': '4055', # ID Dummy: 4055
+            '40132': '1391', # Kode Pos 40132 (Coblong, Bandung) -> ID RO: 1391
+            '40111': '1376', # Kode Pos 40111 (Sumur Bandung) -> ID RO: 1376
+            '12110': '1362', # Kode Pos 12110 (Kebayoran Baru, Jaksel) -> ID RO: 1362
+            '12810': '1369', # Kode Pos 12810 (Tebet, Jaksel) -> ID RO: 1369
+        }
+
+        # Cari di kamus. 
+        # Jika ditemukan, kembalikan ID-nya.
+        # Jika TIDAK DITEMUKAN, gunakan parameter kedua ('1805') sebagai default / fallback ke Garut.
+        return zip_to_ro_id.get(zip_clean, '1805')
 
     def rajaongkir_rate_shipment(self, order):
         try:
@@ -45,26 +41,19 @@ class DeliveryCarrier(models.Model):
             zip_toko = self.env.company.partner_id.zip
             zip_pembeli = order.partner_shipping_id.zip
 
-            # 2. Minta Odoo untuk otomatis mencari ID-nya via API
-            origin_id = self._get_ro_id_from_api(zip_toko)
-            destination_id = self._get_ro_id_from_api(zip_pembeli)
+            # Panggil fungsi mapping di atas
+            # Karena sudah ada fallback di fungsinya, variabel ini tidak akan pernah kosong
+            origin_id = self._get_ro_district_id_by_zip(zip_toko)
+            destination_id = self._get_ro_district_id_by_zip(zip_pembeli)
 
-            if not origin_id or not destination_id:
-                return {
-                    'success': False, 
-                    'price': 0.0, 
-                    'error_message': f"Gagal: Kode Pos Toko ({zip_toko}) atau Pembeli ({zip_pembeli}) tidak terdeteksi oleh sistem pencarian RajaOngkir.", 
-                    'warning_message': False
-                }
-
-            # 3. Hitung Berat Barang (Odoo defaultnya KG, API butuhnya Gram)
+            # 2. Hitung Berat Barang (Odoo defaultnya KG, API butuhnya Gram)
             total_weight_kg = sum([(line.product_id.weight * line.product_uom_qty) for line in order.order_line])
             
             total_weight_gram = int((total_weight_kg or 1.0) * 1000)
             if total_weight_gram < 1000:
                 total_weight_gram = 1000
 
-            # 4. Request harga ke API RajaOngkir
+            # 3. Request ke API RajaOngkir
             url = "https://rajaongkir.komerce.id/api/v1/calculate/district/domestic-cost"
             headers = {
                 'Key': self.rajaongkir_api_key or '',
@@ -78,15 +67,15 @@ class DeliveryCarrier(models.Model):
                 'price': 'lowest'
             }
 
-            response = requests.post(url, headers=headers, data=payload, timeout=10)
+            response = requests.post(url, headers=headers, data=payload)
             response_data = response.json()
 
-            # 5. Tangkap Output Harga
+            # 4. Tangkap Output Harga
             if response_data.get('meta', {}).get('status') == 'success':
                 ongkir_value = response_data['data'][0]['cost'] 
                 return {'success': True, 'price': ongkir_value, 'error_message': False, 'warning_message': False}
             else:
-                raise Exception(response_data.get('meta', {}).get('message', 'Error API Perhitungan'))
+                raise Exception(response_data.get('meta', {}).get('message', 'Error API'))
 
         except Exception as e:
             return {'success': False, 'price': 0.0, 'error_message': f"Gagal menghitung ongkir: {str(e)}", 'warning_message': False}
