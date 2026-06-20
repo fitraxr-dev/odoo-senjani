@@ -21,9 +21,10 @@ class DeliveryCarrier(models.Model):
 
         # KAMUS KODE POS -> ID RAJAONGKIR
         zip_to_ro_id = {
-            '44181': '1805', # Alamat Toko (Garut) -> ID Dummy: 1805
-            '55434': '5543', # ID Dummy: 5543
-            '40559': '4055', # ID Dummy: 4055
+            '44182': '1391',
+            '44181': '1376', # Alamat Toko (Garut) -> ID Dummy: 1805
+            '55434': '1369', # ID Dummy: 5543
+            '40559': '1362', # ID Dummy: 4055
             '40132': '1391', # Kode Pos 40132 (Coblong, Bandung) -> ID RO: 1391
             '40111': '1376', # Kode Pos 40111 (Sumur Bandung) -> ID RO: 1376
             '12110': '1362', # Kode Pos 12110 (Kebayoran Baru, Jaksel) -> ID RO: 1362
