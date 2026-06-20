@@ -11,13 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy via SSH
+      - name: Backup & Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            # 1. Jalankan backup terlebih dahulu
+            echo "🔗 Terhubung ke server. Memulai script backup..."
+            bash /home/azureuser/scripts/backup_odoo.sh
+
+            # 2. Masuk ke folder deploy dan tarik kode terbaru jika backup berhasil
+            echo "🚀 Memulai proses deployment..."
             cd ${{ secrets.DEPLOY_PATH }}
+
             git pull origin main
+
             sudo docker compose up -d --remove-orphans --force-recreate
+            
+            sudo docker compose exec odoo odoo \
+              -c /etc/odoo/odoo.conf \
+              -u senjani_website_custom \
+              -d senjani-dev-db \
+              --stop-after-init
