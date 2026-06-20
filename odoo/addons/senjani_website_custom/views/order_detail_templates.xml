@@ -30,11 +30,10 @@
                 border-radius: 2px;
                 transition: width 0.5s ease;
             }
-            .senjani-progress-fill-pending { width: 0%; }
-            .senjani-progress-fill-diproses { width: 25%; }
-            .senjani-progress-fill-dikirim { width: 50%; }
-            .senjani-progress-fill-diterima { width: 75%; }
-            .senjani-progress-fill-selesai { width: 100%; }
+            .senjani-progress-fill-PENDING { width: 0%; }
+            .senjani-progress-fill-PROCESSED { width: 33%; }
+            .senjani-progress-fill-IN_DELIVERY { width: 66%; }
+            .senjani-progress-fill-DONE { width: 100%; }
             .senjani-steps {
                 display: flex;
                 justify-content: space-between;
@@ -139,6 +138,22 @@
                 transform: translateY(-2px);
                 box-shadow: 0 4px 12px rgba(6, 5, 3, 0.15);
             }
+            .senjani-btn-received {
+                background-color: #2E7D32 !important;
+                color: #fff !important;
+                font-weight: 700 !important;
+                border: none !important;
+                border-radius: 10px !important;
+                padding: 0.6rem 1.5rem !important;
+                transition: all 0.3s ease !important;
+                font-size: 0.9rem;
+            }
+            .senjani-btn-received:hover {
+                background-color: #1B5E20 !important;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+                color: #fff !important;
+            }
             @media (max-width: 575.98px) {
                 .senjani-status-card { padding: 1.25rem 0.75rem; }
                 .senjani-progress-track { top: 18px; left: calc(10% + 18px); right: calc(10% + 18px); }
@@ -162,23 +177,18 @@
                     </div>
                     <div class="senjani-steps">
                         <t t-set="status_list" t-value="[
-                            ('pending', 'Pending'),
-                            ('diproses', 'Diproses'),
-                            ('dikirim', 'Dikirim'),
-                            ('diterima', 'Diterima'),
-                            ('selesai', 'Selesai'),
+                            ('PENDING', 'Pending'),
+                            ('PROCESSED', 'Diproses'),
+                            ('IN_DELIVERY', 'Dikirim'),
+                            ('DONE', 'Selesai'),
                         ]"/>
-                        <t t-set="current_idx" t-value="{
-                            'pending': 0, 'diproses': 1, 'dikirim': 2, 'diterima': 3, 'selesai': 4
-                        }.get(sale_order.senjani_order_status, 0)"/>
                         <t t-foreach="status_list" t-as="st">
-                            <div t-attf-class="senjani-step #{st[0] == sale_order.senjani_order_status and 'senjani-step-active' or ''} #{st[0] == 'selesai' and sale_order.senjani_order_status == 'selesai' and 'senjani-step-completed' or ''}">
+                            <div t-attf-class="senjani-step #{st[0] == sale_order.senjani_order_status and 'senjani-step-active' or ''} #{st[0] == 'DONE' and sale_order.senjani_order_status == 'DONE' and 'senjani-step-completed' or ''}">
                                 <div t-attf-class="senjani-step-indicator #{st[0] == sale_order.senjani_order_status and 'senjani-step-indicator-active' or ''}">
-                                    <t t-if="st[0] == 'pending'"><i class="fa fa-file-o"/></t>
-                                    <t t-elif="st[0] == 'diproses'"><i class="fa fa-cog"/></t>
-                                    <t t-elif="st[0] == 'dikirim'"><i class="fa fa-truck"/></t>
-                                    <t t-elif="st[0] == 'diterima'"><i class="fa fa-handshake-o"/></t>
-                                    <t t-elif="st[0] == 'selesai'"><i class="fa fa-check-circle"/></t>
+                                    <t t-if="st[0] == 'PENDING'"><i class="fa fa-file-o"/></t>
+                                    <t t-elif="st[0] == 'PROCESSED'"><i class="fa fa-cog"/></t>
+                                    <t t-elif="st[0] == 'IN_DELIVERY'"><i class="fa fa-truck"/></t>
+                                    <t t-elif="st[0] == 'DONE'"><i class="fa fa-check-circle"/></t>
                                 </div>
                                 <span t-esc="st[1]" class="senjani-step-label"/>
                             </div>
@@ -204,17 +214,28 @@
                             <span class="text-muted small">No. Resi</span>
                             <strong class="senjani-resi-number" t-field="picking.carrier_tracking_ref"/>
                         </div>
-                        <div class="senjani-tracking-actions">
+                        <div class="senjani-tracking-actions d-flex gap-2 flex-wrap">
                             <a href="https://jne.co.id/tracking-package" target="_blank" class="btn senjani-btn-tracking">
                                 <i class="fa fa-external-link me-1"/>
                                 Lacak di JNE
                             </a>
+                            <!-- Tombol Pesanan Diterima: tampil jika status masih IN_DELIVERY -->
+                            <t t-if="sale_order.senjani_order_status == 'IN_DELIVERY'">
+                                <form t-attf-action="/my/orders/#{sale_order.id}/mark-received" method="POST" style="display:inline;">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <button type="submit" class="btn senjani-btn-received">
+                                        <i class="fa fa-check me-1"/>
+                                        Pesanan Diterima
+                                    </button>
+                                </form>
+                            </t>
                         </div>
                     </div>
                 </t>
             </div>
         </t>
     </template>
+
 
     <template id="senjani_order_portal_content_inherit"
               name="Senjani Order Portal Content"
@@ -275,27 +296,22 @@
                 font-weight: 700;
                 white-space: nowrap;
             }
-            .senjani-badge-pending {
+            .senjani-badge-PENDING {
                 background: var(--senjani-2, #FFF8F0);
                 color: var(--senjani-3, #FFCA86);
                 border: 1px solid var(--senjani-1, #FFEACF);
             }
-            .senjani-badge-diproses {
+            .senjani-badge-PROCESSED {
                 background: #FFF3E0;
                 color: #E65100;
                 border: 1px solid #FFE0B2;
             }
-            .senjani-badge-dikirim {
+            .senjani-badge-IN_DELIVERY {
                 background: #E3F2FD;
                 color: #1565C0;
                 border: 1px solid #BBDEFB;
             }
-            .senjani-badge-diterima {
-                background: #E8F5E9;
-                color: #2E7D32;
-                border: 1px solid #C8E6C9;
-            }
-            .senjani-badge-selesai {
+            .senjani-badge-DONE {
                 background: var(--senjani-4, #FFBA64);
                 color: #fff;
                 border: 1px solid var(--senjani-4, #FFBA64);
@@ -516,18 +532,17 @@
                         </div>
                         <t t-if="order.senjani_order_status">
                             <span t-attf-class="senjani-badge-status senjani-badge-#{order.senjani_order_status}">
-                                <i t-attf-class="fa #{'fa-file-o' if order.senjani_order_status == 'pending' else 'fa-cog' if order.senjani_order_status == 'diproses' else 'fa-truck' if order.senjani_order_status == 'dikirim' else 'fa-handshake-o' if order.senjani_order_status == 'diterima' else 'fa-check-circle'}"/>
+                                <i t-attf-class="fa #{'fa-file-o' if order.senjani_order_status == 'PENDING' else 'fa-cog' if order.senjani_order_status == 'PROCESSED' else 'fa-truck' if order.senjani_order_status == 'IN_DELIVERY' else 'fa-check-circle'}"/>
                                 <t t-out="{
-                                    'pending': 'Pending',
-                                    'diproses': 'Diproses',
-                                    'dikirim': 'Dikirim',
-                                    'diterima': 'Diterima',
-                                    'selesai': 'Selesai',
+                                    'PENDING': 'Pending',
+                                    'PROCESSED': 'Diproses',
+                                    'IN_DELIVERY': 'Dikirim',
+                                    'DONE': 'Selesai',
                                 }.get(order.senjani_order_status, order.senjani_order_status)"/>
                             </span>
                         </t>
                         <t t-else="">
-                            <span class="senjani-badge-status senjani-badge-pending">
+                            <span class="senjani-badge-status senjani-badge-PENDING">
                                 <i class="fa fa-file-o"/>
                                 Pending
                             </span>
