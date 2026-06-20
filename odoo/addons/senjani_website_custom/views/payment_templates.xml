@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        When only one payment method is available at checkout, the stock
+        Odoo payment form (addons/payment/views/payment_form_templates.xml,
+        template payment.form) still renders it inside a <ul class="list-group">
+        with one <li name="o_payment_option"> per method, each containing a
+        radio <input name="o_payment_radio">. With a single method this radio
+        is a fake choice, so we hide it via CSS and auto-select it on load.
+        We do not touch the provider/method list logic - only the visual
+        affordance - so this stays correct automatically if a second method
+        is enabled later (the radios simply reappear).
+    -->
+    <template id="senjani_payment_form_single_provider"
+              name="Senjani - Hide radio button for single payment method"
+              inherit_id="payment.form">
+
+        <xpath expr="//form[hasclass('o_payment_form')]" position="inside">
+            <style>
+                /* Active only when the form carries this marker class,
+                   added by the script below when exactly one
+                   li[name="o_payment_option"] is present in the DOM. */
+                form.senjani-single-payment-option li[name="o_payment_option"] input[name="o_payment_radio"] {
+                    display: none !important;
+                }
+                form.senjani-single-payment-option li[name="o_payment_option"] {
+                    cursor: default;
+                }
+                form.senjani-single-payment-option li[name="o_payment_option"] label {
+                    cursor: default;
+                }
+                /* o_outline (Odoo's payment SCSS) shifts the row's border
+                   color on hover/focus-within to hint that the row is
+                   selectable. With the radio hidden there is nothing to
+                   select, so we pin the border to its resting color in
+                   both states to remove that leftover affordance. */
+                form.senjani-single-payment-option li[name="o_payment_option"].o_outline,
+                form.senjani-single-payment-option li[name="o_payment_option"].o_outline:hover,
+                form.senjani-single-payment-option li[name="o_payment_option"].o_outline:focus-within {
+                    border-color: var(--bs-list-group-border-color, #dee2e6) !important;
+                }
+            </style>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var form = document.getElementById('o_payment_form');
+                    if (!form) {
+                        return;
+                    }
+                    var options = form.querySelectorAll('li[name="o_payment_option"]');
+                    if (options.length === 1) {
+                        var radio = options[0].querySelector('input[name="o_payment_radio"]');
+                        if (radio) {
+                            form.classList.add('senjani-single-payment-option');
+                            radio.checked = true;
+                            // Odoo's payment JS listens for a change event on
+                            // the radio to reveal the inline form (e.g. the
+                            // redirect button) - fire it once so that still
+                            // happens even though we hid the input visually.
+                            radio.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    }
+                });
+            </script>
+        </xpath>
+
+    </template>
+
+</odoo>

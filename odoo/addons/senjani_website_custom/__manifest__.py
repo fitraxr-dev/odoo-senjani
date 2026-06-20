@@ -6,7 +6,7 @@
     'license': 'LGPL-3',
     'category': 'Website/Website',
     'version': '18.0.1.0',
-    'depends': ['website_sale', 'website_sale_stock', 'stock_delivery', 'website_sale_wishlist', 'senjani_odoo_core'],
+    'depends': ['website_sale', 'website_sale_stock', 'stock_delivery', 'website_sale_wishlist', 'senjani_odoo_core', 'payment'],
     'auto_install': True,
     'data': [
         'views/products_item_templates.xml',
@@ -18,6 +18,7 @@
         'views/cart_templates.xml',
         'views/homepage_templates.xml',
         'views/address_templates.xml',
+        'views/payment_templates.xml',
     ],
     'assets': {
         'web.assets_frontend': [
