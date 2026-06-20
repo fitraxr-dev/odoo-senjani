@@ -305,6 +305,7 @@
      * Sets up MutationObserver to watch for cart changes
      * Automatically updates discount when cart is modified
      */
+    var isUpdating = false;
     function setupMutationObserver() {
         var cartDiv = document.getElementById('cart_total');
         if (!cartDiv) {
@@ -314,8 +315,14 @@
 
         console.log('[Discount] Setting up MutationObserver on cart_total');
         var observer = new MutationObserver(function () {
+            if (isUpdating) return;
+            isUpdating = true;
             console.log('[Discount] Cart mutation detected, updating discount value...');
             updateDiscountValue();
+            // Allow DOM to settle before releasing flag
+            setTimeout(function() {
+                isUpdating = false;
+            }, 0);
         });
 
         var config = {

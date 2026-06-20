@@ -1,5 +1,8 @@
+import logging
 import requests
 from odoo import models, fields, api
+
+_logger = logging.getLogger(__name__)
 
 class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
@@ -48,13 +51,23 @@ class DeliveryCarrier(models.Model):
             destination_id = self._get_ro_district_id_by_zip(zip_pembeli)
 
             # 2. Hitung Berat Barang (Odoo defaultnya KG, API butuhnya Gram)
-            total_weight_kg = sum([(line.product_id.weight * line.product_uom_qty) for line in order.order_line])
+            #    Filter: hanya produk fisik, exclude delivery line & line tanpa produk
+            total_weight_kg = sum([
+                (line.product_id.weight or 0) * line.product_uom_qty
+                for line in order.order_line
+                if not line.is_delivery and line.product_id
+            ])
             
             total_weight_gram = int((total_weight_kg or 1.0) * 1000)
             if total_weight_gram < 1000:
                 total_weight_gram = 1000
 
-            # 3. Request ke API RajaOngkir
+            _logger.info(
+                'RajaOngkir request: order=%s, origin=%s, dest=%s, weight=%sg',
+                order.name, origin_id, destination_id, total_weight_gram
+            )
+
+            # 3. Request ke API RajaOngkir (dengan timeout 10 detik)
             url = "https://rajaongkir.komerce.id/api/v1/calculate/district/domestic-cost"
             headers = {
                 'Key': self.rajaongkir_api_key or '',
@@ -68,8 +81,10 @@ class DeliveryCarrier(models.Model):
                 'price': 'lowest'
             }
 
-            response = requests.post(url, headers=headers, data=payload)
+            response = requests.post(url, headers=headers, data=payload, timeout=10)
             response_data = response.json()
+
+            _logger.info('RajaOngkir response status: %s', response_data.get('meta', {}).get('status'))
 
             # 4. Tangkap Output Harga
             if response_data.get('meta', {}).get('status') == 'success':
@@ -78,7 +93,22 @@ class DeliveryCarrier(models.Model):
             else:
                 raise Exception(response_data.get('meta', {}).get('message', 'Error API'))
 
+        except requests.exceptions.Timeout:
+            _logger.warning('RajaOngkir API timeout for order %s', order.name)
+            return {
+                'success': False, 'price': 0.0,
+                'error_message': 'Layanan ongkir tidak merespons (timeout). Silakan coba lagi.',
+                'warning_message': False,
+            }
+        except requests.exceptions.ConnectionError:
+            _logger.warning('RajaOngkir API connection error for order %s', order.name)
+            return {
+                'success': False, 'price': 0.0,
+                'error_message': 'Tidak dapat terhubung ke layanan ongkir. Periksa koneksi internet server.',
+                'warning_message': False,
+            }
         except Exception as e:
+            _logger.error('RajaOngkir error for order %s: %s', order.name, str(e))
             return {'success': False, 'price': 0.0, 'error_message': f"Gagal menghitung ongkir: {str(e)}", 'warning_message': False}
 
     # =====================================================================
