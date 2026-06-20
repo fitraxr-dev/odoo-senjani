@@ -1,0 +1,841 @@
+/* ==========================================================================
+   Senjani Cart Page Custom Premium Stylesheet
+   ========================================================================== */
+
+:root {
+  --yellow-white: rgba(255, 248, 240, 1);
+  --yellow-skin: rgba(255, 233, 207, 1);
+  --yellow-golden: rgba(255, 186, 99, 1);
+  --darker-black: rgba(6, 5, 3, 1);
+  --grayish: rgba(77, 80, 87, 1);
+  --white: rgba(242, 242, 242, 1);
+  --brand-font-family: "Poppins", Helvetica, sans-serif;
+}
+
+/* Page background & base layout overrides */
+#wrapwrap:has(.oe_website_sale_checkout),
+body:has(.oe_website_sale_checkout) {
+    background-color: #F5F5F5 !important;
+    font-family: 'Poppins', Helvetica, sans-serif !important;
+}
+
+body.o_wsale_cart,
+body.o_wsale_cart #wrapwrap {
+    background-color: #F5F5F5 !important;
+    font-family: 'Poppins', Helvetica, sans-serif !important;
+}
+
+/* Apply Poppins font globally to checkout container elements, excluding FontAwesome and Odoo icons */
+.oe_website_sale_checkout,
+.oe_website_sale_checkout *:not(.fa):not(.oi) {
+    font-family: 'Poppins', Helvetica, sans-serif !important;
+}
+
+/* Base checkout container padding */
+.oe_website_sale_checkout {
+    background-color: transparent !important;
+    padding: 60px 24px 100px !important;
+    max-width: 1320px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+}
+
+@media (min-width: 1400px) {
+    .oe_website_sale_checkout {
+        max-width: 1600px !important;
+        padding-left: 80px !important;
+        padding-right: 80px !important;
+    }
+}
+
+/* Hide default Odoo step indicators / wizard and parent col-12 wrapper */
+.oe_website_sale_checkout .o_wsale_steps_bar,
+.oe_website_sale_checkout .wizard,
+.oe_website_sale_checkout .o_wizard,
+.oe_website_sale_checkout .dropdown.d-md-none,
+.oe_website_sale_checkout .d-md-none.fw-bold.small {
+    display: none !important;
+}
+
+.oe_website_sale_checkout > .row > .col-12:has(.o_wizard),
+.oe_website_sale_checkout > .row > .col-12:has(.dropdown.d-md-none),
+.oe_website_sale_checkout > .row > .col-12:has(.d-md-none.fw-bold.small) {
+    display: none !important;
+}
+
+/* ---- Breadcrumb ---- */
+.senjani-cart-breadcrumb {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+}
+.senjani-cart-breadcrumb .breadcrumb {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+.senjani-cart-breadcrumb .breadcrumb-item {
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+}
+.senjani-cart-breadcrumb .breadcrumb-item,
+.senjani-cart-breadcrumb .breadcrumb-item a {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 32px !important;
+    font-weight: 400 !important;
+    letter-spacing: 3.2px !important;
+    color: #4D5057 !important;
+    text-decoration: none !important;
+}
+.senjani-cart-breadcrumb .breadcrumb-item.active {
+    color: #4D5057 !important;
+}
+.senjani-cart-breadcrumb .breadcrumb-item a {
+    color: #FFBA63 !important;
+}
+.senjani-cart-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    content: "/" !important;
+    color: #4D5057 !important;
+    padding: 0 10px !important;
+}
+
+/* ---- Shopping Cart Title ---- */
+.oe_website_sale_checkout h3.mb-4 {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 40px !important;
+    color: #060503 !important;
+    margin-top: 0 !important;
+    margin-bottom: 40px !important;
+}
+
+/* ---- Outer layout alignment ---- */
+.oe_website_sale_checkout > .row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+}
+
+@media (min-width: 992px) {
+    .oe_website_sale_checkout > .row {
+        display: flex !important;
+        justify-content: space-between !important;
+        flex-wrap: nowrap !important;
+        width: 100% !important;
+    }
+    .oe_website_sale_checkout .oe_cart {
+        flex: 1 1 auto !important;
+        width: calc(100% - 510px) !important;
+        max-width: calc(100% - 510px) !important;
+        padding-right: 40px !important;
+        background-color: transparent !important;
+    }
+    .oe_website_sale_checkout #o_cart_summary {
+        flex: 0 0 480px !important;
+        width: 480px !important;
+        max-width: 480px !important;
+        margin-left: 30px !important;
+        background-color: transparent !important;
+        padding: 0 !important;
+    }
+    /* Align order summary card with the top of the product table */
+    .oe_website_sale_checkout #o_cart_summary .card {
+        margin-top: 110px !important;
+    }
+}
+
+/* ---- Product list table header ---- */
+.cart-header-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    color: #4D5057 !important;
+    margin-bottom: 20px !important;
+    border-bottom: 1.5px solid #FFBA63 !important;
+    padding-bottom: 12px !important;
+}
+.cart-header-product {
+    flex: 1 1 auto !important;
+}
+.cart-header-right-group {
+    display: flex !important;
+    align-items: center !important;
+    width: 500px !important;
+    justify-content: flex-start !important;
+    flex-shrink: 0 !important;
+}
+.cart-header-price {
+    width: 140px !important;
+    text-align: right !important;
+}
+.cart-header-quantity {
+    width: 180px !important;
+    text-align: center !important;
+}
+.cart-header-total {
+    width: 140px !important;
+    text-align: right !important;
+}
+
+/* ---- Cart product rows ---- */
+.oe_website_sale_checkout .o_cart_product {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 24px 0 !important;
+    border-bottom: 1.5px solid #FFBA63 !important;
+    background: transparent !important;
+}
+.oe_website_sale_checkout .o_cart_product:last-child {
+    border-bottom: 1.5px solid #FFBA63 !important;
+}
+
+/* Product left group */
+.cart-product-left-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 40px !important;
+    flex: 1 1 auto !important;
+}
+
+/* Product image */
+.cart-product-image {
+    width: 140px !important;
+    height: 140px !important;
+    flex-shrink: 0 !important;
+}
+.cart-product-image img,
+.cart-product-image .o_image_64_max {
+    width: 140px !important;
+    height: 140px !important;
+    object-fit: cover !important;
+    border-radius: 12px !important;
+    max-width: 140px !important;
+}
+
+/* Product details text */
+.cart-product-info {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+}
+.cart-product-name {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    color: #060503 !important;
+}
+
+/* Combo/accessory item text style */
+.combo-item-line-detail {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 14px !important;
+    color: #4D5057 !important;
+}
+
+/* Variant drop-down badge */
+.cart-product-variant-badge {
+    background-color: #FFBA63 !important;
+    border-radius: 6px !important;
+    padding: 4px 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+}
+.cart-product-variant-text {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    color: #4D5057 !important;
+}
+
+/* Product right group */
+.cart-product-right-group {
+    display: flex !important;
+    align-items: center !important;
+    width: 500px !important;
+    justify-content: flex-start !important;
+    flex-shrink: 0 !important;
+}
+.cart-product-unit-price {
+    width: 140px !important;
+    text-align: right !important;
+}
+.cart-product-qty-wrapper {
+    width: 180px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+.cart-product-total-price {
+    width: 140px !important;
+    text-align: right !important;
+}
+.cart-product-unit-price span,
+.cart-product-total-price span {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    color: #060503 !important;
+}
+
+/* Delete trash button */
+.cart-product-delete {
+    width: 40px !important;
+    text-align: right !important;
+}
+.cart-product-delete button.js_delete_product {
+    color: #060503 !important;
+    font-size: 26px !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    transition: color 0.2s ease !important;
+}
+.cart-product-delete button.js_delete_product:hover {
+    color: #e74c3c !important;
+}
+
+/* ---- Quantity controls ---- */
+.oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity.input-group,
+.oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity {
+    background-color: #FFBA63 !important;
+    border-radius: 6px !important;
+    border: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 6px 14px !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;
+}
+.oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity .btn,
+.oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity .js_add_cart_json {
+    background: transparent !important;
+    border: none !important;
+    color: #060503 !important;
+    font-size: 16px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+    box-shadow: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+}
+.oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity input.quantity {
+    background: transparent !important;
+    border: none !important;
+    color: #060503 !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    width: 32px !important;
+    height: auto !important;
+    padding: 0 !important;
+    text-align: center !important;
+    box-shadow: none !important;
+}
+
+/* ---- Order Summary sidebar ---- */
+.oe_website_sale_checkout .card,
+.oe_website_sale_checkout .oe_cart,
+.oe_website_sale_checkout .oe_cart .card,
+.oe_website_sale_checkout .o_total_card,
+.oe_website_sale_checkout .o_total_card .card-body,
+.oe_website_sale_checkout .o_total_card .card-body > div,
+.oe_website_sale_checkout #cart_total {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+.oe_website_sale_checkout .o_total_card .card-body {
+    padding: 0 !important;
+}
+
+/* Redesign Order Summary as a premium standalone card */
+.oe_website_sale_checkout #o_cart_summary .card {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+
+/* Order Summary Header */
+.oe_website_sale_checkout .o_total_card h5,
+.oe_website_sale_checkout #cart_total h5,
+.oe_website_sale_checkout .o_order_summary_title,
+.oe_website_sale_checkout .o_checkout_col h5 {
+    display: none !important; /* Hide original Odoo heading if exists */
+}
+.oe_website_sale_checkout #cart_total::before {
+    content: "Order Summary" !important;
+    display: block !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    color: #4D5057 !important;
+    margin-bottom: 20px !important;
+}
+
+/* Dividers in summary */
+.oe_website_sale_checkout #cart_total {
+    border-bottom: 1.5px solid #e0e0e0 !important; /* clean border color */
+    padding-bottom: 24px !important;
+    margin-bottom: 24px !important;
+}
+
+/* Hide delivery and discount rows in order summary */
+#order_delivery,
+#order_total_untaxed + tr:not(#order_total_taxes):not(#order_total):not(#senjani_promo_row),
+tr:has(td[title="Discounted amount"]),
+tr[id*="discount"],
+#cart_total table tr:not(#senjani_promo_row):has(.coupon_form) {
+    display: none !important;
+}
+
+/* Summary table */
+.oe_website_sale_checkout #cart_total table,
+.oe_website_sale_checkout #cart_total tbody {
+    display: block !important;
+    border: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+.oe_website_sale_checkout #cart_total table tr {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 16px !important;
+    background: transparent !important;
+    border: none !important;
+    width: 100% !important;
+}
+.oe_website_sale_checkout #cart_total table tr:last-child {
+    margin-bottom: 0 !important;
+}
+.oe_website_sale_checkout #cart_total table tr:has(#order_delivery) {
+    display: none !important; /* Double check delivery row is hidden */
+}
+.oe_website_sale_checkout #cart_total table td {
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+/* Subtotal & Taxes Label styling */
+.oe_website_sale_checkout #cart_total_subtotal,
+.oe_website_sale_checkout #order_total_taxes td:first-child {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    color: #4D5057 !important;
+}
+/* Subtotal & Taxes styling */
+#cart_total table tr:not(#order_total) td:first-child,
+#cart_total table tr:not(#order_total) td:first-child *,
+.oe_website_sale_checkout #cart_total_subtotal,
+.oe_website_sale_checkout #order_total_taxes td:first-child {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 20px !important;
+    color: #4D5057 !important;
+    background: transparent !important;
+    border: none !important;
+}
+#cart_total table tr:not(#order_total) td:last-child,
+#cart_total table tr:not(#order_total) td:last-child * {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    color: #060503 !important;
+    text-align: right !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+/* ---- Promo coupon form inside summary ---- */
+.oe_website_sale_checkout #cart_total .coupon_form,
+.oe_website_sale_checkout .coupon_form,
+#o_cart_summary .coupon_form,
+#o_cart_summary form[name="coupon_code"] {
+    width: 100% !important;
+    margin-top: 16px !important;
+}
+
+.oe_website_sale_checkout .coupon_form form {
+    width: 100% !important;
+    display: block !important;
+}
+
+.oe_website_sale_checkout form .input-group,
+.oe_website_sale_checkout .coupon_form .input-group,
+#o_cart_summary form[name="coupon_code"] .input-group,
+#senjani_promo_row .input-group {
+    background-color: #FFFFFF !important;
+    border: 1px solid #D5D5D5 !important;
+    border-radius: 8px !important;
+    padding: 4px !important; /* Space for the floating button inside the field */
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    height: 52px !important;
+}
+
+.oe_website_sale_checkout form input[name="promo"],
+.oe_website_sale_checkout .coupon_form input[name="promo"],
+#o_cart_summary form[name="coupon_code"] input[name="promo"],
+#senjani_promo_row input[name="promo"] {
+    background-color: transparent !important;
+    border: none !important;
+    color: #333333 !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    padding: 0 16px !important;
+    height: 100% !important;
+    box-shadow: none !important;
+    flex: 1 1 auto !important;
+}
+
+.oe_website_sale_checkout form input[name="promo"]::placeholder,
+.oe_website_sale_checkout .coupon_form input[name="promo"]::placeholder,
+#o_cart_summary form[name="coupon_code"] input[name="promo"]::placeholder,
+#senjani_promo_row input[name="promo"]::placeholder {
+    color: #999999 !important;
+    opacity: 0.8 !important;
+}
+
+.oe_website_sale_checkout form .a-submit,
+.oe_website_sale_checkout .coupon_form .a-submit,
+#o_cart_summary form[name="coupon_code"] .a-submit,
+#senjani_promo_row .a-submit {
+    background-color: #4A4A4A !important; /* solid dark background */
+    color: #FFFFFF !important; /* white text */
+    border: none !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    padding: 0 24px !important;
+    border-radius: 6px !important; /* rounded corners */
+    height: 100% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.oe_website_sale_checkout form .a-submit:hover,
+.oe_website_sale_checkout .coupon_form .a-submit:hover,
+#o_cart_summary form[name="coupon_code"] .a-submit:hover,
+#senjani_promo_row .a-submit:hover {
+    background-color: #333333 !important;
+}
+
+/* ---- Total amount row ---- */
+.oe_website_sale_checkout #order_total {
+    border-top: 1.5px solid #e0e0e0 !important; /* clean light gray border */
+    padding-top: 24px !important;
+    margin-top: 16px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 40px !important;
+    width: 100% !important;
+}
+.oe_website_sale_checkout #order_total td {
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+}
+.oe_website_sale_checkout #order_total td:first-child strong,
+.oe_website_sale_checkout #order_total td:first-child {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 32px !important;
+    color: #060503 !important;
+}
+.oe_website_sale_checkout #order_total td:last-child strong,
+.oe_website_sale_checkout #order_total td:last-child .monetary_field,
+.oe_website_sale_checkout #order_total td:last-child {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 32px !important;
+    color: #060503 !important;
+}
+
+/* ---- Navigation buttons (Checkout & Continue Shopping) ---- */
+.oe_website_sale_checkout .o_total_card .card-body > div.pt-4,
+.oe_website_sale_checkout .o_cta_navigation_container,
+#o_cart_summary .card-body,
+#o_cart_summary .card-body > div {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+/* Checkout Button */
+.oe_website_sale_checkout a[href*="/shop/checkout"],
+.oe_website_sale_checkout a.btn-primary.float-end,
+.oe_website_sale_checkout a[name="website_sale_main_button"],
+#o_cart_summary a.btn-primary,
+#o_cart_summary a[name="website_sale_main_button"] {
+    background-color: #FFBA63 !important;
+    color: #060503 !important;
+    border-radius: 8px !important;
+    border: none !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 32px !important;
+    padding: 16px 40px !important;
+    text-align: center !important;
+    width: 100% !important;
+    display: block !important;
+    box-shadow: none !important;
+    transition: background-color 0.2s ease, transform 0.2s ease !important;
+    text-decoration: none !important;
+    text-transform: capitalize !important;
+    order: 1 !important;
+}
+.oe_website_sale_checkout a[href*="/shop/checkout"]:hover,
+.oe_website_sale_checkout a[name="website_sale_main_button"]:hover,
+#o_cart_summary a.btn-primary:hover {
+    background-color: #E6A759 !important;
+    color: #060503 !important;
+    transform: translateY(-1px) !important;
+}
+.oe_website_sale_checkout a[href*="/shop/checkout"] i,
+.oe_website_sale_checkout a[name="website_sale_main_button"] i,
+#o_cart_summary a.btn-primary i {
+    display: none !important; /* Hide chevron icon */
+}
+
+/* Style the "or" separator in Odoo's navigation buttons */
+.oe_website_sale_checkout .o_cta_navigation_container .my-2,
+.oe_website_sale_checkout .o_total_card .card-body > div.pt-4 > .my-2,
+.oe_website_sale_checkout .my-2,
+#o_cart_summary .my-2,
+#o_cart_summary .my-2.opacity-75 {
+    display: block !important;
+    text-align: center !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 16px !important;
+    color: #999999 !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    order: 2 !important;
+}
+
+/* Continue Shopping Link */
+.oe_website_sale_checkout a[href="/shop"],
+#o_cart_summary a[href="/shop"],
+.oe_website_sale_checkout a.btn-link,
+#o_cart_summary a.btn-link,
+.oe_website_sale_checkout .o_total_card .card-body > div.pt-4 a.text-center,
+.oe_website_sale_checkout .o_cta_navigation_container a.text-center {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    color: #FFBA63 !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    transition: color 0.2s ease !important;
+    order: 3 !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-transform: capitalize !important;
+}
+.oe_website_sale_checkout a[href="/shop"]:hover,
+#o_cart_summary a[href="/shop"]:hover {
+    color: #E6A759 !important;
+    text-decoration: underline !important;
+}
+.oe_website_sale_checkout a[href="/shop"] i,
+#o_cart_summary a[href="/shop"] i,
+.oe_website_sale_checkout a.btn-link i {
+    display: none !important; /* Hide back chevron */
+}
+.oe_website_sale_checkout .o_total_card .card-body > div.pt-4 a.text-center:hover,
+.oe_website_sale_checkout .o_cta_navigation_container a.text-center:hover {
+    color: #E6A759 !important;
+    text-decoration: underline !important;
+}
+.oe_website_sale_checkout .o_total_card .card-body > div.pt-4 a.text-center i,
+.oe_website_sale_checkout .o_cta_navigation_container a.text-center i {
+    display: none !important; /* Hide back chevron */
+}
+
+/* Empty cart alert box */
+.oe_website_sale_checkout .js_cart_lines.alert-info {
+    font-family: 'Poppins', sans-serif !important;
+    background-color: #ffffff !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 12px !important;
+    color: #4D5057 !important;
+    font-size: 18px !important;
+    padding: 20px !important;
+}
+
+/* ---- Responsive Styles ---- */
+@media (max-width: 991.98px) {
+    .oe_website_sale_checkout {
+        padding: 20px 16px 100px !important;
+    }
+    .oe_website_sale_checkout > .row {
+        flex-direction: column !important;
+    }
+    .oe_website_sale_checkout .oe_cart {
+        width: 100% !important;
+        padding-right: 0 !important;
+        margin-bottom: 40px !important;
+    }
+    .oe_website_sale_checkout #o_cart_summary {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .cart-header-row {
+        display: none !important;
+    }
+    .oe_website_sale_checkout .o_cart_product {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 16px !important;
+        padding: 20px 0 !important;
+    }
+    .cart-product-left-group {
+        width: 100% !important;
+        gap: 20px !important;
+    }
+    .cart-product-image,
+    .cart-product-image img,
+    .cart-product-image .o_image_64_max {
+        width: 100px !important;
+        height: 100px !important;
+    }
+    .cart-product-right-group {
+        width: 100% !important;
+        justify-content: space-between !important;
+        margin-top: 10px !important;
+    }
+    .cart-product-unit-price,
+    .cart-product-qty-wrapper,
+    .cart-product-total-price,
+    .cart-product-delete {
+        width: auto !important;
+        text-align: left !important;
+    }
+    .cart-product-delete {
+        text-align: right !important;
+    }
+    .senjani-cart-breadcrumb .breadcrumb-item,
+    .senjani-cart-breadcrumb .breadcrumb-item a {
+        font-size: 24px !important;
+    }
+    .oe_website_sale_checkout h3.mb-4 {
+        font-size: 32px !important;
+        margin-bottom: 24px !important;
+    }
+    .cart-product-name {
+        font-size: 18px !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .oe_website_sale_checkout {
+        padding: 15px 12px 60px !important;
+    }
+    .senjani-cart-breadcrumb .breadcrumb-item,
+    .senjani-cart-breadcrumb .breadcrumb-item a {
+        font-size: 18px !important;
+        letter-spacing: 1.5px !important;
+    }
+    .oe_website_sale_checkout h3.mb-4 {
+        font-size: 26px !important;
+        margin-bottom: 20px !important;
+    }
+    .cart-product-left-group {
+        gap: 12px !important;
+    }
+    .cart-product-image,
+    .cart-product-image img,
+    .cart-product-image .o_image_64_max {
+        width: 70px !important;
+        height: 70px !important;
+    }
+    .cart-product-name {
+        font-size: 15px !important;
+    }
+    .cart-product-unit-price span,
+    .cart-product-total-price span {
+        font-size: 16px !important;
+    }
+    .oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity.input-group {
+        padding: 2px 8px !important;
+        gap: 8px !important;
+    }
+    .oe_website_sale_checkout .cart-product-qty-wrapper .css_quantity input.quantity {
+        font-size: 16px !important;
+        width: 24px !important;
+    }
+    .cart-product-delete button.js_delete_product {
+        font-size: 20px !important;
+    }
+    
+    /* Order summary adjustments for small mobile */
+    .oe_website_sale_checkout #cart_total::before {
+        font-size: 18px !important;
+    }
+    .oe_website_sale_checkout #cart_total_subtotal,
+    .oe_website_sale_checkout #order_delivery td:first-child,
+    .oe_website_sale_checkout #order_total_taxes td:first-child {
+        font-size: 16px !important;
+    }
+    .oe_website_sale_checkout #cart_total td:last-child {
+        font-size: 16px !important;
+    }
+    .oe_website_sale_checkout #order_total td:first-child strong {
+        font-size: 24px !important;
+    }
+    .oe_website_sale_checkout #order_total td:last-child strong,
+    .oe_website_sale_checkout #order_total td:last-child .monetary_field {
+        font-size: 24px !important;
+    }
+    .oe_website_sale_checkout a[name="website_sale_main_button"] {
+        font-size: 24px !important;
+        padding: 12px 20px !important;
+    }
+    .oe_website_sale_checkout form[name="coupon_code"] input[name="promo"] {
+        font-size: 14px !important;
+        padding: 0 12px !important;
+    }
+    .oe_website_sale_checkout form[name="coupon_code"] .a-submit {
+        font-size: 14px !important;
+        padding: 0 16px !important;
+    }
+}

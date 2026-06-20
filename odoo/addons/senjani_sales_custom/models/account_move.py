@@ -8,6 +8,6 @@ class AccountMove(models.Model):
         sale_orders = self.line_ids.sale_line_ids.order_id
         if sale_orders:
             for order in sale_orders:
-                if order.senjani_order_status in (False, 'pending'):
-                    order.senjani_order_status = 'diproses'
+                if order.senjani_order_status in (False, 'PENDING'):
+                    order.senjani_order_status = 'PROCESSED'
         return res

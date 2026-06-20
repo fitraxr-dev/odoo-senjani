@@ -5,8 +5,8 @@
     'author': 'Tim Senjani',
     'license': 'LGPL-3',
     'category': 'Website/Website',
-    'version': '18.0.1.0',
-    'depends': ['website_sale', 'website_sale_stock', 'stock_delivery', 'website_sale_wishlist', 'senjani_odoo_core'],
+    'version': '18.0.1.1',
+    'depends': ['website_sale', 'website_sale_stock', 'stock_delivery', 'website_sale_wishlist', 'website_sale_loyalty', 'senjani_odoo_core'],
     'auto_install': True,
     'data': [
         'views/products_item_templates.xml',
@@ -29,6 +29,7 @@
             'senjani_website_custom/static/src/css/address_form.css',
             'senjani_website_custom/static/src/xml/stock_availability.xml',
             'senjani_website_custom/static/src/css/homepage.css',
+            'senjani_website_custom/static/src/css/cart.css',
             'senjani_website_custom/static/src/js/cart_discount.js',
             'senjani_website_custom/static/src/js/wishlist.js',
         ],

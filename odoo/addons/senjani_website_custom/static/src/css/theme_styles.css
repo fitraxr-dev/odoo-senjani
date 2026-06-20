@@ -25,13 +25,7 @@ header#top .navbar {
 
 /* Logo styling */
 .senjani-header-brand-text {
-    font-family: 'Playfair Display', serif;
-    font-weight: 600;
-    font-size: 0.95rem;
-    line-height: 1.1;
-    color: var(--senjani-gold) !important;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    display: none !important;
 }
 
 /* Nav links */

@@ -1,41 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- 
+        <!--
         ==============================================================================
-        Website Shop Cart Views - Discount Display
+        Senjani Cart Template Customization
         ==============================================================================
-        
-        This module extends the e-commerce shopping cart to display calculated 
-        discounts dynamically.
-        
-        Features:
-        - Auto-detects discount amounts in cart total
-        - Inserts discount row after taxes
-        - Real-time updates on cart changes
-        - Handles various currency formats
-        
-        Implementation:
-        - JavaScript: static/src/js/cart_discount.js
-        - QWeb Templates: static/src/xml/cart_templates.xml
         -->
-        
-        <!-- 
-        Template: Extend website.shop cart page with discount display
-        This template is loaded on all shop cart pages via assets.
-        -->
-        <template id="shop_cart_discount" inherit_id="website_sale.cart">
-            <!-- 
-            No XPath modifications needed - discount injection is handled by JavaScript.
-            The JavaScript module automatically:
-            1. Detects the cart_total section
-            2. Locates the taxes row
-            3. Inserts discount row dynamically
-            4. Updates values in real-time
-            
-            This approach is more maintainable as it doesn't break with minor
-            template changes in the base website_sale module.
-            -->
+        <!-- Override the cart page heading and add breadcrumb -->
+        <template id="shop_cart_senjani" inherit_id="website_sale.cart" name="Senjani Cart Page">
+            <!-- Replace the default "Order overview" h3 with Senjani-styled heading + breadcrumb -->
+            <xpath expr="//h3[contains(text(),'Order overview')]" position="replace">
+                <!-- Google Fonts Link for Poppins -->
+                <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+                <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+                
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-2 senjani-cart-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/shop/cart">Cart</a>
+                        </li>
+                        <li class="breadcrumb-item active">Checkout</li>
+                    </ol>
+                </nav>
+                <!-- Title -->
+                <h3 class="mb-4">Shopping Cart</h3>
+            </xpath>
         </template>
+
+        <!-- Override the product lines rendering -->
+        <template id="cart_lines_senjani" inherit_id="website_sale.cart_lines" name="Senjani Cart Lines">
+            <!-- Replace the main product list body to match mockup layout -->
+            <xpath expr="//div[@id='cart_products']" position="replace">
+                <div id="cart_products" t-if="website_sale_order and website_sale_order.website_order_line" class="js_cart_lines d-flex flex-column mb32">
+                    <!-- Column headers (Product, Price, Quantity, Total) -->
+                    <div class="cart-header-row d-none d-md-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
+                        <div class="cart-header-product">Product</div>
+                        <div class="cart-header-right-group d-flex align-items-center">
+                            <div class="cart-header-price">Price</div>
+                            <div class="cart-header-quantity">Quantity</div>
+                            <div class="cart-header-total">Total</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Loop through order lines -->
+                    <t t-set="show_qty" t-value="is_view_active('website_sale.product_quantity')"/>
+                    <div t-foreach="website_sale_order.website_order_line"
+                         t-as="line"
+                         t-attf-class="o_cart_product d-flex align-items-center justify-content-between gap-3 #{line.linked_line_id and 'optional_product info'} #{not line_last and 'border-bottom pb-4'} #{line_index &gt; 0 and 'pt-4'}"
+                         t-attf-data-product-id="#{line.product_id and line.product_id.id}">
+                         <t t-if="line.product_id">
+                             <!-- Left Group: Image + Product Details -->
+                             <div class="cart-product-left-group d-flex align-items-center gap-4">
+                                 <!-- Image -->
+                                 <div class="cart-product-image">
+                                     <img t-if="line._is_not_sellable_line() and line.product_id.image_128"
+                                          t-att-src="image_data_uri(line.product_id.image_128)"
+                                          class="img-fluid rounded"
+                                          t-att-alt="line.name_short" />
+                                     <div t-elif="line.product_id.image_128"
+                                          t-field="line.product_id.image_128"
+                                          t-options="{'widget': 'image', 'qweb_img_responsive': False, 'class': 'img-fluid rounded'}" />
+                                 </div>
+                                 
+                                 <!-- Details: Name + Variant Badge + Combo Items -->
+                                 <div class="cart-product-info d-flex flex-column align-items-start gap-2">
+                                     <t t-call="website_sale.cart_line_product_link">
+                                         <span t-field="line.name_short" class="cart-product-name fw-semibold"/>
+                                     </t>
+                                     
+                                     <!-- Description following lines (Event sale ticket info, etc.) -->
+                                     <t t-call="website_sale.cart_line_description_following_lines">
+                                         <t t-set="div_class" t-value="''"/>
+                                     </t>
+                                     
+                                     <!-- Combo Items list if type is combo -->
+                                     <t t-if="line.product_type == 'combo'">
+                                         <div t-foreach="line.linked_line_ids"
+                                              t-as="combo_item_line"
+                                              t-attf-class="combo-item-line-detail {{'' if combo_item_line_last else 'pb-1'}}">
+                                             <t t-call="website_sale.cart_combo_item_line"/>
+                                         </div>
+                                     </t>
+                                     
+                                     <!-- Variant drop-down badge / label -->
+                                     <div class="cart-product-variant-badge d-flex align-items-center gap-1">
+                                         <span class="cart-product-variant-text">Type</span>
+                                         <i class="fa fa-caret-down text-dark opacity-50"/>
+                                     </div>
+
+                                     <!-- Odoo Wishlist / delete container target -->
+                                     <div name="o_wsale_cart_line_button_container" class="cart-line-buttons mt-1">
+                                         <a href='#'
+                                            class="js_delete_product d-none"
+                                            aria-label="Remove from cart"
+                                            title="Remove from cart">Remove</a>
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                             <!-- Right Group: Price, Quantity, Total, Trash -->
+                             <div class="cart-product-right-group d-flex align-items-center">
+                                 <!-- Unit Price -->
+                                 <div class="cart-product-unit-price">
+                                     <span t-out="line._get_displayed_unit_price()"
+                                           t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
+                                 </div>
+                                 
+                                 <!-- Quantity Controls -->
+                                 <div class="cart-product-qty-wrapper">
+                                     <div t-attf-class="css_quantity input-group" name="website_sale_cart_line_quantity">
+                                         <t t-if="not line._is_not_sellable_line()">
+                                             <t t-if="show_qty">
+                                                 <a href="#" class="js_add_cart_json btn border-0 d-flex align-items-center justify-content-center" aria-label="Remove one" title="Remove one">
+                                                     <i class="fa fa-minus"/>
+                                                 </a>
+                                                 <input type="text" class="js_quantity quantity form-control border-0 text-center" t-att-data-line-id="line.id" t-att-data-product-id="line.product_id.id" t-att-value="line._get_displayed_quantity()"/>
+                                                 <t t-if="line._get_shop_warning(clear=False)">
+                                                     <a href="#" class="btn btn-link px-1">
+                                                         <i class='fa fa-warning text-warning' t-att-title="line._get_shop_warning()" role="img" aria-label="Warning"/>
+                                                     </a>
+                                                 </t>
+                                                 <a t-else="" href="#" class="js_add_cart_json btn border-0 d-flex align-items-center justify-content-center" aria-label="Add one" title="Add one">
+                                                     <i class="fa fa-plus"/>
+                                                 </a>
+                                             </t>
+                                             <t t-else="">
+                                                 <input type="hidden" class="js_quantity form-control quantity" t-att-data-line-id="line.id" t-att-data-product-id="line.product_id.id" t-att-value="line._get_displayed_quantity()"/>
+                                             </t>
+                                         </t>
+                                         <t t-else="">
+                                             <span class="w-100 text-muted text-center" t-esc="int(line.product_uom_qty)"/>
+                                             <input type="hidden" class="js_quantity quantity form-control" t-att-data-line-id="line.id" t-att-data-product-id="line.product_id.id" t-att-value="line._get_displayed_quantity()"/>
+                                         </t>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- Total Price for the line -->
+                                 <div class="cart-product-total-price" name="website_sale_cart_line_price">
+                                     <t t-if="line.discount">
+                                         <del t-attf-class="#{'text-muted mr8'}"
+                                              style="white-space: nowrap;"
+                                              t-out="line._get_displayed_unit_price() * line.product_uom_qty"
+                                              t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
+                                     </t>
+                                     <span t-out="line._get_cart_display_price()"
+                                           t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
+                                 </div>
+                                 
+                                 <!-- Delete Button (Trash Icon) -->
+                                 <div class="cart-product-delete">
+                                     <button class="js_delete_product btn p-0 border-0" title="Remove from cart">
+                                         <i class="fa fa-trash"/>
+                                     </button>
+                                 </div>
+                             </div>
+                         </t>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
+        <!-- Override the coupon form -->
+        <template id="coupon_form_senjani" inherit_id="website_sale.coupon_form" name="Senjani Coupon Form">
+            <xpath expr="//input[@name='promo']" position="attributes">
+                <attribute name="placeholder">Coupon code....</attribute>
+            </xpath>
+            <xpath expr="//a[contains(@class, 'a-submit')]" position="replace">
+                <a href="#" role="button" class="btn btn-secondary a-submit">Terapkan</a>
+            </xpath>
+        </template>
+
+
+        <!-- Position the coupon form before the total row -->
+        <template id="total_senjani" inherit_id="website_sale.total" name="Senjani Total Override">
+            <!-- Remove delivery row from order summary -->
+            <xpath expr="//tr[@id='order_delivery']" position="replace"/>
+            <xpath expr="//tr[@id='order_total']" position="before">
+                <tr t-if="not hide_promotions" id="senjani_promo_row">
+                    <td colspan="3" class="border-0 p-0 pb-4">
+                        <span>
+                            <t t-set="force_coupon" t-value="website_sale_order.pricelist_id.code"/>
+                            <div class="coupon_form">
+                                <t t-call="website_sale.coupon_form"/>
+                            </div>
+                        </span>
+                    </td>
+                </tr>
+            </xpath>
+        </template>
+
     </data>
 </odoo>

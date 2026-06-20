@@ -28,6 +28,14 @@
      */
     function initializeCartDiscount() {
         console.log('[Discount] Initializing cart discount module...');
+        
+        // Ensure container has o_website_sale_checkout class for styling scoping
+        var container = document.querySelector('.oe_website_sale');
+        if (container && !container.classList.contains('o_website_sale_checkout')) {
+            container.classList.add('o_website_sale_checkout');
+            console.log('[Discount] Added class o_website_sale_checkout to container');
+        }
+
         if (addDiscountRow()) {
             setupMutationObserver();
             console.log('[Discount] Module initialized successfully');

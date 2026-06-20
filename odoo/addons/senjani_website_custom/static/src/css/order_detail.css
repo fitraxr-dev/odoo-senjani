@@ -29,11 +29,11 @@
     transition: width 0.5s ease;
 }
 
-.senjani-progress-fill-pending { width: 0%; }
-.senjani-progress-fill-diproses { width: 25%; }
-.senjani-progress-fill-dikirim { width: 50%; }
+.senjani-progress-fill-pending, .senjani-progress-fill-PENDING { width: 0%; }
+.senjani-progress-fill-diproses, .senjani-progress-fill-PROCESSED { width: 33%; }
+.senjani-progress-fill-dikirim, .senjani-progress-fill-IN_DELIVERY { width: 66%; }
 .senjani-progress-fill-diterima { width: 75%; }
-.senjani-progress-fill-selesai { width: 100%; }
+.senjani-progress-fill-selesai, .senjani-progress-fill-DONE { width: 100%; }
 
 .senjani-steps {
     display: flex;

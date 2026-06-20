@@ -46,8 +46,9 @@ class SaleOrder(models.Model):
                 if order.state == 'done':
                     order.senjani_order_status = 'DONE'
                 else:
-                    # Semua pengiriman selesai, order belum di-done → Dikirim
-                    order.senjani_order_status = 'IN_DELIVERY'
+                    order.senjani_order_status = 'DONE'
+            elif done_pickings and not active_pickings:
+                order.senjani_order_status = 'DONE'
             elif done_pickings:
                 order.senjani_order_status = 'IN_DELIVERY'
             elif active_pickings:

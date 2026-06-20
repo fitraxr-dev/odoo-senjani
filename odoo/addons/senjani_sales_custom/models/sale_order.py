@@ -7,10 +7,10 @@ class SaleOrder(models.Model):
     def _compute_senjani_order_status(self):
         super()._compute_senjani_order_status()
         for order in self:
-            if order.senjani_order_status in (False, 'pending'):
+            if order.senjani_order_status in (False, 'PENDING'):
                 posted_invoices = order.invoice_ids.filtered(lambda m: m.state == 'posted')
                 if posted_invoices:
-                    order.senjani_order_status = 'diproses'
+                    order.senjani_order_status = 'PROCESSED'
 
     def action_create_invoices_directly(self):
         self.ensure_one()
