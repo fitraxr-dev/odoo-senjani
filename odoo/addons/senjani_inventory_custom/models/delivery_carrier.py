@@ -80,3 +80,28 @@ class DeliveryCarrier(models.Model):
 
         except Exception as e:
             return {'success': False, 'price': 0.0, 'error_message': f"Gagal menghitung ongkir: {str(e)}", 'warning_message': False}
+
+    # =====================================================================
+    # 3 FUNGSI DI BAWAH INI WAJIB ADA AGAR TOMBOL VALIDATE TIDAK ERROR
+    # =====================================================================
+
+    # 1. Fungsi yang dipanggil saat tombol Validate diklik
+    def rajaongkir_send_shipping(self, pickings):
+        res = []
+        for picking in pickings:
+            res.append({
+                'exact_price': 0.0,
+                'tracking_number': False, # Karena resi diinput manual, biarkan False
+            })
+        return res
+
+    # 2. Fungsi untuk menghasilkan link pelacakan (opsional tapi wajib ada fungsinya)
+    def rajaongkir_get_tracking_link(self, picking):
+        if picking.carrier_tracking_ref:
+            # Mengarahkan ke web cekresi umum jika resi sudah diisi
+            return "https://cekresi.com/?noresi=%s" % picking.carrier_tracking_ref
+        return False
+
+    # 3. Fungsi yang dipanggil jika pengiriman dibatalkan
+    def rajaongkir_cancel_shipment(self, pickings):
+        return True
