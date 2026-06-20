@@ -19,5 +19,13 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
+
             git pull origin main
+
             sudo docker compose up -d --remove-orphans --force-recreate
+            
+            docker compose exec odoo odoo \
+            -c /etc/odoo/odoo.conf \
+            -u senjani_website_custom \
+            -d <DATABASE_NAME> \
+            --stop-after-init
