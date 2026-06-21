@@ -7,14 +7,14 @@
         their order list at /my/orders.
     -->
     <template id="senjani_confirmation_order_list_button"
-              name="Senjani - Tombol Daftar Order di Halaman Konfirmasi"
+              name="Senjani - Tombol Daftar Pesanan di Halaman Konfirmasi"
               inherit_id="website_sale.confirmation">
 
-        <xpath expr="//h2" position="after">
+        <xpath expr="//a[@href='/shop/print']" position="after">
             <a href="/my/orders"
-               class="btn senjani-btn-order-list mt-2 mb-3 d-inline-flex align-items-center gap-2">
-                <i class="fa fa-list-alt"/>
-                <span>Daftar Order Penjualan</span>
+               class="btn senjani-btn-order-list d-none d-md-inline-block ms-2">
+                <i class="fa fa-list-alt me-1"/>
+                <span>Daftar Pesanan</span>
             </a>
             <style>
                 .senjani-btn-order-list {
@@ -40,3 +40,4 @@
     </template>
 
 </odoo>
+
