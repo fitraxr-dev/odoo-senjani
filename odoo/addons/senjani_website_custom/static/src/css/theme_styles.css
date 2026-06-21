@@ -377,3 +377,174 @@ footer#bottom.o_footer {
         margin-bottom: 2rem;
     }
 }
+
+/* ==========================================================================
+   Product Detail Page (PDP) Styling overrides
+   ========================================================================== */
+
+/* Homepage & Product Detail Page Background & Text overrides */
+#wrapwrap:has(.senjani-homepage-container),
+#wrapwrap:has(.senjani-homepage-container) #wrap,
+body:has(.senjani-homepage-container),
+#wrapwrap:has(section[data-senjani-pdp="true"]),
+#wrapwrap:has(section[data-senjani-pdp="true"]) #wrap,
+body:has(section[data-senjani-pdp="true"]) {
+    background-color: #FFFFFF !important;
+}
+
+/* Ensure readable dark text color on PDP for all text/headings */
+#wrapwrap:has(section[data-senjani-pdp="true"]) {
+    color: var(--senjani-charcoal, #4A3C31) !important;
+}
+
+section[data-senjani-pdp="true"] h1,
+section[data-senjani-pdp="true"] h2,
+section[data-senjani-pdp="true"] h3,
+section[data-senjani-pdp="true"] h4,
+section[data-senjani-pdp="true"] h5,
+section[data-senjani-pdp="true"] h6,
+section[data-senjani-pdp="true"] p,
+section[data-senjani-pdp="true"] label,
+section[data-senjani-pdp="true"] td,
+section[data-senjani-pdp="true"] th,
+section[data-senjani-pdp="true"] .breadcrumb-item,
+section[data-senjani-pdp="true"] .breadcrumb-item a,
+section[data-senjani-pdp="true"] .oe_price,
+section[data-senjani-pdp="true"] .oe_price_value,
+section[data-senjani-pdp="true"] .o_wsale_product_information_text {
+    color: var(--senjani-charcoal, #4A3C31) !important;
+}
+
+section[data-senjani-pdp="true"] .text-muted {
+    color: #6C757D !important;
+}
+
+/* PDP Quantity Selector */
+section[data-senjani-pdp="true"] .css_quantity.input-group {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E2E2E2 !important;
+    border-radius: 8px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    justify-content: space-between !important;
+    width: 120px !important;
+    height: 40px !important;
+    box-shadow: none !important;
+    margin-right: 16px !important;
+}
+
+section[data-senjani-pdp="true"] .css_quantity .js_add_cart_json,
+section[data-senjani-pdp="true"] .css_quantity button {
+    color: var(--senjani-peach, #FDBB74) !important;
+    background-color: transparent !important;
+    border: none !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    width: 36px !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    flex: 0 0 36px !important;
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+}
+
+section[data-senjani-pdp="true"] .css_quantity .js_add_cart_json i,
+section[data-senjani-pdp="true"] .css_quantity button i {
+    color: var(--senjani-peach, #FDBB74) !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+    display: inline-block !important;
+    transition: color 0.2s ease !important;
+}
+
+section[data-senjani-pdp="true"] .css_quantity .js_add_cart_json:hover,
+section[data-senjani-pdp="true"] .css_quantity button:hover {
+    background-color: rgba(163, 107, 54, 0.05) !important;
+}
+
+section[data-senjani-pdp="true"] .css_quantity .js_add_cart_json:hover i,
+section[data-senjani-pdp="true"] .css_quantity button:hover i {
+    color: var(--senjani-gold, #A36B36) !important;
+}
+
+section[data-senjani-pdp="true"] .css_quantity .js_add_cart_json:first-of-type,
+section[data-senjani-pdp="true"] .css_quantity button:first-of-type {
+    order: 1 !important;
+}
+
+section[data-senjani-pdp="true"] .css_quantity .js_add_cart_json:last-of-type,
+section[data-senjani-pdp="true"] .css_quantity button:last-of-type {
+    order: 3 !important;
+}
+
+section[data-senjani-pdp="true"] .css_quantity input.quantity {
+    background-color: transparent !important;
+    border-left: 1px solid #E2E2E2 !important;
+    border-right: 1px solid #E2E2E2 !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    color: var(--senjani-dark, #0C0908) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    text-align: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 100% !important;
+    width: 48px !important;
+    min-width: 48px !important;
+    flex: 0 0 48px !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    order: 2 !important;
+}
+
+/* PDP Add to Cart Button */
+section[data-senjani-pdp="true"] #add_to_cart_wrap {
+    display: inline-flex !important;
+    margin-bottom: 0 !important;
+}
+
+section[data-senjani-pdp="true"] #add_to_cart {
+    background-color: var(--senjani-peach, #FDBB74) !important;
+    color: var(--senjani-charcoal, #4A3C31) !important;
+    border: none !important;
+    border-radius: 24px !important; /* rounded / pill shape */
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    padding: 10px 28px !important;
+    height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    transition: transform 0.2s ease, opacity 0.2s ease !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+
+section[data-senjani-pdp="true"] #add_to_cart:hover {
+    opacity: 0.9 !important;
+    transform: translateY(-1px) !important;
+}
+
+section[data-senjani-pdp="true"] #add_to_cart:active {
+    transform: translateY(1px) !important;
+}
+
+section[data-senjani-pdp="true"] #add_to_cart i {
+    font-size: 16px !important;
+    color: var(--senjani-charcoal, #4A3C31) !important;
+    margin: 0 !important;
+}

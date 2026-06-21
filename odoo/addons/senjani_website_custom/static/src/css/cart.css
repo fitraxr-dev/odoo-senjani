@@ -14,15 +14,45 @@
 
 /* Page background & base layout overrides */
 #wrapwrap:has(.o_website_sale_checkout),
-body:has(.o_website_sale_checkout) {
-    background-color: #F5F5F5 !important;
+body:has(.o_website_sale_checkout),
+#wrapwrap:has(#cart_products),
+body:has(#cart_products) {
+    background-color: #FFFFFF !important;
+    color: var(--senjani-charcoal, #4A3C31) !important;
     font-family: 'Poppins', Helvetica, sans-serif !important;
 }
 
 body.o_wsale_cart,
 body.o_wsale_cart #wrapwrap {
-    background-color: #F5F5F5 !important;
+    background-color: #FFFFFF !important;
+    color: var(--senjani-charcoal, #4A3C31) !important;
     font-family: 'Poppins', Helvetica, sans-serif !important;
+}
+
+/* Ensure all text inside cart & checkout pages is dark */
+#wrapwrap:has(#cart_products) h1,
+#wrapwrap:has(#cart_products) h2,
+#wrapwrap:has(#cart_products) h3,
+#wrapwrap:has(#cart_products) h4,
+#wrapwrap:has(#cart_products) h5,
+#wrapwrap:has(#cart_products) h6,
+#wrapwrap:has(#cart_products) p,
+#wrapwrap:has(#cart_products) label,
+#wrapwrap:has(#cart_products) td,
+#wrapwrap:has(#cart_products) th,
+#wrapwrap:has(#cart_products) span:not(.fa):not(.oi),
+#wrapwrap:has(.o_website_sale_checkout) h1,
+#wrapwrap:has(.o_website_sale_checkout) h2,
+#wrapwrap:has(.o_website_sale_checkout) h3,
+#wrapwrap:has(.o_website_sale_checkout) h4,
+#wrapwrap:has(.o_website_sale_checkout) h5,
+#wrapwrap:has(.o_website_sale_checkout) h6,
+#wrapwrap:has(.o_website_sale_checkout) p,
+#wrapwrap:has(.o_website_sale_checkout) label,
+#wrapwrap:has(.o_website_sale_checkout) td,
+#wrapwrap:has(.o_website_sale_checkout) th,
+#wrapwrap:has(.o_website_sale_checkout) span:not(.fa):not(.oi) {
+    color: var(--senjani-charcoal, #4A3C31) !important;
 }
 
 /* Apply Poppins font globally to checkout container elements, excluding FontAwesome and Odoo icons */
@@ -193,6 +223,34 @@ body.o_wsale_cart #wrapwrap {
 }
 .o_website_sale_checkout .o_cart_product:last-child {
     border-bottom: 1.5px solid #FFBA63 !important;
+}
+.o_website_sale_checkout .o_cart_product.d-none {
+    display: none !important;
+}
+.o_website_sale_checkout .o_cart_product.senjani-discount-line {
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 24px 0 !important;
+    margin: 0 !important;
+}
+.o_website_sale_checkout .o_cart_product.senjani-discount-line .cart-product-image {
+    width: 80px !important;
+    height: 80px !important;
+}
+.o_website_sale_checkout .o_cart_product.senjani-discount-line .cart-product-name {
+    color: var(--senjani-gold, #A36B36) !important;
+    font-size: 16px !important;
+}
+.o_website_sale_checkout .o_cart_product.senjani-discount-line .cart-product-unit-price {
+    visibility: hidden !important;
+}
+.o_website_sale_checkout .o_cart_product.senjani-discount-line .cart-product-total-price {
+    color: #2E7D32 !important;
+    font-weight: 600 !important;
+}
+.o_website_sale_checkout .o_cart_product.senjani-discount-line .cart-product-qty-wrapper {
+    visibility: hidden !important;
 }
 
 /* Product left group */
@@ -501,7 +559,6 @@ tr[id*="discount"],
     display: block !important;
 }
 
-.o_website_sale_checkout form .input-group,
 .o_website_sale_checkout .coupon_form .input-group,
 #o_cart_summary form[name="coupon_code"] .input-group,
 #senjani_promo_row .input-group {
@@ -517,7 +574,6 @@ tr[id*="discount"],
     box-shadow: none !important;
 }
 
-.o_website_sale_checkout form input[name="promo"],
 .o_website_sale_checkout .coupon_form input[name="promo"],
 #o_cart_summary form[name="coupon_code"] input[name="promo"],
 #senjani_promo_row input[name="promo"] {
@@ -535,7 +591,6 @@ tr[id*="discount"],
     text-align: left !important;
 }
 
-.o_website_sale_checkout form input[name="promo"]::placeholder,
 .o_website_sale_checkout .coupon_form input[name="promo"]::placeholder,
 #o_cart_summary form[name="coupon_code"] input[name="promo"]::placeholder,
 #senjani_promo_row input[name="promo"]::placeholder {
@@ -543,7 +598,6 @@ tr[id*="discount"],
     opacity: 0.85 !important;
 }
 
-.o_website_sale_checkout form .a-submit,
 .o_website_sale_checkout .coupon_form .a-submit,
 #o_cart_summary form[name="coupon_code"] .a-submit,
 #senjani_promo_row .a-submit {
@@ -566,7 +620,6 @@ tr[id*="discount"],
     margin: 0 !important;
 }
 
-.o_website_sale_checkout form .a-submit:hover,
 .o_website_sale_checkout .coupon_form .a-submit:hover,
 #o_cart_summary form[name="coupon_code"] .a-submit:hover,
 #senjani_promo_row .a-submit:hover {
