@@ -49,6 +49,22 @@
             <xpath expr="//form" position="attributes">
                 <attribute name="create">0</attribute>
             </xpath>
+            
+            <!-- Restrict Confirm and Register Payment buttons to Accounting users only -->
+            <xpath expr="//button[@name='action_post'][1]" position="attributes">
+                <attribute name="groups">account.group_account_user</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_post'][2]" position="attributes">
+                <attribute name="groups">account.group_account_user</attribute>
+                <attribute name="invisible">hide_post_button or move_type == 'entry' or display_inactive_currency_warning or move_type == 'out_invoice'</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_register_payment'][1]" position="attributes">
+                <attribute name="groups">account.group_account_user</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_register_payment'][2]" position="attributes">
+                <attribute name="groups">account.group_account_user</attribute>
+            </xpath>
+
             <!-- Add Xendit info section -->
             <xpath expr="//sheet//group[1]" position="before">
                 <group string="🔔 Xendit Payment Information"
@@ -67,14 +83,11 @@
                     <field name="x_show_xendit_info" invisible="1"/>
                 </group>
             </xpath>
-            <!-- Hide default post button on Customer Invoices -->
-            <xpath expr="//button[@name='action_post' and contains(@invisible, 'move_type ==')]" position="attributes">
-                <attribute name="invisible">hide_post_button or move_type == 'entry' or display_inactive_currency_warning or move_type == 'out_invoice'</attribute>
-            </xpath>
+            <!-- Hide default post button on Customer Invoices (moved up) -->
             <!-- Add specialized Validate to In Payment button -->
-            <xpath expr="//button[@name='action_post' and contains(@invisible, 'move_type ==')]" position="after">
+            <xpath expr="//button[@name='action_post'][2]" position="after">
                 <button name="action_post" string="Validate to In Payment" class="oe_highlight"
-                        type="object" groups="account.group_account_invoice" data-hotkey="q"
+                        type="object" groups="account.group_account_user" data-hotkey="q"
                         context="{'validate_analytic': True, 'disable_abnormal_invoice_detection': False}"
                         invisible="hide_post_button or move_type != 'out_invoice' or display_inactive_currency_warning"/>
             </xpath>

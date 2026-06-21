@@ -251,7 +251,7 @@ if records:
                 <field name="is_senjani_accounting" invisible="1"/>
             </xpath>
             <xpath expr="//button[@name='action_post'][2]" position="attributes">
-                <attribute name="invisible">hide_post_button or move_type == 'entry' or display_inactive_currency_warning or (move_type in ('in_invoice', 'in_refund') and not is_senjani_accounting)</attribute>
+                <attribute name="invisible">hide_post_button or move_type == 'entry' or display_inactive_currency_warning or (move_type in ('in_invoice', 'in_refund') and not is_senjani_accounting) or move_type == 'out_invoice'</attribute>
             </xpath>
         </field>
     </record>
