@@ -215,6 +215,17 @@ class AccountJournal(models.Model):
             }
         }
 
+    def action_open_unpaid_payments(self):
+        self.ensure_one()
+        return {
+            'name': 'Payments to Reconcile',
+            'type': 'ir.actions.act_window',
+            'res_model': 'account.payment',
+            'view_mode': 'list,form',
+            'domain': [('journal_id', '=', self.id), ('state', 'in', ('draft', 'in_process'))],
+            'context': {'default_journal_id': self.id},
+        }
+
     def _fill_sale_purchase_dashboard_data(self, dashboard_data):
         """
         Override to include 'in_payment' (In Process) bills in the 'To Pay' count and amount
@@ -268,6 +279,8 @@ class AccountJournal(models.Model):
                 currency = journal.currency_id or journal.company_id.currency_id
                 dashboard_data[journal.id]['account_balance'] = currency.format(real_balance)
                 dashboard_data[journal.id]['nb_lines_bank_account_balance'] = True
+                # Hide the native 'Payments' outstanding balance row
+                dashboard_data[journal.id]['nb_lines_outstanding_pay_account_balance'] = False
                 
         xndt_journals = self.filtered(lambda j: j.code == 'XNDT')
         for journal in xndt_journals:
@@ -289,12 +302,18 @@ class AccountJournal(models.Model):
                 'show_on_dashboard': True,
             })
             
-        journals_to_update = self.search([('code', 'in', ['XNDT', 'BNK1'])])
-        for journal in journals_to_update:
+        for journal in self.search([('code', '=', 'XNDT')]):
             if journal.default_account_id:
                 for line in journal.inbound_payment_method_line_ids:
                     line.payment_account_id = journal.default_account_id.id
                 for line in journal.outbound_payment_method_line_ids:
+                    line.payment_account_id = journal.default_account_id.id
+
+        # For BNK1, only bypass Inbound so Internal Transfers skip 'in_process'
+        # Leave Outbound alone so Vendor Bills stay 'in_process'
+        for journal in self.search([('code', '=', 'BNK1')]):
+            if journal.default_account_id:
+                for line in journal.inbound_payment_method_line_ids:
                     line.payment_account_id = journal.default_account_id.id
                     
         BNK1 = self.search([('code', '=', 'BNK1')])

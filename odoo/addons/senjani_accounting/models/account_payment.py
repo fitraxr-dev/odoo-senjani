@@ -18,13 +18,10 @@ class AccountPayment(models.Model):
             rec.is_senjani_bank_journal = (rec.journal_id.type == 'bank')
 
     def action_validate(self):
-        # First, run standard post to create the payment move and reconcile with bills
-        res = super(AccountPayment, self).action_validate()
+        # We don't call super() because base Odoo 18 account.payment doesn't have action_validate
         
-        # Second, for bank journals, automatically create a bank statement line 
-        # and reconcile it so it updates the bank balance and marks bill as paid.
         for payment in self:
-            if payment.journal_id.type == 'bank' and not payment.is_reconciled:
+            if payment.journal_id.type == 'bank' and not payment.is_matched:
                 journal = payment.journal_id
                 
                 # 1. Create bank statement line
@@ -37,15 +34,11 @@ class AccountPayment(models.Model):
                 }
                 bsl = self.env['account.bank.statement.line'].create(bsl_vals)
                 
-                # 2. Find payable/receivable lines on the linked bills
-                moves = payment.reconciled_bill_ids or payment.reconciled_invoice_ids
-                if not moves:
-                    continue
-                    
-                bill_lines = moves.line_ids.filtered(
-                    lambda l: l.account_id.account_type in ('asset_receivable', 'liability_payable') and not l.reconciled
+                # 2. Find outstanding line on the payment
+                payment_outstanding_line = payment.move_id.line_ids.filtered(
+                    lambda l: l.account_id == payment.outstanding_account_id and not l.reconciled
                 )
-                if not bill_lines:
+                if not payment_outstanding_line:
                     continue
                 
                 # 3. Find suspense line on the statement line
@@ -57,22 +50,18 @@ class AccountPayment(models.Model):
                         lambda l: l.account_id.account_type == 'asset_current' and not l.reconciled
                     )
                     
-                if bill_lines and suspense_line:
-                    payable_account = bill_lines[0].account_id
-                    
+                if payment_outstanding_line and suspense_line:
                     # 4. Perform reconciliation
                     stmt_move = bsl.move_id
                     stmt_move.button_draft()
-                    suspense_line.with_context(skip_account_move_synchronization=True).account_id = payable_account.id
+                    suspense_line.with_context(skip_account_move_synchronization=True).account_id = payment_outstanding_line[0].account_id.id
                     stmt_move.with_context(skip_account_move_synchronization=True).action_post()
-                    (suspense_line + bill_lines).reconcile()
+                    (suspense_line + payment_outstanding_line).reconcile()
                     
-                    # Update payment state
-                    payment.is_reconciled = True
-                    if payment.state != 'paid':
-                        payment.state = 'paid'
+                    # Update payment match state
+                    payment.is_matched = True
 
-        return res
+        return True
 
 class AccountPaymentRegister(models.TransientModel):
     _inherit = 'account.payment.register'

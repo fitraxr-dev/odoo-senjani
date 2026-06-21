@@ -87,7 +87,7 @@
             <xpath expr="//div[@id='dashboard_bank_cash_right']" position="inside">
                 <div class="row" t-if="record.senjani_unpaid_payment_count.raw_value > 0 and record.code.raw_value != 'XNDT'">
                     <div class="col overflow-hidden text-start">
-                        <button type="object" name="open_payments_action" class="btn btn-link p-0 text-decoration-none">
+                        <button type="object" name="action_open_unpaid_payments" class="btn btn-link p-0 text-decoration-none">
                             <span title="Payments to Reconcile">
                                 <t t-esc="record.senjani_unpaid_payment_count.raw_value"/> To Reconcile
                             </span>
