@@ -148,7 +148,7 @@
               name="Senjani Address Form">
         
         <!-- Inject styles & custom breadcrumbs/heading at the top of the form layout -->
-        <xpath expr="//div[hasclass('oe_cart')]" position="before">
+        <xpath expr="//div[hasclass('oe_cart')]/div" position="before">
             <t t-call="senjani_website_custom.senjani_address_styles"/>
             <div class="senjani-breadcrumbs">
                 <span>Cart</span> / 
@@ -169,8 +169,6 @@
         <!-- Remove B2B fields (company_name, vat) -->
         <xpath expr="//t[@t-if='website._display_partner_b2b_fields()']" position="replace"/>
 
-        <!-- Remove "Already have an account?" sign-in prompt for anonymous -->
-        <xpath expr="//div[hasclass('align-items-center')][.//span[contains(text(), 'Already have an account')]]" position="replace"/>
 
         <!-- Remove dynamic default h3 headings inside the card -->
         <xpath expr="//t[@t-if='not is_anonymous_cart']" position="replace"/>
