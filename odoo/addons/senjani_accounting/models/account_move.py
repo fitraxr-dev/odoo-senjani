@@ -1,6 +1,7 @@
 import random
 from datetime import timedelta
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 from odoo.tools.misc import format_date, get_lang
 
 
@@ -102,8 +103,13 @@ class AccountMove(models.Model):
 
     def action_post(self):
         """
-        Override action_post to automatically match Xendit payments.
+        Override action_post to restrict Vendor Bill confirmation to Accounting Staff
+        and automatically match Xendit payments.
         """
+        for move in self:
+            if move.move_type in ('in_invoice', 'in_refund') and not self.env.user.has_group('senjani_accounting.group_senjani_accounting_staff'):
+                raise UserError(_("Hanya tim Accounting yang diizinkan untuk melakukan konfirmasi (Post) pada Vendor Bill."))
+        
         res = super(AccountMove, self).action_post()
         self._auto_link_xendit_payment()
         return res
