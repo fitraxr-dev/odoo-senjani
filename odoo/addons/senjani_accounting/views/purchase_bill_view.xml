@@ -256,4 +256,22 @@ if records:
         </field>
     </record>
 
+    <!-- ===== VIEW INHERITANCE: Hide Confirm/Validate Button for Bank Payments ===== -->
+    <record id="view_account_payment_form_inherit_senjani_hide_validate" model="ir.ui.view">
+        <field name="name">account.payment.form.inherit.senjani.hide.validate</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <field name="is_senjani_bank_journal" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='action_post']" position="attributes">
+                <attribute name="invisible">state != 'draft' or is_senjani_bank_journal</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_validate']" position="attributes">
+                <attribute name="invisible">state != 'in_process' or move_id or is_senjani_bank_journal</attribute>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
