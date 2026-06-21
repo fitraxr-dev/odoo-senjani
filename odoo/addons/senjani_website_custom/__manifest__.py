@@ -19,6 +19,7 @@
         'views/homepage_templates.xml',
         'views/address_templates.xml',
         'views/payment_templates.xml',
+        'views/confirmation_templates.xml',
     ],
     'assets': {
         'web.assets_frontend': [
