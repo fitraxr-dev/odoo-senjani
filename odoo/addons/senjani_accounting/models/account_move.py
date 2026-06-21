@@ -202,6 +202,19 @@ class AccountJournal(models.Model):
             currency = journal.currency_id or journal.company_id.currency_id
             journal.senjani_unpaid_payment_amount = currency.format(total)
 
+    def action_senjani_transfer_funds(self):
+        self.ensure_one()
+        return {
+            'name': 'Transfer Xendit Funds',
+            'type': 'ir.actions.act_window',
+            'res_model': 'senjani.transfer.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_journal_id': self.id,
+            }
+        }
+
     def _fill_sale_purchase_dashboard_data(self, dashboard_data):
         """
         Override to include 'in_payment' (In Process) bills in the 'To Pay' count and amount
@@ -241,6 +254,21 @@ class AccountJournal(models.Model):
     def _fill_bank_cash_dashboard_data(self, dashboard_data):
         super()._fill_bank_cash_dashboard_data(dashboard_data)
         
+        for journal in self.filtered(lambda j: j.type in ('bank', 'cash')):
+            if journal.id in dashboard_data and journal.default_account_id:
+                # Calculate real GL balance for the default account
+                self.env.cr.execute("""
+                    SELECT SUM(balance)
+                    FROM account_move_line
+                    WHERE account_id = %s AND parent_state = 'posted' AND journal_id = %s
+                """, (journal.default_account_id.id, journal.id))
+                res = self.env.cr.fetchone()
+                real_balance = res[0] or 0.0
+                
+                currency = journal.currency_id or journal.company_id.currency_id
+                dashboard_data[journal.id]['account_balance'] = currency.format(real_balance)
+                dashboard_data[journal.id]['nb_lines_bank_account_balance'] = True
+                
         xndt_journals = self.filtered(lambda j: j.code == 'XNDT')
         for journal in xndt_journals:
             if journal.id in dashboard_data:
@@ -261,7 +289,8 @@ class AccountJournal(models.Model):
                 'show_on_dashboard': True,
             })
             
-        for journal in XNDT:
+        journals_to_update = self.search([('code', 'in', ['XNDT', 'BNK1'])])
+        for journal in journals_to_update:
             if journal.default_account_id:
                 for line in journal.inbound_payment_method_line_ids:
                     line.payment_account_id = journal.default_account_id.id

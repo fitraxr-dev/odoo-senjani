@@ -48,6 +48,7 @@
         'views/dashboard.xml',
         'views/menu.xml',
         'wizard/bank_reconcile_wizard_view.xml',
+        'wizard/transfer_wizard_view.xml',
     ],
     'assets': {
         'web.assets_backend': [

@@ -104,7 +104,10 @@
                 <div name="bank_cash_buttons" class="d-flex gap-1">
                     <!-- Xendit Journal (XNDT) Buttons -->
                     <t t-if="record.code.raw_value == 'XNDT'">
-                        <button type="object" name="open_customer_payments_action" class="btn btn-primary">
+                        <button type="object" name="action_senjani_transfer_funds" class="btn btn-primary">
+                            Transfer Funds
+                        </button>
+                        <button type="object" name="open_customer_payments_action" class="btn btn-secondary">
                             Customer Payments
                         </button>
                     </t>
