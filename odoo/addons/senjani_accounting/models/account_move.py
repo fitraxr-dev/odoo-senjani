@@ -112,6 +112,7 @@ class AccountMove(models.Model):
         
         res = super(AccountMove, self).action_post()
         self._auto_link_xendit_payment()
+        self._auto_create_vendor_payment()
         return res
 
     def _auto_link_xendit_payment(self):
@@ -147,6 +148,33 @@ class AccountMove(models.Model):
                 if invoice_receivable_line:
                     # Perform automatic reconciliation
                     (invoice_receivable_line + receivable_lines[0]).reconcile()
+
+    def _auto_create_vendor_payment(self):
+        """
+        Custom helper to automatically create a payment for Vendor Bills 
+        when they are validated by the accounting team.
+        """
+        for bill in self:
+            if bill.move_type != 'in_invoice' or bill.state != 'posted' or bill.payment_state in ('paid', 'in_payment', 'reversed'):
+                continue
+                
+            # Find a bank journal, preferring non-XNDT bank journal
+            journal = self.env['account.journal'].search([('type', '=', 'bank'), ('code', '!=', 'XNDT')], limit=1)
+            if not journal:
+                journal = self.env['account.journal'].search([('type', '=', 'bank')], limit=1)
+            
+            if not journal:
+                continue
+                
+            # Use the payment register wizard to ensure accurate reconciliation
+            payment_register = self.env['account.payment.register'].with_context(
+                active_model='account.move',
+                active_ids=bill.ids,
+            ).create({
+                'journal_id': journal.id,
+                'payment_date': fields.Date.context_today(self),
+            })
+            payment_register._create_payments()
 
 
 class AccountJournal(models.Model):
