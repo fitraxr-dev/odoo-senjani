@@ -240,4 +240,19 @@ if records:
         </field>
     </record>
 
+    <!-- ===== VIEW INHERITANCE: Hide Confirm Button for Purchasing ===== -->
+    <record id="view_account_move_form_inherit_senjani_hide_confirm" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.senjani.hide.confirm</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <field name="is_senjani_accounting" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='action_post'][2]" position="attributes">
+                <attribute name="invisible">hide_post_button or move_type == 'entry' or display_inactive_currency_warning or (move_type in ('in_invoice', 'in_refund') and not is_senjani_accounting)</attribute>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
