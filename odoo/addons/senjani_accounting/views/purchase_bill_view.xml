@@ -274,4 +274,19 @@ if records:
         </field>
     </record>
 
+    <!-- ===== VIEW INHERITANCE: Hide Register Payment Button if already in_payment ===== -->
+    <record id="view_account_move_form_inherit_senjani_hide_pay" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.senjani.hide.pay</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_register_payment'][1]" position="attributes">
+                <attribute name="invisible">state != 'posted' or payment_state not in ('not_paid', 'partial') or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt') or invoice_has_outstanding</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_register_payment'][2]" position="attributes">
+                <attribute name="invisible">state != 'posted' or payment_state not in ('not_paid', 'partial') or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt') or not invoice_has_outstanding</attribute>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>

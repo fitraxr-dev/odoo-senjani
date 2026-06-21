@@ -117,7 +117,6 @@ class AccountMove(models.Model):
 
         res = super(AccountMove, self).action_post()
         self._auto_link_xendit_payment()
-        self._auto_create_vendor_payment()
         return res
 
     def _auto_link_xendit_payment(self):
@@ -154,37 +153,9 @@ class AccountMove(models.Model):
                     # Perform automatic reconciliation
                     (invoice_receivable_line + receivable_lines[0]).reconcile()
 
-    def _auto_create_vendor_payment(self):
-        """
-        Custom helper to automatically create a payment for Vendor Bills 
-        when they are validated by the accounting team.
-        """
-        for bill in self:
-            if bill.move_type != 'in_invoice' or bill.state != 'posted' or bill.payment_state in ('paid', 'in_payment', 'reversed'):
-                continue
-                
-            # Find a bank journal, preferring non-XNDT bank journal
-            journal = self.env['account.journal'].search([('type', '=', 'bank'), ('code', '!=', 'XNDT')], limit=1)
-            if not journal:
-                journal = self.env['account.journal'].search([('type', '=', 'bank')], limit=1)
-            
-            if not journal:
-                continue
-                
-            # Initialize wizard exactly like UI to guarantee move and outstanding accounts are created
-            ctx = {'active_model': 'account.move', 'active_ids': bill.ids}
-            wizard_fields = ['amount', 'currency_id', 'payment_date', 'payment_type', 'partner_id', 'partner_type', 'communication', 'payment_method_line_id']
-            wizard_vals = self.env['account.payment.register'].with_context(ctx).default_get(wizard_fields)
-            wizard_vals['journal_id'] = journal.id
-            
-            payment_wizard = self.env['account.payment.register'].with_context(ctx).create(wizard_vals)
-            payments = payment_wizard._create_payments()
-            
-            if payments:
-                bill.payment_reference = payments[0].name
-
 
 class AccountJournal(models.Model):
+
     _inherit = 'account.journal'
 
     def _fill_sale_purchase_dashboard_data(self, dashboard_data):
