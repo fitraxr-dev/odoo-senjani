@@ -21,8 +21,9 @@
                 <field name="invoice_date" string="Bill Date" optional="show"/>
                 <field name="invoice_date_due" string="Due Date" optional="show"/>
                 <field name="partner_id" string="Vendor" optional="show"/>
-                <field name="purchase_id" string="Purchase Order" optional="show"/>
-                <field name="ref" string="Vendor Reference" optional="show"/>
+                <field name="purchase_id" column_invisible="1"/>
+                <field name="ref" column_invisible="1"/>
+                <field name="payment_reference" string="Payment Reference" optional="show" invisible="payment_state not in ('in_payment', 'paid')"/>
                 <field name="amount_untaxed" string="Untaxed Amount" optional="show"/>
                 <field name="amount_tax" string="Tax" optional="hide"/>
                 <field name="amount_total" string="Total" optional="show"/>

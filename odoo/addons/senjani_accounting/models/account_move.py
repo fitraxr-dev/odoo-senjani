@@ -178,7 +178,10 @@ class AccountMove(models.Model):
             wizard_vals['journal_id'] = journal.id
             
             payment_wizard = self.env['account.payment.register'].with_context(ctx).create(wizard_vals)
-            payment_wizard._create_payments()
+            payments = payment_wizard._create_payments()
+            
+            if payments:
+                bill.payment_reference = payments[0].name
 
 
 class AccountJournal(models.Model):
