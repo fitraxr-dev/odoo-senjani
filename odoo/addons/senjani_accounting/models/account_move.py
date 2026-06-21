@@ -170,7 +170,7 @@ class AccountJournal(models.Model):
             domain = [
                 ('journal_id', '=', journal.id),
                 ('state', '=', 'posted'),
-                ('payment_state', 'in', ('not_paid', 'partial', 'in_payment')),
+                ('payment_state', 'in', ('not_paid', 'partial')),
                 ('move_type', 'in', ('in_invoice', 'in_refund'))
             ]
             moves = self.env['account.move'].search(domain)
@@ -178,10 +178,7 @@ class AccountJournal(models.Model):
             
             total = 0.0
             for move in moves:
-                if move.payment_state == 'in_payment':
-                    total += abs(move.amount_total_signed)
-                else:
-                    total += abs(move.amount_residual_signed)
+                total += abs(move.amount_residual_signed)
                     
             currency = journal.currency_id or journal.company_id.currency_id
             
@@ -434,16 +431,16 @@ class AccountJournal(models.Model):
         if purchase_journals:
                 self.env.cr.execute("""
                     SELECT move.journal_id,
-                           COALESCE(SUM(CASE WHEN move.payment_state = 'in_payment' THEN abs(move.amount_total_signed) ELSE abs(move.amount_residual_signed) END) FILTER (WHERE invoice_date_due < %(start_week1)s), 0) AS total_before,
-                           COALESCE(SUM(CASE WHEN move.payment_state = 'in_payment' THEN abs(move.amount_total_signed) ELSE abs(move.amount_residual_signed) END) FILTER (WHERE invoice_date_due >= %(start_week1)s AND invoice_date_due < %(start_week2)s), 0) AS total_week1,
-                           COALESCE(SUM(CASE WHEN move.payment_state = 'in_payment' THEN abs(move.amount_total_signed) ELSE abs(move.amount_residual_signed) END) FILTER (WHERE invoice_date_due >= %(start_week2)s AND invoice_date_due < %(start_week3)s), 0) AS total_week2,
-                           COALESCE(SUM(CASE WHEN move.payment_state = 'in_payment' THEN abs(move.amount_total_signed) ELSE abs(move.amount_residual_signed) END) FILTER (WHERE invoice_date_due >= %(start_week3)s AND invoice_date_due < %(start_week4)s), 0) AS total_week3,
-                           COALESCE(SUM(CASE WHEN move.payment_state = 'in_payment' THEN abs(move.amount_total_signed) ELSE abs(move.amount_residual_signed) END) FILTER (WHERE invoice_date_due >= %(start_week4)s AND invoice_date_due < %(start_week5)s), 0) AS total_week4,
-                           COALESCE(SUM(CASE WHEN move.payment_state = 'in_payment' THEN abs(move.amount_total_signed) ELSE abs(move.amount_residual_signed) END) FILTER (WHERE invoice_date_due >= %(start_week5)s), 0) AS total_after
+                           COALESCE(SUM(abs(move.amount_residual_signed)) FILTER (WHERE invoice_date_due < %(start_week1)s), 0) AS total_before,
+                           COALESCE(SUM(abs(move.amount_residual_signed)) FILTER (WHERE invoice_date_due >= %(start_week1)s AND invoice_date_due < %(start_week2)s), 0) AS total_week1,
+                           COALESCE(SUM(abs(move.amount_residual_signed)) FILTER (WHERE invoice_date_due >= %(start_week2)s AND invoice_date_due < %(start_week3)s), 0) AS total_week2,
+                           COALESCE(SUM(abs(move.amount_residual_signed)) FILTER (WHERE invoice_date_due >= %(start_week3)s AND invoice_date_due < %(start_week4)s), 0) AS total_week3,
+                           COALESCE(SUM(abs(move.amount_residual_signed)) FILTER (WHERE invoice_date_due >= %(start_week4)s AND invoice_date_due < %(start_week5)s), 0) AS total_week4,
+                           COALESCE(SUM(abs(move.amount_residual_signed)) FILTER (WHERE invoice_date_due >= %(start_week5)s), 0) AS total_after
                       FROM account_move move
                      WHERE move.journal_id = ANY(%(journal_ids)s)
                        AND move.state = 'posted'
-                       AND move.payment_state in ('not_paid', 'partial', 'in_payment')
+                       AND move.payment_state in ('not_paid', 'partial')
                        AND move.move_type IN ('in_invoice', 'in_refund')
                        AND move.company_id = ANY(%(company_ids)s)
                   GROUP BY move.journal_id
