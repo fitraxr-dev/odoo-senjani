@@ -3,6 +3,11 @@ from odoo import models, fields, api
 class AccountPayment(models.Model):
     _inherit = 'account.payment'
 
+    partner_id = fields.Many2one(
+        'res.partner',
+        string='Customer/Vendor'
+    )
+
     is_senjani_bank_journal = fields.Boolean(
         compute='_compute_is_senjani_bank_journal'
     )

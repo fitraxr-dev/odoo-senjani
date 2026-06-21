@@ -76,9 +76,27 @@
                 </t>
             </xpath>
 
-            <!-- Add code field to access in templates -->
+            <!-- Add code and unpaid payment fields to access in templates -->
             <xpath expr="//kanban/field[1]" position="before">
                 <field name="code"/>
+                <field name="senjani_unpaid_payment_count"/>
+                <field name="senjani_unpaid_payment_amount"/>
+            </xpath>
+
+            <!-- Add To Reconcile label for unpaid payments -->
+            <xpath expr="//div[@id='dashboard_bank_cash_right']" position="inside">
+                <div class="row" t-if="record.senjani_unpaid_payment_count.raw_value > 0">
+                    <div class="col overflow-hidden text-start">
+                        <button type="object" name="open_payments_action" class="btn btn-link p-0 text-decoration-none">
+                            <span title="Payments to Reconcile">
+                                <t t-esc="record.senjani_unpaid_payment_count.raw_value"/> To Reconcile
+                            </span>
+                        </button>
+                    </div>
+                    <div class="col-auto text-end">
+                        <span dir="ltr"><field name="senjani_unpaid_payment_amount"/></span>
+                    </div>
+                </div>
             </xpath>
 
             <!-- Customize buttons for Bank/Cash cards based on journal code -->

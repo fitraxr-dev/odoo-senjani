@@ -155,8 +155,33 @@ class AccountMove(models.Model):
 
 
 class AccountJournal(models.Model):
-
     _inherit = 'account.journal'
+
+    senjani_unpaid_payment_count = fields.Integer(
+        string='Unpaid Payments Count',
+        compute='_compute_senjani_unpaid_payment_info'
+    )
+    senjani_unpaid_payment_amount = fields.Char(
+        string='Unpaid Payments Amount',
+        compute='_compute_senjani_unpaid_payment_info'
+    )
+
+    def _compute_senjani_unpaid_payment_info(self):
+        for journal in self:
+            payments = self.env['account.payment'].search([
+                ('journal_id', '=', journal.id),
+                ('state', 'in', ('draft', 'in_process'))
+            ])
+            journal.senjani_unpaid_payment_count = len(payments)
+            
+            total = 0.0
+            for p in payments:
+                # Outbound payments (sending money) decrease balance, so negative
+                sign = -1 if p.payment_type == 'outbound' else 1
+                total += p.amount * sign
+                
+            currency = journal.currency_id or journal.company_id.currency_id
+            journal.senjani_unpaid_payment_amount = currency.format(total)
 
     def _fill_sale_purchase_dashboard_data(self, dashboard_data):
         """

@@ -282,5 +282,19 @@ if records:
             </xpath>
         </field>
     </record>
+    <!-- ===== VIEW INHERITANCE: Add Payment Type to Payment List ===== -->
+    <record id="view_account_payment_tree_inherit_senjani" model="ir.ui.view">
+        <field name="name">account.payment.tree.inherit.senjani</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="string">Customer/Vendor</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="payment_type" string="Type (Send/Receive)" optional="show" widget="badge" decoration-info="payment_type == 'inbound'" decoration-danger="payment_type == 'outbound'"/>
+            </xpath>
+        </field>
+    </record>
 
 </odoo>
