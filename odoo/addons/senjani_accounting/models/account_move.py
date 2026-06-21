@@ -135,23 +135,42 @@ class AccountMove(models.Model):
 
             # Find outstanding receivable lines in Xendit Journal (XNDT)
             receivable_lines = self.env['account.move.line'].search([
-                ('partner_id', '=', invoice.partner_id.id),
+                ('partner_id.commercial_partner_id', '=', invoice.partner_id.commercial_partner_id.id),
                 ('account_id.account_type', '=', 'asset_receivable'),
                 ('reconciled', '=', False),
                 ('journal_id.code', '=', 'XNDT'),
-                '|',
-                ('move_id.ref', 'ilike', origin),
-                ('name', 'ilike', origin),
             ])
 
-            if receivable_lines:
+            matched_line = False
+            for line in receivable_lines:
+                payment = line.move_id.payment_ids[:1] if line.move_id.payment_ids else False
+                tx = payment.payment_transaction_id if payment else False
+                
+                # Try to match by Transaction Reference (often contains SO Origin)
+                if tx and tx.reference and origin in tx.reference:
+                    matched_line = line
+                    break
+                # Try to match by Payment Move Ref
+                if line.move_id.ref and origin in line.move_id.ref:
+                    matched_line = line
+                    break
+                # Try to match by Xendit Payment Reference exactly
+                if invoice.payment_reference and invoice.payment_reference in (line.move_id.ref or ''):
+                    matched_line = line
+                    break
+                # Try to match by exact Amount Total (as a fallback)
+                if invoice.amount_total == abs(line.balance):
+                    matched_line = line
+                    break
+
+            if matched_line:
                 # Find receivable line on this invoice
                 invoice_receivable_line = invoice.line_ids.filtered(
                     lambda l: l.account_id.account_type == 'asset_receivable' and not l.reconciled
                 )
                 if invoice_receivable_line:
                     # Perform automatic reconciliation
-                    (invoice_receivable_line + receivable_lines[0]).reconcile()
+                    (invoice_receivable_line + matched_line).reconcile()
 
 
 class AccountJournal(models.Model):
@@ -211,6 +230,22 @@ class AccountJournal(models.Model):
             dashboard_data[journal.id]['sum_waiting'] = currency.format(total)
             dashboard_data[journal.id]['is_sample_data'] = False
             dashboard_data[journal.id]['has_entries'] = True
+
+        sale_journals = self.filtered(lambda j: j.type == 'sale')
+        for journal in sale_journals:
+            # We must force these to prevent Odoo from graying out the whole card and graph
+            if journal.id in dashboard_data:
+                dashboard_data[journal.id]['is_sample_data'] = False
+                dashboard_data[journal.id]['has_entries'] = True
+
+    def _fill_bank_cash_dashboard_data(self, dashboard_data):
+        super()._fill_bank_cash_dashboard_data(dashboard_data)
+        
+        xndt_journals = self.filtered(lambda j: j.code == 'XNDT')
+        for journal in xndt_journals:
+            if journal.id in dashboard_data:
+                dashboard_data[journal.id]['number_to_reconcile'] = 0
+
     @api.model
     def _setup_senjani_outstanding_accounts(self):
         """
@@ -226,12 +261,19 @@ class AccountJournal(models.Model):
                 'show_on_dashboard': True,
             })
             
+        for journal in XNDT:
+            if journal.default_account_id:
+                for line in journal.inbound_payment_method_line_ids:
+                    line.payment_account_id = journal.default_account_id.id
+                for line in journal.outbound_payment_method_line_ids:
+                    line.payment_account_id = journal.default_account_id.id
+                    
         BNK1 = self.search([('code', '=', 'BNK1')])
         out_receipts = self.env['account.account'].search([('code', '=', '101403')])
         out_payments = self.env['account.account'].search([('code', '=', '101404')])
         
         if out_receipts and out_payments:
-            for journal in (XNDT + BNK1):
+            for journal in BNK1:
                 for line in journal.inbound_payment_method_line_ids:
                     if not line.payment_account_id:
                         line.payment_account_id = out_receipts.id
@@ -395,6 +437,7 @@ class AccountJournal(models.Model):
                  WHERE move.journal_id = ANY(%(journal_ids)s)
                    AND move.state = 'posted'
                    AND move.move_type IN ('out_invoice', 'out_refund')
+                   AND move.payment_state IN ('paid', 'in_payment', 'reversed')
                    AND move.company_id = ANY(%(company_ids)s)
               GROUP BY move.journal_id
             """, {
@@ -430,20 +473,20 @@ class AccountJournal(models.Model):
             
                 has_sales = journal_data and any(journal_data[k] != 0.0 for k in ['total_before', 'total_week1', 'total_week2', 'total_week3', 'total_week4', 'total_after'])
             
-                is_sample_data = not has_sales
+                is_sample_data = False
                 if not is_sample_data:
-                    data[0]['value'] = currency.round(journal_data['total_before'])
-                    data[1]['value'] = currency.round(journal_data['total_week1'])
-                    data[2]['value'] = currency.round(journal_data['total_week2'])
-                    data[3]['value'] = currency.round(journal_data['total_week3'])
-                    data[4]['value'] = currency.round(journal_data['total_week4'])
-                    data[5]['value'] = currency.round(journal_data['total_after'])
+                    data[0]['value'] = currency.round(journal_data['total_before']) if journal_data else 0.0
+                    data[1]['value'] = currency.round(journal_data['total_week1']) if journal_data else 0.0
+                    data[2]['value'] = currency.round(journal_data['total_week2']) if journal_data else 0.0
+                    data[3]['value'] = currency.round(journal_data['total_week3']) if journal_data else 0.0
+                    data[4]['value'] = currency.round(journal_data['total_week4']) if journal_data else 0.0
+                    data[5]['value'] = currency.round(journal_data['total_after']) if journal_data else 0.0
                     graph_key = 'Sales Volume'
                 else:
                     for index in range(6):
-                        data[index]['type'] = 'o_sample_data'
-                        data[index]['value'] = random.randint(0, 20)
-                    graph_key = _('Sample data')
+                        data[index]['type'] = 'past' if index < 6 else 'future'
+                        data[index]['value'] = 0.0
+                    graph_key = 'Sales Volume'
                 
                 result[journal.id] = [{
                     'values': data,

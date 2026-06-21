@@ -86,7 +86,7 @@
             <!-- Hide default post button on Customer Invoices (moved up) -->
             <!-- Add specialized Validate to In Payment button -->
             <xpath expr="//button[@name='action_post'][2]" position="after">
-                <button name="action_post" string="Validate to In Payment" class="oe_highlight"
+                <button name="action_post" string="Validate" class="oe_highlight"
                         type="object" groups="account.group_account_user" data-hotkey="q"
                         context="{'validate_analytic': True, 'disable_abnormal_invoice_detection': False}"
                         invisible="hide_post_button or move_type != 'out_invoice' or display_inactive_currency_warning"/>
