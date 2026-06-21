@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Add a "Daftar Order Penjualan" button on the confirmation page
+        ("/shop/confirmation") so the customer can quickly navigate to
+        their order list at /my/orders.
+    -->
+    <template id="senjani_confirmation_order_list_button"
+              name="Senjani - Tombol Daftar Order di Halaman Konfirmasi"
+              inherit_id="website_sale.confirmation">
+
+        <xpath expr="//h2" position="after">
+            <a href="/my/orders"
+               class="btn senjani-btn-order-list mt-2 mb-3 d-inline-flex align-items-center gap-2">
+                <i class="fa fa-list-alt"/>
+                <span>Daftar Order Penjualan</span>
+            </a>
+            <style>
+                .senjani-btn-order-list {
+                    background-color: var(--senjani-4, #FFBA64) !important;
+                    color: #fff !important;
+                    font-weight: 700 !important;
+                    border: none !important;
+                    border-radius: 10px !important;
+                    padding: 0.6rem 1.5rem !important;
+                    transition: all 0.3s ease !important;
+                    text-decoration: none !important;
+                    font-size: 0.9rem;
+                }
+                .senjani-btn-order-list:hover {
+                    background-color: var(--senjani-5, #060503) !important;
+                    color: #fff !important;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(6, 5, 3, 0.15);
+                }
+            </style>
+        </xpath>
+
+    </template>
+
+</odoo>
