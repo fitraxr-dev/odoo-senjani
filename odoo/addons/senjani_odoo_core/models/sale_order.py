@@ -32,24 +32,24 @@ class SaleOrder(models.Model):
                 order.senjani_order_status = False
                 continue
 
+            # Jika sudah DONE (ditandai pelanggan), jangan timpa nilainya
+            if order.senjani_order_status == 'DONE' and order.state != 'cancel':
+                continue
+
             pickings = order.picking_ids.filtered(lambda p: p.picking_type_id.code == 'outgoing')
             done_pickings = pickings.filtered(lambda p: p.state == 'done')
             active_pickings = pickings.filtered(lambda p: p.state not in ('done', 'cancel'))
+            # Picking yang sudah done DAN sudah ada resi
+            shipped_pickings = done_pickings.filtered(lambda p: p.carrier_tracking_ref)
 
-            if order.state == 'done':
-                order.senjani_order_status = 'DONE'
-            elif not pickings or all(p.state == 'cancel' for p in pickings):
+            if not pickings or all(p.state == 'cancel' for p in pickings):
+                # Belum ada pengiriman sama sekali
                 order.senjani_order_status = 'PENDING'
-            elif all(p.state in ('done', 'cancel') for p in pickings):
-                if order.state == 'done':
-                    order.senjani_order_status = 'DONE'
-                else:
-                    order.senjani_order_status = 'DONE'
-            elif done_pickings and not active_pickings:
-                order.senjani_order_status = 'DONE'
-            elif done_pickings:
+            elif shipped_pickings:
+                # Ada picking yang sudah divalidasi DAN sudah ada nomor resi → Dikirim
                 order.senjani_order_status = 'IN_DELIVERY'
-            elif active_pickings:
+            elif done_pickings or active_pickings:
+                # Picking ada (sedang diproses atau sudah done tapi belum ada resi) → Diproses
                 order.senjani_order_status = 'PROCESSED'
             else:
                 order.senjani_order_status = 'PENDING'
